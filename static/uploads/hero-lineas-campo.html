@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Líneas de campo eléctrico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAF0EF; --paper-line: rgba(28,43,51,0.07); --card:#FFFFFF;
+    --ink:#1C2B33; --ink-soft:#4B5D63; --copper:#C1622D; --copper-dark:#8C4620;
+    --teal:#1F7A6C; --teal-dark:#155A50; --border:rgba(28,43,51,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background-color:var(--paper);
+    background-image:linear-gradient(var(--paper-line) 1px, transparent 1px),linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:28px 28px; color:var(--ink); font-family:'IBM Plex Sans', sans-serif;}
+  .wrap{max-width:880px; margin:0 auto; padding:28px 24px;}
+  h1{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; margin:0 0 4px;}
+  p.sub{color:var(--ink-soft); font-size:14px; margin:0 0 18px;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:6px; overflow:hidden;}
+  .toolbar{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); flex-wrap:wrap;}
+  button{font-family:'IBM Plex Mono',monospace; font-size:12px; border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 12px; cursor:pointer; color:var(--ink);}
+  button.active{border-color:currentColor;}
+  #btnPos.active{background:rgba(193,98,45,0.12); color:var(--copper-dark); border-color:var(--copper);}
+  #btnNeg.active{background:rgba(31,122,108,0.12); color:var(--teal-dark); border-color:var(--teal);}
+  #btnClear{margin-left:auto; color:var(--ink-soft);}
+  .hint{font-size:12px; color:var(--ink-soft); padding:10px 16px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace;}
+  canvas{display:block; width:100%; touch-action:none; cursor:crosshair;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Líneas de campo eléctrico</h1>
+  <p class="sub">Las líneas salen de las cargas positivas y entran en las negativas. Cambia el arreglo y observa cómo se reconfigura el campo.</p>
+  <div class="panel">
+    <div class="toolbar">
+      <button id="btnPos" class="active">+ carga positiva</button>
+      <button id="btnNeg">+ carga negativa</button>
+      <button id="btnClear">Limpiar lienzo</button>
+    </div>
+    <canvas id="stage" width="880" height="440"></canvas>
+    <div class="hint">Clic en un espacio vacío: agrega carga · Arrastra una carga: la mueve · Doble clic sobre una carga: la elimina</div>
+  </div>
+</div>
+<script>
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d');
+  let charges = [{x:260,y:220,q:1},{x:600,y:220,q:-1}];
+  let mode = 1;
+  let dragIndex = -1;
+  const K = 9000, EPS2 = 400;
+
+  document.getElementById('btnPos').onclick = ()=>{mode=1; setActive();};
+  document.getElementById('btnNeg').onclick = ()=>{mode=-1; setActive();};
+  document.getElementById('btnClear').onclick = ()=>{charges=[]; draw();};
+  function setActive(){
+    document.getElementById('btnPos').classList.toggle('active', mode===1);
+    document.getElementById('btnNeg').classList.toggle('active', mode===-1);
+  }
+
+  function hitTest(x,y){
+    for(let i=charges.length-1;i>=0;i--){
+      const c=charges[i];
+      if((c.x-x)**2+(c.y-y)**2 < 18*18) return i;
+    }
+    return -1;
+  }
+  canvas.addEventListener('mousedown', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ dragIndex = hit; } else { charges.push({x,y,q:mode}); draw(); }
+  });
+  canvas.addEventListener('mousemove', e=>{
+    if(dragIndex<0) return;
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    charges[dragIndex].x=x; charges[dragIndex].y=y; draw();
+  });
+  window.addEventListener('mouseup', ()=>{dragIndex=-1;});
+  canvas.addEventListener('dblclick', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ charges.splice(hit,1); draw(); }
+  });
+
+  function fieldAt(x,y){
+    let ex=0, ey=0;
+    charges.forEach(c=>{
+      const dx=x-c.x, dy=y-c.y;
+      const r2 = dx*dx+dy*dy+EPS2;
+      const r = Math.sqrt(r2);
+      const f = K*c.q/r2;
+      ex += f*dx/r; ey += f*dy/r;
+    });
+    return {ex,ey};
+  }
+
+  function traceLine(x0,y0,dirSign,stopSign){
+    const pts=[[x0,y0]];
+    let x=x0,y=y0;
+    const step=4;
+    for(let i=0;i<400;i++){
+      const {ex,ey} = fieldAt(x,y);
+      const mag = Math.hypot(ex,ey);
+      if(mag < 0.02){ break; } // punto de campo nulo (p. ej. a mitad de camino entre dos cargas iguales): la linea no puede cruzarlo
+      x += dirSign*step*ex/mag; y += dirSign*step*ey/mag;
+      if(x<0||x>canvas.width||y<0||y>canvas.height) break;
+      let hitCharge=false;
+      for(const c of charges){
+        // solo se detiene al llegar a una carga de signo OPUESTO al de origen de esta linea;
+        // nunca debe terminar en una carga del mismo signo, porque cargas iguales se repelen
+        // y sus lineas de campo jamas se tocan entre si
+        if(Math.sign(c.q)===stopSign && (c.x-x)**2+(c.y-y)**2 < 15*15){ hitCharge=true; break; }
+      }
+      pts.push([x,y]);
+      if(hitCharge) break;
+    }
+    return pts;
+  }
+
+  function drawTrace(pts, color){
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0],pts[0][1]);
+    for(let k=1;k<pts.length;k++) ctx.lineTo(pts[k][0],pts[k][1]);
+    ctx.strokeStyle=color; ctx.lineWidth=1.3; ctx.stroke();
+    if(pts.length>6){
+      const mid=pts[Math.floor(pts.length*0.55)];
+      const prev=pts[Math.floor(pts.length*0.55)-1];
+      const ang2=Math.atan2(mid[1]-prev[1],mid[0]-prev[0]);
+      ctx.save(); ctx.translate(mid[0],mid[1]); ctx.rotate(ang2);
+      ctx.beginPath(); ctx.moveTo(5,0); ctx.lineTo(-4,-3); ctx.lineTo(-4,3); ctx.closePath();
+      ctx.fillStyle=color; ctx.fill(); ctx.restore();
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const seedsPos=16, seedsNeg=14;
+    // Lineas que salen de cada carga positiva: siguen el campo total (suma de todas las cargas)
+    charges.filter(c=>c.q>0).forEach(c=>{
+      for(let i=0;i<seedsPos;i++){
+        const ang = (i/seedsPos)*Math.PI*2;
+        const sx = c.x+18*Math.cos(ang), sy=c.y+18*Math.sin(ang);
+        const pts = traceLine(sx,sy,1,-1);
+        drawTrace(pts, 'rgba(140,70,32,0.55)');
+      }
+    });
+    // Lineas que convergen en cada carga negativa: integracion hacia atras usando el mismo campo total,
+    // asi se ve como influyen TODAS las cargas del arreglo, no solo la positiva mas cercana
+    charges.filter(c=>c.q<0).forEach(c=>{
+      for(let i=0;i<seedsNeg;i++){
+        const ang = (i/seedsNeg)*Math.PI*2;
+        const sx = c.x+18*Math.cos(ang), sy=c.y+18*Math.sin(ang);
+        const pts = traceLine(sx,sy,-1,1);
+        drawTrace(pts, 'rgba(21,90,80,0.5)');
+      }
+    });
+    charges.forEach(c=>{
+      ctx.beginPath(); ctx.arc(c.x,c.y,16,0,Math.PI*2);
+      ctx.fillStyle = c.q>0 ? '#C1622D' : '#1F7A6C'; ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='600 16px IBM Plex Mono, monospace';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(c.q>0?'+':'−', c.x, c.y+1);
+    });
+  }
+  draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arreglos de cargas puntuales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAF0EF; --paper-line: rgba(28,43,51,0.07); --card:#FFFFFF;
+    --ink:#1C2B33; --ink-soft:#4B5D63; --copper:#C1622D; --copper-dark:#8C4620;
+    --teal:#1F7A6C; --teal-dark:#155A50; --border:rgba(28,43,51,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background-color:var(--paper);
+    background-image:linear-gradient(var(--paper-line) 1px, transparent 1px),linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:28px 28px; color:var(--ink); font-family:'IBM Plex Sans', sans-serif;}
+  .wrap{max-width:880px; margin:0 auto; padding:28px 24px;}
+  h1{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; margin:0 0 4px;}
+  p.sub{color:var(--ink-soft); font-size:14px; margin:0 0 18px;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:6px; overflow:hidden;}
+  .toolbar{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); flex-wrap:wrap;}
+  button{font-family:'IBM Plex Mono',monospace; font-size:12px; border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 12px; cursor:pointer; color:var(--ink);}
+  button.active{border-color:currentColor;}
+  #btnPos.active{background:rgba(193,98,45,0.12); color:var(--copper-dark); border-color:var(--copper);}
+  #btnNeg.active{background:rgba(31,122,108,0.12); color:var(--teal-dark); border-color:var(--teal);}
+  #btnClear{margin-left:auto; color:var(--ink-soft);}
+  .hint{font-size:12px; color:var(--ink-soft); padding:10px 16px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace;}
+  canvas{display:block; width:100%; touch-action:none; cursor:crosshair;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Arreglos de cargas puntuales</h1>
+  <p class="sub">Coloca cargas en el lienzo y observa cómo cambia la fuerza resultante sobre cada una según su posición relativa.</p>
+  <div class="panel">
+    <div class="toolbar">
+      <button id="btnPos" class="active">+ carga positiva</button>
+      <button id="btnNeg">+ carga negativa</button>
+      <button id="btnClear">Limpiar lienzo</button>
+    </div>
+    <canvas id="stage" width="880" height="440"></canvas>
+    <div class="hint">Clic en un espacio vacío: agrega carga · Arrastra una carga: la mueve · Doble clic sobre una carga: la elimina</div>
+  </div>
+</div>
+<script>
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d');
+  let charges = [{x:260,y:220,q:1},{x:560,y:150,q:-1},{x:600,y:300,q:1}];
+  let mode = 1;
+  let dragIndex = -1;
+  const K = 9000, EPS2 = 500;
+
+  document.getElementById('btnPos').onclick = ()=>{mode=1; setActive();};
+  document.getElementById('btnNeg').onclick = ()=>{mode=-1; setActive();};
+  document.getElementById('btnClear').onclick = ()=>{charges=[]; draw();};
+  function setActive(){
+    document.getElementById('btnPos').classList.toggle('active', mode===1);
+    document.getElementById('btnNeg').classList.toggle('active', mode===-1);
+  }
+
+  function hitTest(x,y){
+    for(let i=charges.length-1;i>=0;i--){
+      const c=charges[i];
+      if((c.x-x)**2+(c.y-y)**2 < 18*18) return i;
+    }
+    return -1;
+  }
+
+  canvas.addEventListener('mousedown', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ dragIndex = hit; }
+    else { charges.push({x,y,q:mode}); draw(); }
+  });
+  canvas.addEventListener('mousemove', e=>{
+    if(dragIndex<0) return;
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    charges[dragIndex].x=x; charges[dragIndex].y=y; draw();
+  });
+  window.addEventListener('mouseup', ()=>{dragIndex=-1;});
+  canvas.addEventListener('dblclick', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ charges.splice(hit,1); draw(); }
+  });
+
+  function netForce(i){
+    let fx=0, fy=0;
+    const a = charges[i];
+    charges.forEach((b,j)=>{
+      if(j===i) return;
+      const dx=a.x-b.x, dy=a.y-b.y;
+      const r2 = dx*dx+dy*dy+EPS2;
+      const r = Math.sqrt(r2);
+      const f = K*a.q*b.q/r2;
+      fx += f*dx/r; fy += f*dy/r;
+    });
+    return {fx,fy};
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    charges.forEach((c,i)=>{
+      const {fx,fy} = netForce(i);
+      const mag = Math.hypot(fx,fy);
+      if(mag>0.5){
+        const scale = Math.min(70, mag*4)/mag;
+        ctx.strokeStyle = '#4B5D63'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(c.x,c.y); ctx.lineTo(c.x+fx*scale, c.y+fy*scale); ctx.stroke();
+        const ang = Math.atan2(fy,fx);
+        const ex=c.x+fx*scale, ey=c.y+fy*scale;
+        ctx.beginPath();
+        ctx.moveTo(ex,ey);
+        ctx.lineTo(ex-9*Math.cos(ang-0.4), ey-9*Math.sin(ang-0.4));
+        ctx.lineTo(ex-9*Math.cos(ang+0.4), ey-9*Math.sin(ang+0.4));
+        ctx.closePath(); ctx.fillStyle='#4B5D63'; ctx.fill();
+      }
+    });
+    charges.forEach(c=>{
+      ctx.beginPath(); ctx.arc(c.x,c.y,16,0,Math.PI*2);
+      ctx.fillStyle = c.q>0 ? '#C1622D' : '#1F7A6C';
+      ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='600 16px IBM Plex Mono, monospace';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(c.q>0?'+':'−', c.x, c.y+1);
+    });
+  }
+  draw();
+</script>
+</body>
+</html>

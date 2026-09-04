@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Líneas equipotenciales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAF0EF; --paper-line: rgba(28,43,51,0.07); --card:#FFFFFF;
+    --ink:#1C2B33; --ink-soft:#4B5D63; --copper:#C1622D; --copper-dark:#8C4620;
+    --teal:#1F7A6C; --teal-dark:#155A50; --border:rgba(28,43,51,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background-color:var(--paper);
+    background-image:linear-gradient(var(--paper-line) 1px, transparent 1px),linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:28px 28px; color:var(--ink); font-family:'IBM Plex Sans', sans-serif;}
+  .wrap{max-width:880px; margin:0 auto; padding:28px 24px;}
+  h1{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; margin:0 0 4px;}
+  p.sub{color:var(--ink-soft); font-size:14px; margin:0 0 18px;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:6px; overflow:hidden;}
+  .toolbar{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); flex-wrap:wrap;}
+  button{font-family:'IBM Plex Mono',monospace; font-size:12px; border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 12px; cursor:pointer; color:var(--ink);}
+  button.active{border-color:currentColor;}
+  #btnPos.active{background:rgba(193,98,45,0.12); color:var(--copper-dark); border-color:var(--copper);}
+  #btnNeg.active{background:rgba(31,122,108,0.12); color:var(--teal-dark); border-color:var(--teal);}
+  #btnClear{margin-left:auto; color:var(--ink-soft);}
+  .hint{font-size:12px; color:var(--ink-soft); padding:10px 16px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace;}
+  canvas{display:block; width:100%; touch-action:none; cursor:crosshair;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Líneas equipotenciales</h1>
+  <p class="sub">Cada línea conecta puntos con el mismo potencial eléctrico. Nota que siempre cruzan perpendicularmente a las líneas de campo.</p>
+  <div class="panel">
+    <div class="toolbar">
+      <button id="btnPos" class="active">+ carga positiva</button>
+      <button id="btnNeg">+ carga negativa</button>
+      <button id="btnClear">Limpiar lienzo</button>
+    </div>
+    <canvas id="stage" width="880" height="440"></canvas>
+    <div class="hint">Clic en un espacio vacío: agrega carga · Arrastra una carga: la mueve · Doble clic sobre una carga: la elimina</div>
+  </div>
+</div>
+<script>
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d');
+  let charges = [{x:260,y:220,q:1},{x:600,y:220,q:-1}];
+  let mode = 1;
+  let dragIndex = -1;
+  const K = 9000, EPS2 = 400;
+  const GRID = 8;
+
+  document.getElementById('btnPos').onclick = ()=>{mode=1; setActive();};
+  document.getElementById('btnNeg').onclick = ()=>{mode=-1; setActive();};
+  document.getElementById('btnClear').onclick = ()=>{charges=[]; draw();};
+  function setActive(){
+    document.getElementById('btnPos').classList.toggle('active', mode===1);
+    document.getElementById('btnNeg').classList.toggle('active', mode===-1);
+  }
+
+  function hitTest(x,y){
+    for(let i=charges.length-1;i>=0;i--){
+      const c=charges[i];
+      if((c.x-x)**2+(c.y-y)**2 < 18*18) return i;
+    }
+    return -1;
+  }
+  canvas.addEventListener('mousedown', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ dragIndex = hit; } else { charges.push({x,y,q:mode}); draw(); }
+  });
+  canvas.addEventListener('mousemove', e=>{
+    if(dragIndex<0) return;
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    charges[dragIndex].x=x; charges[dragIndex].y=y; draw();
+  });
+  window.addEventListener('mouseup', ()=>{dragIndex=-1;});
+  canvas.addEventListener('dblclick', e=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)*(canvas.width/r.width), y=(e.clientY-r.top)*(canvas.height/r.height);
+    const hit = hitTest(x,y);
+    if(hit>=0){ charges.splice(hit,1); draw(); }
+  });
+
+  function potentialAt(x,y){
+    let v=0;
+    charges.forEach(c=>{
+      const dx=x-c.x, dy=y-c.y;
+      const r = Math.sqrt(dx*dx+dy*dy+EPS2);
+      v += K*c.q/r;
+    });
+    return v;
+  }
+
+  function buildGrid(){
+    const cols = Math.ceil(canvas.width/GRID)+1;
+    const rows = Math.ceil(canvas.height/GRID)+1;
+    const g = new Float64Array(cols*rows);
+    for(let j=0;j<rows;j++){
+      for(let i=0;i<cols;i++){
+        g[j*cols+i] = potentialAt(i*GRID, j*GRID);
+      }
+    }
+    return {g, cols, rows};
+  }
+
+  function marchingSquares(level, g, cols, rows, color){
+    ctx.strokeStyle = color; ctx.lineWidth = 1.2; ctx.beginPath();
+    function interp(v0,v1,p0,p1){
+      if(Math.abs(v1-v0)<1e-9) return (p0+p1)/2;
+      const t=(level-v0)/(v1-v0);
+      return p0+t*(p1-p0);
+    }
+    for(let j=0;j<rows-1;j++){
+      for(let i=0;i<cols-1;i++){
+        const v00=g[j*cols+i], v10=g[j*cols+i+1], v11=g[(j+1)*cols+i+1], v01=g[(j+1)*cols+i];
+        const x0=i*GRID, x1=(i+1)*GRID, y0=j*GRID, y1=(j+1)*GRID;
+        const above=[v00>level, v10>level, v11>level, v01>level];
+        const idx = above[0]*1 + above[1]*2 + above[2]*4 + above[3]*8;
+        if(idx===0||idx===15) continue;
+        const pts=[];
+        if(above[0]!==above[1]) pts.push([interp(v00,v10,x0,x1), y0]);
+        if(above[1]!==above[2]) pts.push([x1, interp(v10,v11,y0,y1)]);
+        if(above[2]!==above[3]) pts.push([interp(v01,v11,x0,x1), y1]);
+        if(above[3]!==above[0]) pts.push([x0, interp(v00,v01,y0,y1)]);
+        for(let k=0;k+1<pts.length;k+=2){
+          ctx.moveTo(pts[k][0],pts[k][1]);
+          ctx.lineTo(pts[k+1][0],pts[k+1][1]);
+        }
+      }
+    }
+    ctx.stroke();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(charges.length>0){
+      const {g, cols, rows} = buildGrid();
+      let vmax=-Infinity;
+      for(let n=0;n<g.length;n++){ if(isFinite(g[n])) vmax=Math.max(vmax, Math.abs(g[n])); }
+      const levels=10;
+      for(let k=1;k<=levels;k++){
+        const lv = (k/levels)*vmax*0.9;
+        marchingSquares(lv, g, cols, rows, 'rgba(140,70,32,0.5)');
+        marchingSquares(-lv, g, cols, rows, 'rgba(21,90,80,0.5)');
+      }
+    }
+    charges.forEach(c=>{
+      ctx.beginPath(); ctx.arc(c.x,c.y,16,0,Math.PI*2);
+      ctx.fillStyle = c.q>0 ? '#C1622D' : '#1F7A6C'; ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='600 16px IBM Plex Mono, monospace';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(c.q>0?'+':'−', c.x, c.y+1);
+    });
+  }
+  draw();
+</script>
+</body>
+</html>
