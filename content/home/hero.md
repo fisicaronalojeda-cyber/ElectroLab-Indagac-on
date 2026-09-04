@@ -32,12 +32,12 @@ design:
   .emlab .hero h1 .accent{color:var(--amber);}
   .emlab .hero p.lead{color:var(--text-soft); font-size:16px; max-width:480px; margin:20px 0 28px;}
   .emlab .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
-  .emlab .btn{display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:9px; font-weight:600; font-size:14px;}
-  .emlab .btn-primary{background:var(--teal); color:#04211D;}
-  .emlab .btn-outline{border:1px solid var(--border-strong); color:var(--text);}
+  .emlab .elab-btn{display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:9px; font-weight:600; font-size:14px;}
+  .emlab .elab-btn-primary{background:var(--teal); color:#04211D;}
+  .emlab .elab-btn-outline{border:1px solid var(--border-strong); color:var(--text);}
 
-  .emlab .hero-visual{position:relative; display:flex; align-items:center; justify-content:center; min-height:320px;}
-  .emlab .scene-glow{position:absolute; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle, rgba(45,212,191,0.16), transparent 70%); filter:blur(6px);}
+  .emlab .hero-visual{position:relative; display:flex; flex-direction:column; align-items:center; gap:18px; min-height:auto;}
+  .emlab .scene-glow{position:absolute; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle, rgba(45,212,191,0.16), transparent 70%); filter:blur(6px); top:0; left:50%; transform:translateX(-50%);}
   .emlab .flow-dot{animation:emlab-flow 3.6s linear infinite;}
   .emlab .flow-dot.d2{animation-delay:1.2s;}
   .emlab .flow-dot.d3{animation-delay:2.4s;}
@@ -53,31 +53,31 @@ design:
     0%{ r:16; opacity:0.55; }
     100%{ r:46; opacity:0; }
   }
-  .emlab .callout{position:absolute; bottom:-6px; right:-4px; max-width:250px; background:var(--card); border:1px solid var(--border-strong); border-radius:12px; padding:16px 18px; box-shadow:0 20px 40px rgba(0,0,0,0.35);}
+  .emlab .callout{position:static; width:100%; max-width:340px; background:var(--card); border:1px solid var(--border-strong); border-radius:12px; padding:16px 18px; box-shadow:0 20px 40px rgba(0,0,0,0.35);}
   .emlab .callout .ct-title{font-size:13px; font-weight:600; color:var(--amber); margin-bottom:6px; display:flex; align-items:center; gap:6px;}
   .emlab .callout p{font-size:12.5px; color:var(--text-soft); margin:0;}
 
   .emlab .route{padding:8px 0 40px;}
   .emlab .section-label{display:flex; align-items:center; gap:10px; font-size:12px; letter-spacing:0.08em; color:var(--text-soft); margin-bottom:24px;}
   .emlab .section-label b{color:var(--text);}
-  .emlab .stations{display:grid; grid-template-columns:repeat(7,1fr); gap:12px;}
-  @media (max-width:1000px){ .emlab .stations{grid-template-columns:repeat(4,1fr);} }
-  @media (max-width:640px){ .emlab .stations{grid-template-columns:repeat(2,1fr);} }
-  .emlab .station{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 16px;}
-  .emlab .station .num{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:20px; margin-bottom:10px;}
-  .emlab .station .icon{font-size:20px; margin-bottom:10px; display:block;}
-  .emlab .station h3{font-size:13px; letter-spacing:0.03em; margin-bottom:6px;}
-  .emlab .station p{font-size:12px; color:var(--text-soft); margin:0;}
+  .emlab .stations{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media (max-width:760px){ .emlab .stations{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .emlab .stations{grid-template-columns:1fr;} }
+  .emlab .station{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 18px; display:block;}
+  .emlab .station .num{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:8px;}
+  .emlab .station h3{font-size:15px; letter-spacing:0.01em; margin-bottom:8px; line-height:1.3;}
+  .emlab .station p{font-size:12.5px; color:var(--text-soft); margin:0;}
 
   .emlab .features{padding:8px 0 48px;}
-  .emlab .fgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
-  @media (max-width:900px){ .emlab .fgrid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:560px){ .emlab .fgrid{grid-template-columns:1fr;} }
-  .emlab .fcard{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; display:flex; flex-direction:column; gap:12px;}
-  .emlab .fcard .ftitle{font-size:12px; letter-spacing:0.06em; font-weight:600;}
-  .emlab .fcard .fthumb{height:74px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:26px;}
-  .emlab .fcard p{font-size:13px; color:var(--text-soft); margin:0; flex:1;}
-  .emlab .fcard .flink{font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px;}
+  .emlab .fgrid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  @media (max-width:1050px){ .emlab .fgrid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:700px){ .emlab .fgrid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .emlab .fgrid{grid-template-columns:1fr;} }
+  .emlab .fcard{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:10px;}
+  .emlab .fcard .ftitle{font-size:11.5px; letter-spacing:0.05em; font-weight:600;}
+  .emlab .fcard .fthumb{height:62px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:24px;}
+  .emlab .fcard p{font-size:12.5px; color:var(--text-soft); margin:0; flex:1;}
+  .emlab .fcard .flink{font-size:12.5px; font-weight:600; display:inline-flex; align-items:center; gap:6px;}
 
   .emlab .badges{border-top:1px solid var(--border); padding:22px 0;}
   .emlab .badge-row{display:flex; gap:32px; flex-wrap:wrap; justify-content:center; font-size:12.5px; color:var(--text-soft);}
@@ -88,11 +88,11 @@ design:
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow"><span class="dot"></span>FÍSICA · SECUNDARIA</div>
-      <h1>Electrostática y circuitos<br><span class="accent">laboratorio de indagación</span></h1>
-      <p class="lead">Explora fenómenos, formula preguntas, experimenta con simuladores reales, analiza datos y construye tus propias explicaciones sobre cómo interactúan las cargas eléctricas.</p>
+      <h1>Electrostática y electricidad<br><span class="accent">laboratorio de indagación</span></h1>
+      <p class="lead">6 aprendizajes, cada uno con su propia ruta de indagación: observa, pregúntate, formula hipótesis, experimenta con simuladores reales y evalúa lo que descubriste.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#ruta">Comenzar secuencia</a>
-        <a class="btn btn-outline" href="#laboratorio">Ir al laboratorio</a>
+        <a class="elab-btn elab-btn-primary" href="#aprendizajes">Ver los 6 aprendizajes</a>
+        <a class="elab-btn elab-btn-outline" href="#recursos">Ir a recursos</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -140,46 +140,54 @@ design:
   </div>
 </section>
 
-<section class="route" id="ruta">
+<section class="route" id="aprendizajes">
   <div class="wrap">
-    <div class="section-label">◇ <b>RUTA DE INDAGACIÓN</b> — 7 estaciones</div>
+    <div class="section-label">◇ <b>6 APRENDIZAJES</b> — cada uno con su ruta de indagación completa</div>
     <div class="stations">
-      <div class="station" style="border-top:2px solid var(--blue);"><div class="num" style="color:var(--blue)">01</div><span class="icon">🔍</span><h3>OBSERVA</h3><p>Observa el fenómeno y recoge información.</p></div>
-      <div class="station" style="border-top:2px solid var(--orange);"><div class="num" style="color:var(--orange)">02</div><span class="icon">❓</span><h3>PREGUNTA</h3><p>Plantea preguntas de indagación.</p></div>
-      <div class="station" style="border-top:2px solid var(--amber);"><div class="num" style="color:var(--amber)">03</div><span class="icon">💡</span><h3>HIPÓTESIS</h3><p>Formula hipótesis y predicciones.</p></div>
-      <div class="station" style="border-top:2px solid var(--green);"><div class="num" style="color:var(--green)">04</div><span class="icon">🧪</span><h3>EXPERIMENTA</h3><p>Diseña y realiza experimentos.</p></div>
-      <div class="station" style="border-top:2px solid var(--teal);"><div class="num" style="color:var(--teal)">05</div><span class="icon">📊</span><h3>ANALIZA</h3><p>Organiza y analiza tus datos.</p></div>
-      <div class="station" style="border-top:2px solid var(--violet);"><div class="num" style="color:var(--violet)">06</div><span class="icon">🧠</span><h3>EXPLICA</h3><p>Construye explicaciones propias.</p></div>
-      <div class="station" style="border-top:2px solid var(--pink);"><div class="num" style="color:var(--pink)">07</div><span class="icon">🎯</span><h3>EVALÚA</h3><p>Evalúa y comunica tus conclusiones.</p></div>
+      <a class="station" href="/course/aprendizaje-1-carga-electrica/" style="border-top:2px solid var(--blue);"><div class="num" style="color:var(--blue)">01</div><h3>Carga eléctrica</h3><p>Qué es la carga y cómo se transfiere entre objetos.</p></a>
+      <a class="station" href="/course/aprendizaje-2-ley-coulomb/" style="border-top:2px solid var(--amber);"><div class="num" style="color:var(--amber)">02</div><h3>Fuerza eléctrica — Ley de Coulomb</h3><p>Cómo se atraen y repelen las cargas, y con qué fuerza.</p></a>
+      <a class="station" href="/course/aprendizaje-3-campo-electrico/" style="border-top:2px solid var(--teal);"><div class="num" style="color:var(--teal)">03</div><h3>Campo eléctrico — Líneas de campo</h3><p>Cómo visualizar la influencia de una carga en el espacio.</p></a>
+      <a class="station" href="/course/aprendizaje-4-potencial-electrico/" style="border-top:2px solid var(--violet);"><div class="num" style="color:var(--violet)">04</div><h3>Energía y potencial eléctrico</h3><p>Qué es el voltaje y de dónde viene.</p></a>
+      <a class="station" href="/course/aprendizaje-5-magnitudes-electricas/" style="border-top:2px solid var(--green);"><div class="num" style="color:var(--green)">05</div><h3>Magnitudes eléctricas</h3><p>Voltaje, corriente, resistencia y la ley de Ohm.</p></a>
+      <a class="station" href="/course/aprendizaje-6-circuitos-electricos/" style="border-top:2px solid var(--pink);"><div class="num" style="color:var(--pink)">06</div><h3>Circuitos eléctricos</h3><p>Cómo se comportan los circuitos en serie y en paralelo.</p></a>
     </div>
   </div>
 </section>
 
-<section class="features">
-  <div class="wrap fgrid">
-    <div class="fcard" id="laboratorio">
-      <div class="ftitle" style="color:var(--teal)">SIMULACIONES INTERACTIVAS</div>
-      <div class="fthumb" style="background:rgba(45,212,191,0.12)">⚡</div>
-      <p>Explora con PhET: ley de Coulomb, líneas de campo, equipotenciales y circuitos.</p>
-      <a class="flink" style="color:var(--teal)" href="/hero-cargas-puntuales.html">Ir al laboratorio →</a>
-    </div>
-    <div class="fcard" id="actividades">
-      <div class="ftitle" style="color:var(--orange)">ACTIVIDADES INTERACTIVAS</div>
-      <div class="fthumb" style="background:rgba(251,146,60,0.12)">🎮</div>
-      <p>Actividades en Genially y formularios para poner a prueba lo aprendido.</p>
-      <a class="flink" style="color:var(--orange)" href="/course/electrostatica/">Explorar actividades →</a>
-    </div>
-    <div class="fcard" id="recursos">
-      <div class="ftitle" style="color:var(--amber)">CONCEPTOS CLAVE</div>
-      <div class="fthumb" style="background:rgba(245,183,0,0.12)">📐</div>
-      <p>Repasa carga, fuerza de Coulomb, campo eléctrico, potencial y ley de Ohm.</p>
-      <a class="flink" style="color:var(--amber)" href="/course/electrostatica/03-teoria-coulomb/">Ver conceptos →</a>
-    </div>
-    <div class="fcard" id="evaluacion">
-      <div class="ftitle" style="color:var(--violet)">EVALUACIÓN</div>
-      <div class="fthumb" style="background:rgba(167,139,250,0.12)">📋</div>
-      <p>Prueba previa, post prueba y actividad integradora final.</p>
-      <a class="flink" style="color:var(--violet)" href="/course/electrostatica/08-post-prueba/">Ir a evaluación →</a>
+<section class="features" id="recursos">
+  <div class="wrap">
+    <div class="section-label">◇ <b>RECURSOS DEL MÓDULO</b> — todo en un solo lugar</div>
+    <div class="fgrid">
+      <div class="fcard" id="apuntes">
+        <div class="ftitle" style="color:var(--amber)">APUNTES / TEORÍA</div>
+        <div class="fthumb" style="background:rgba(245,183,0,0.12)">📐</div>
+        <p>La sección "Conceptualización abstracta" de cada aprendizaje explica el tema paso a paso.</p>
+        <a class="flink" style="color:var(--amber)" href="/course/aprendizaje-2-ley-coulomb/fuerza-coulomb/03-conceptualizacion-abstracta/">Ver ejemplo →</a>
+      </div>
+      <div class="fcard" id="laboratorio">
+        <div class="ftitle" style="color:var(--teal)">LABORATORIOS VIRTUALES</div>
+        <div class="fthumb" style="background:rgba(45,212,191,0.12)">⚡</div>
+        <p>Simuladores PhET y heroes propios integrados en la sección "Experimentación activa" de cada tema.</p>
+        <a class="flink" style="color:var(--teal)" href="/course/aprendizaje-2-ley-coulomb/fuerza-coulomb/04-experimentacion-activa/">Ver ejemplo →</a>
+      </div>
+      <div class="fcard" id="actividades">
+        <div class="ftitle" style="color:var(--orange)">ACTIVIDADES INTERACTIVAS</div>
+        <div class="fthumb" style="background:rgba(251,146,60,0.12)">🎮</div>
+        <p>Actividades en Genially para reforzar cada tema, dentro de "Experimentación activa".</p>
+        <a class="flink" style="color:var(--orange)" href="/course/aprendizaje-6-circuitos-electricos/circuitos-electricos/04-experimentacion-activa/">Ver ejemplo →</a>
+      </div>
+      <div class="fcard" id="evaluacion">
+        <div class="ftitle" style="color:var(--violet)">EVALUACIÓN</div>
+        <div class="fthumb" style="background:rgba(167,139,250,0.12)">📋</div>
+        <p>Cada uno de los 9 temas cierra con su propia evaluación de aprendizajes.</p>
+        <a class="flink" style="color:var(--violet)" href="/course/aprendizaje-2-ley-coulomb/fuerza-coulomb/05-evaluacion/">Ver ejemplo →</a>
+      </div>
+      <div class="fcard" id="guias">
+        <div class="ftitle" style="color:var(--pink)">GUÍAS DESCARGABLES</div>
+        <div class="fthumb" style="background:rgba(244,114,182,0.12)">📥</div>
+        <p>Guías de laboratorio en PDF con tablas para registrar tus datos.</p>
+        <a class="flink" style="color:var(--pink)" href="/guias_laboratorio.pdf">Descargar guías →</a>
+      </div>
     </div>
   </div>
 </section>
