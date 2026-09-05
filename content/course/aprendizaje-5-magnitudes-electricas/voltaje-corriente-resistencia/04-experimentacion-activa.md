@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Usa el Kit de construcción de circuitos de PhET para medir corriente y voltaje con diferentes valores de batería y resistencia.
@@ -22,3 +26,6 @@ Usa el Kit de construcción de circuitos de PhET para medir corriente y voltaje 
 En Genially, crea una simulación simplificada tipo 'circuito de agua' (analogía hidráulica) que el estudiante deba relacionar con voltaje, corriente y resistencia.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

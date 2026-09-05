@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Explora el simulador de Globos y Electricidad Estática de PhET: frota el globo contra el gato o la pared y observa la transferencia de electrones.
@@ -22,3 +26,6 @@ Explora el simulador de Globos y Electricidad Estática de PhET: frota el globo 
 Diseña, en Genially o en papel, un mapa conceptual que conecte: átomo neutro → fricción → transferencia de electrones → carga positiva / carga negativa.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

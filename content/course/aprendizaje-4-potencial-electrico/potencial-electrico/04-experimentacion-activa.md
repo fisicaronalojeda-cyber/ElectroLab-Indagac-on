@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Usa tu propio hero de líneas equipotenciales y compáralo lado a lado con el de líneas de campo para el mismo arreglo de cargas.
@@ -22,3 +26,6 @@ Usa tu propio hero de líneas equipotenciales y compáralo lado a lado con el de
 En Genially, diseña una actividad de verdadero/falso sobre las propiedades de las superficies equipotenciales.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

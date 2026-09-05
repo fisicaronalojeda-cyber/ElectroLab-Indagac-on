@@ -4,6 +4,10 @@ weight: 2
 type: book
 ---
 
+
+<div class="etapa-badge obs-reflexiva"><span class="eb-icon">❓</span>Observación reflexiva</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 2.1 Pregunta
 
 ¿Por qué a veces los globos se alejan y otras veces se atraen?
@@ -11,3 +15,6 @@ type: book
 ## 2.2 Hipótesis
 
 Plantea una hipótesis sobre qué determina si dos objetos cargados se atraen o se repelen entre sí.
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

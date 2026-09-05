@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Usa el Kit de construcción de circuitos (laboratorio virtual) de PhET para armar y comparar ambas configuraciones con mediciones reales.
@@ -22,3 +26,6 @@ Usa el Kit de construcción de circuitos (laboratorio virtual) de PhET para arma
 En Genially, diseña un diagrama interactivo donde el estudiante deba identificar si un circuito dado está en serie, en paralelo, o es mixto.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

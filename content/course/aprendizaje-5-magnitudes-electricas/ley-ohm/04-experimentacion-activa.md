@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Vuelve al Kit de construcción de circuitos de PhET y verifica numéricamente la ley de Ohm con tus propios datos.
@@ -22,3 +26,6 @@ Vuelve al Kit de construcción de circuitos de PhET y verifica numéricamente la
 En Genially o en papel, arma una actividad de resolución de problemas donde el estudiante calcule la variable faltante (V, I o R) dado dos de los tres valores.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Explora el simulador de Cargas y Campos de PhET, activando la opción de 'sensores E-field' para ver cómo un objeto neutro se polariza cerca de una carga.
@@ -22,3 +26,6 @@ Explora el simulador de Cargas y Campos de PhET, activando la opción de 'sensor
 Crea una tabla comparativa en Genially o Actividades de los tres tipos de electrización, con un ejemplo cotidiano para cada uno.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

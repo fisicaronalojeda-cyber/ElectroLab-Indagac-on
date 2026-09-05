@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y distancia de forma controlada.
@@ -22,3 +26,6 @@ Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y di
 Con Genially, arma una actividad tipo 'calculadora interactiva' donde el estudiante ingrese dos cargas y una distancia, y compare su cálculo manual con el resultado esperado.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

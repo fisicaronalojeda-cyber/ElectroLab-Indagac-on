@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Explora tu propio hero de líneas de campo, probando arreglos con una carga, dos cargas del mismo signo, y dipolos.
@@ -22,3 +26,6 @@ Explora tu propio hero de líneas de campo, probando arreglos con una carga, dos
 En Genially, crea una actividad de 'arrastrar la línea correcta' donde el estudiante deba unir cada arreglo de cargas con su patrón de líneas de campo correspondiente.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

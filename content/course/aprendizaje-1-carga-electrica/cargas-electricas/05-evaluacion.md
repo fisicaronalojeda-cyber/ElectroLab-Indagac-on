@@ -4,8 +4,15 @@ weight: 5
 type: book
 ---
 
+
+<div class="etapa-badge evaluacion"><span class="eb-icon">🎯</span>Evaluación de aprendizajes</div>
+<div id="emlab-aviso-slot"></div>
+
 Responde:
 
 1. Explica con tus palabras qué es la carga eléctrica.
 2. ¿Qué partícula subatómica se transfiere al frotar dos materiales?
 3. Da dos ejemplos cotidianos donde ocurra electrización por fricción.
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>

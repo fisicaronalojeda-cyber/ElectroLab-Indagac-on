@@ -4,6 +4,10 @@ weight: 4
 type: book
 ---
 
+
+<div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
+<div id="emlab-aviso-slot"></div>
+
 ## 4.1 Laboratorio virtual / simulador
 
 Usa el hero interactivo de arreglos de cargas puntuales para experimentar libremente con distintas combinaciones de signos.
@@ -22,3 +26,6 @@ Usa el hero interactivo de arreglos de cargas puntuales para experimentar librem
 Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
 
 <!-- Pega aquí tu iframe de Genially -->
+
+<div id="emlab-boton-slot"></div>
+<script src="/js/progreso.js"></script>
