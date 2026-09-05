@@ -1,1 +1,109 @@
+/* ===== EM·LAB — estilos globales para páginas de lección ===== */
+
+:root{
+  --elab-navy:#0B1220;
+  --elab-blue:#2563EB;
+  --elab-amber:#C99400;
+  --elab-teal:#1BA394;
+  --elab-violet:#7C5CE0;
+  --elab-green:#1F9D5A;
+  --elab-pink:#D6449A;
+  --elab-ink:#1C2B33;
+  --elab-soft:#5B6B73;
+  --elab-border:#E4E9EC;
+}
+
+/* Insignia de etapa, al inicio de cada página de lección */
+.etapa-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+  padding:6px 14px; border-radius:20px; margin-bottom:18px;
+}
+.etapa-badge .eb-icon{ font-size:14px; }
+.etapa-badge.exp-concreta{ background:rgba(37,99,235,0.1); color:var(--elab-blue); }
+.etapa-badge.obs-reflexiva{ background:rgba(251,146,60,0.12); color:#C2650F; }
+.etapa-badge.concept-abstracta{ background:rgba(201,148,0,0.12); color:var(--elab-amber); }
+.etapa-badge.exp-activa{ background:rgba(31,157,90,0.12); color:var(--elab-green); }
+.etapa-badge.evaluacion{ background:rgba(214,68,154,0.12); color:var(--elab-pink); }
+
+/* Tipografía general de contenido de lección */
+article h1{
+  color:var(--elab-navy);
+  font-weight:800;
+  letter-spacing:-0.01em;
+  border-bottom:3px solid var(--elab-teal);
+  padding-bottom:14px;
+  margin-bottom:22px;
+}
+article h2{
+  color:var(--elab-navy);
+  font-size:1.3rem;
+  font-weight:700;
+  margin-top:2.2rem;
+  padding-left:12px;
+  border-left:4px solid var(--elab-teal);
+}
+article h3{
+  color:var(--elab-soft);
+  font-size:1.05rem;
+  font-weight:700;
+  margin-top:1.6rem;
+}
+article p{ line-height:1.75; color:var(--elab-ink); }
+article b, article strong{
+  background:linear-gradient(transparent 60%, rgba(27,163,148,0.18) 60%);
+  padding:0 1px;
+}
+
+/* Simuladores embebidos (PhET, Concord Consortium, heroes propios) */
+article iframe{
+  width:100%;
+  border:1px solid var(--elab-border) !important;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(11,18,32,0.10);
+  margin:18px 0;
+}
+
+/* Guías paso a paso (listas numeradas) */
+article ol{
+  counter-reset: elab-step;
+  list-style:none;
+  padding-left:0;
+  margin:18px 0;
+}
+article ol > li{
+  counter-increment: elab-step;
+  position:relative;
+  padding:10px 16px 10px 46px;
+  margin-bottom:10px;
+  background:#F7FAFA;
+  border:1px solid var(--elab-border);
+  border-radius:10px;
+  line-height:1.6;
+}
+article ol > li::before{
+  content: counter(elab-step);
+  position:absolute; left:12px; top:10px;
+  width:24px; height:24px; border-radius:7px;
+  background:var(--elab-teal); color:#fff;
+  font-size:12.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Preguntas de evaluación numeradas: mismo trato que la guía */
+article h1 + p + ol > li::before,
+article ol.eval-list > li::before{
+  background:var(--elab-pink);
+}
+
+/* Separador visual */
+article hr{
+  border:none; height:2px;
+  background:linear-gradient(90deg, var(--elab-teal), var(--elab-amber));
+  margin:2.2rem 0;
+  border-radius:2px;
+}
+
+/* Comentario de "pega tu Genially" que quede visible como aviso, no oculto */
+article p:has(+ *:empty), article > *:empty{ display:none; }
 
