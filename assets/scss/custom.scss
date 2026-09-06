@@ -27,7 +27,7 @@
 .etapa-badge.evaluacion{ background:rgba(214,68,154,0.12); color:var(--elab-pink); }
 
 /* Tipografía general de contenido de lección */
-article h1{
+article h1, .content h1, main h1, h1{
   color:var(--elab-navy);
   font-weight:800;
   letter-spacing:-0.01em;
@@ -57,12 +57,15 @@ article b, article strong{
 
 /* Simuladores embebidos (PhET, Concord Consortium, heroes propios) */
 article iframe{
-  width:100%;
+  display:block;
+  max-width:100%;
   border:1px solid var(--elab-border) !important;
   border-radius:12px;
   box-shadow:0 10px 30px rgba(11,18,32,0.10);
-  margin:18px 0;
+  margin:22px auto;
 }
+article p + iframe, article iframe + p{ margin-top:22px; }
+article{ max-width:760px; }
 
 /* Guías paso a paso (listas numeradas) */
 article ol{
@@ -104,6 +107,25 @@ article hr{
   border-radius:2px;
 }
 
+/* Tarjeta de color por Aprendizaje (1 a 6) — franja superior + lateral sobre fondo blanco */
+.apr-theme{
+  background:#fff;
+  border:1px solid var(--elab-border);
+  border-radius:2px 8px 12px 2px;
+  padding:26px 30px;
+  margin-top:10px;
+  border-top-width:4px; border-top-style:solid;
+  border-left-width:4px; border-left-style:solid;
+}
+.apr-theme.apr-1{ border-top-color:#2563EB; border-left-color:#2563EB; }
+.apr-theme.apr-2{ border-top-color:#C99400; border-left-color:#C99400; }
+.apr-theme.apr-3{ border-top-color:#1BA394; border-left-color:#1BA394; }
+.apr-theme.apr-4{ border-top-color:#7C5CE0; border-left-color:#7C5CE0; }
+.apr-theme.apr-5{ border-top-color:#1F9D5A; border-left-color:#1F9D5A; }
+.apr-theme.apr-6{ border-top-color:#D6449A; border-left-color:#D6449A; }
+.apr-theme article ol > li, .apr-theme ol > li{ background:#F7FAFA; }
+
 /* Comentario de "pega tu Genially" que quede visible como aviso, no oculto */
 article p:has(+ *:empty), article > *:empty{ display:none; }
+
 
