@@ -3,8 +3,7 @@ title: "4 · Experimentación activa"
 weight: 4
 type: book
 ---
-
-
+<div class="apr-theme apr-5">
 <div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
 <div id="emlab-aviso-slot"></div>
 
@@ -29,3 +28,4 @@ En Genially, crea una simulación simplificada tipo 'circuito de agua' (analogí
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
+</div>

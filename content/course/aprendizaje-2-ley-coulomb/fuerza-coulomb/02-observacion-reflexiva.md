@@ -3,8 +3,7 @@ title: "2 · Observación reflexiva"
 weight: 2
 type: book
 ---
-
-
+<div class="apr-theme apr-2">
 <div class="etapa-badge obs-reflexiva"><span class="eb-icon">❓</span>Observación reflexiva</div>
 <div id="emlab-aviso-slot"></div>
 
@@ -18,3 +17,4 @@ Predice qué pasa con la fuerza si duplicas la distancia entre las cargas, y qu�
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
+</div>

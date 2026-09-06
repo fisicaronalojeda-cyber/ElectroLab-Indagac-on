@@ -3,8 +3,7 @@ title: "3 · Conceptualización abstracta"
 weight: 3
 type: book
 ---
-
-
+<div class="apr-theme apr-6">
 <div class="etapa-badge concept-abstracta"><span class="eb-icon">💡</span>Conceptualización abstracta</div>
 <div id="emlab-aviso-slot"></div>
 
@@ -12,3 +11,4 @@ En un <b>circuito en serie</b>, los elementos están conectados uno tras otro fo
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
+</div>

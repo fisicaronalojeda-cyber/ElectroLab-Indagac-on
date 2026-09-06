@@ -3,8 +3,7 @@ title: "2 · Observación reflexiva"
 weight: 2
 type: book
 ---
-
-
+<div class="apr-theme apr-4">
 <div class="etapa-badge obs-reflexiva"><span class="eb-icon">❓</span>Observación reflexiva</div>
 <div id="emlab-aviso-slot"></div>
 
@@ -18,3 +17,4 @@ Formula una hipótesis sobre qué significa moverse a lo largo de una de esas cu
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
+</div>
