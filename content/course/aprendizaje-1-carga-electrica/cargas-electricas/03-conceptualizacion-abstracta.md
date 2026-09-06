@@ -8,10 +8,12 @@ type: book
 <div class="etapa-badge concept-abstracta"><span class="eb-icon">💡</span>Conceptualización abstracta</div>
 <div id="emlab-aviso-slot"></div>
 
+
 Observa el siguiente video: toma nota de los aspectos más importantes. 
 
 
 <iframe width="470" height="404" src="https://edpuzzle.com/embed/media/6a9cad7c6e0af672a76dfed4" frameborder="0" allowfullscreen></iframe>
+
 
 
 
