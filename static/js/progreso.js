@@ -105,6 +105,36 @@
     root.innerHTML = html;
   }
 
-  window.addEventListener('DOMContentLoaded', function(){ initEtapaPage(); initProgresoPage(); });
-})();
+  function aprPct(slug){
+    var apr = null;
+    for (var i=0;i<MANIFEST.length;i++){ if (MANIFEST[i].slug === slug){ apr = MANIFEST[i]; break; } }
+    if (!apr) return 0;
+    var items = [];
+    apr.secuencias.forEach(function(s){ items = items.concat(s.etapas); });
+    return pct(items);
+  }
+  window.emlabAprPct = aprPct;
 
+  function initHomeBars(){
+    var nodes = document.querySelectorAll('[data-apr]');
+    if (!nodes.length) return;
+    nodes.forEach(function(node){
+      var slug = node.getAttribute('data-apr');
+      var p = aprPct(slug);
+      var fill = node.querySelector('.apr-bar-fill');
+      var label = node.querySelector('.apr-pct');
+      if (fill) fill.style.width = p + '%';
+      if (label) label.textContent = p + '%';
+      if (p === 100){ node.classList.add('is-complete'); }
+      else { node.classList.remove('is-complete'); }
+    });
+  }
+
+  function initAll(){ initEtapaPage(); initProgresoPage(); initHomeBars(); }
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+  window.addEventListener('load', initAll);
+})();
