@@ -15,8 +15,7 @@ Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y di
 
 ### Simulador alternativo: Fuerzas y campos electrostáticos (SimuFísica)
 
-<iframe src="https://simufisica.com/es/fuerzas-campos-electrostaticos/?modo=ppt&Lx=800&Ly=600" width="100%" height="650" style="border:none;" allow="fullscreen" allowfullscreen></iframe>
-
+<a href="https://simufisica.com/es/fuerzas-campos-electrostaticos/" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#1BA394;color:#fff;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin:10px 0;">▶ Abrir simulador: Fuerzas y campos electrostáticos</a>
 
 ### 4.1.2 Guía
 
