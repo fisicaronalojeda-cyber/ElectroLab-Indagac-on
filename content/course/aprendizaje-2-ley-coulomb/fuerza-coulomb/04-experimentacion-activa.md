@@ -13,6 +13,11 @@ Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y di
 
 <iframe src="https://phet.colorado.edu/es/simulations/coulombs-law" width="100%" height="480" style="border:none;"></iframe>
 
+### Simulador alternativo: Fuerzas y campos electrostáticos (SimuFísica)
+
+<iframe src="https://simufisica.com/es/fuerzas-campos-electrostaticos/" width="100%" height="550" style="border:none;"></iframe>
+
+
 ### 4.1.2 Guía
 
 1. Fija ambas cargas y varía solo la distancia en al menos 5 valores; registra la fuerza.
