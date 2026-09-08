@@ -61,6 +61,10 @@ taxonomies:
   author: authors
 markup:
   _merge: deep
+  goldmark:
+    extensions:
+      typographer:
+        disable: true
 related:
   threshold: 80
   includeNewer: true
