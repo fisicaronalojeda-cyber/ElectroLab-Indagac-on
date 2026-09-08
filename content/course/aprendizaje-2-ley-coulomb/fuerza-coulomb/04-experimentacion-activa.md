@@ -11,7 +11,7 @@ type: book
 
 Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y distancia de forma controlada.
 
-<iframe src="https://phet.colorado.edu/es/simulations/coulombs-law" width="100%" height="480" style="border:none;"></iframe>
+<iframe src="https://phet.colorado.edu/sims/html/coulombs-law/latest/coulombs-law_es.html" width="100%" height="480" style="border:none;"></iframe>
 
 ### Simulador alternativo: Fuerzas y campos electrostáticos (SimuFísica)
 
