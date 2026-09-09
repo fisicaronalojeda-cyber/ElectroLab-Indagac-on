@@ -1,1 +1,18 @@
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7CqxKSqPzumLNTDzGvLP2iVqmHJ8hifc",
+    authDomain: "em-lab-fisica-ronald.firebaseapp.com",
+    projectId: "em-lab-fisica-ronald",
+    storageBucket: "em-lab-fisica-ronald.firebasestorage.app",
+    messagingSenderId: "692250974747",
+    appId: "1:692250974747:web:98a40ed8b938f4daf436be"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.emlabAuth = getAuth(app);
+  window.emlabDB = getFirestore(app);
+</script>
