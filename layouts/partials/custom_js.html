@@ -16,6 +16,7 @@
   window.emlabAuth = getAuth(app);
   window.emlabDB = getFirestore(app);
 </script>
+
 <style>
   #emlab-auth-widget {
     position: fixed;
@@ -75,3 +76,78 @@
   #emlab-modal button { margin-top: 8px; width: 100%; }
   #emlab-error { color: red; font-size: 12px; min-height: 16px; }
 </style>
+
+<div id="emlab-auth-widget"></div>
+
+<div id="emlab-modal-bg">
+  <div id="emlab-modal">
+    <h4 id="emlab-modal-title">Ingresar</h4>
+    <input id="emlab-email" type="email" placeholder="Correo">
+    <input id="emlab-pass" type="password" placeholder="Contraseña">
+    <div id="emlab-error"></div>
+    <button onclick="emlabDoAuth()" id="emlab-submit-btn">Ingresar</button>
+    <p style="font-size:12px;text-align:center;margin-top:8px;">
+      <a href="#" onclick="emlabToggleMode(event)" id="emlab-toggle-link">¿No tienes cuenta? Regístrate</a>
+    </p>
+    <p style="text-align:center;"><a href="#" onclick="emlabCloseModal(event)">Cerrar</a></p>
+  </div>
+</div>
+
+<script type="module">
+  import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+  let modoRegistro = false;
+
+  window.emlabOpenModal = function(registro){
+    modoRegistro = registro;
+    document.getElementById('emlab-modal-title').textContent = registro ? 'Crear cuenta' : 'Ingresar';
+    document.getElementById('emlab-submit-btn').textContent = registro ? 'Crear cuenta' : 'Ingresar';
+    document.getElementById('emlab-toggle-link').textContent = registro ? '¿Ya tienes cuenta? Ingresa' : '¿No tienes cuenta? Regístrate';
+    document.getElementById('emlab-error').textContent = '';
+    document.getElementById('emlab-modal-bg').style.display = 'flex';
+  };
+  window.emlabCloseModal = function(e){ e.preventDefault(); document.getElementById('emlab-modal-bg').style.display = 'none'; };
+  window.emlabToggleMode = function(e){ e.preventDefault(); window.emlabOpenModal(!modoRegistro); };
+
+  window.emlabDoAuth = function(){
+    const email = document.getElementById('emlab-email').value.trim();
+    const pass = document.getElementById('emlab-pass').value;
+    const errorBox = document.getElementById('emlab-error');
+    errorBox.textContent = '';
+    const accion = modoRegistro
+      ? createUserWithEmailAndPassword(window.emlabAuth, email, pass)
+      : signInWithEmailAndPassword(window.emlabAuth, email, pass);
+    accion
+      .then(() => { document.getElementById('emlab-modal-bg').style.display = 'none'; })
+      .catch((err) => { errorBox.textContent = emlabTraducirError(err.code); });
+  };
+
+  window.emlabLogout = function(){ signOut(window.emlabAuth); };
+
+  function emlabTraducirError(code){
+    const mapa = {
+      'auth/invalid-email': 'Correo inválido.',
+      'auth/email-already-in-use': 'Ese correo ya tiene una cuenta.',
+      'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+      'auth/invalid-credential': 'Correo o contraseña incorrectos.',
+      'auth/missing-password': 'Escribe una contraseña.'
+    };
+    return mapa[code] || 'Ocurrió un error, intenta de nuevo.';
+  }
+
+  function pintarWidget(user){
+    const cont = document.getElementById('emlab-auth-widget');
+    if (user){
+      cont.innerHTML = '<span>' + user.email + '</span>' +
+        '<button onclick="emlabLogout()">Cerrar sesión</button>';
+    } else {
+      cont.innerHTML = '<button onclick="emlabOpenModal(false)">Ingresar</button>';
+    }
+  }
+
+  onAuthStateChanged(window.emlabAuth, function(user){
+    pintarWidget(user);
+    window.dispatchEvent(new CustomEvent('emlab-auth-cambio', { detail: { user: user } }));
+  });
+</script>
