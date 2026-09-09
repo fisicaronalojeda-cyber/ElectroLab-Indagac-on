@@ -1,28 +1,35 @@
 /* ===== EM·LAB — estilos globales para páginas de lección ===== */
 .docs-sidebar {
-  background-color: #1c1f26;
+  background-color: #1c1f26 !important;
   padding: 1rem 0.5rem;
   border-radius: 6px;
 
-  .docs-toc-link,
-  .nav.docs-sidenav > li > a {
-    color: rgba(255, 255, 255, 0.75);
+  a {
+    color: rgba(255, 255, 255, 0.75) !important;
     border-radius: 4px;
     display: block;
     transition: background-color .2s ease, color .2s ease;
   }
 
-  .docs-toc-link:hover,
-  .nav.docs-sidenav > li > a:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
   }
 
-  // Etapa actual
-  li.active > a {
-    background-color: #0072ff;
+  // Etapa/sección activa (resuelve el resaltado azul que faltaba)
+  li.active > a,
+  .docs-toc-link.active {
+    background-color: #0072ff !important;
     color: #ffffff !important;
     font-weight: 600;
   }
 }
 
+// Ocultar el índice de contenidos vacío (columna derecha) y aprovechar el espacio
+.docs-toc {
+  display: none !important;
+}
+.docs-content {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+}
