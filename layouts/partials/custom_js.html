@@ -18,37 +18,35 @@
 </script>
 
 <style>
-  #emlab-auth-widget {
-    position: fixed;
-    top: 0;
-    right: 90px;
-    height: 60px;
+  #emlab-nav-item {
     display: flex;
     align-items: center;
-    z-index: 1030;
-    font-family: inherit;
+    margin-right: 8px;
+  }
+  #emlab-auth-widget-inner {
+    display: flex;
+    align-items: center;
     font-size: 14px;
+    white-space: nowrap;
   }
-  #emlab-auth-widget span {
-    margin-right: 10px;
-    font-weight: 500;
+  #emlab-auth-widget-inner span {
+    margin-right: 8px;
   }
-  #emlab-auth-widget button {
+  #emlab-auth-widget-inner button {
     background: transparent;
     color: inherit;
     border: 1.5px solid currentColor;
-    padding: 5px 12px;
+    padding: 4px 12px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 13px;
     white-space: nowrap;
   }
-  #emlab-auth-widget button:hover {
+  #emlab-auth-widget-inner button:hover {
     background: rgba(0,0,0,0.08);
   }
-  @media (max-width: 768px) {
-    #emlab-auth-widget { right: 60px; font-size: 12px; }
-    #emlab-auth-widget span { display: none; }
+  @media (max-width: 576px) {
+    #emlab-auth-widget-inner span { display: none; }
   }
   #emlab-modal-bg {
     display: none;
@@ -77,8 +75,6 @@
   #emlab-error { color: red; font-size: 12px; min-height: 16px; }
 </style>
 
-<div id="emlab-auth-widget"></div>
-
 <div id="emlab-modal-bg">
   <div id="emlab-modal">
     <h4 id="emlab-modal-title">Ingresar</h4>
@@ -98,6 +94,23 @@
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
   let modoRegistro = false;
+
+  function emlabMontarWidget(){
+    if (document.getElementById('emlab-nav-item')) return true;
+    const ul = document.querySelector('ul.nav-icons');
+    if (!ul) return false;
+    const li = document.createElement('li');
+    li.className = 'nav-item';
+    li.id = 'emlab-nav-item';
+    li.innerHTML = '<span id="emlab-auth-widget-inner"></span>';
+    ul.insertBefore(li, ul.firstChild);
+    return true;
+  }
+
+  function emlabAsegurarWidget(intentos){
+    if (emlabMontarWidget()) { pintarWidget(window.emlabAuth.currentUser); return; }
+    if (intentos > 0) setTimeout(function(){ emlabAsegurarWidget(intentos - 1); }, 200);
+  }
 
   window.emlabOpenModal = function(registro){
     modoRegistro = registro;
@@ -137,7 +150,8 @@
   }
 
   function pintarWidget(user){
-    const cont = document.getElementById('emlab-auth-widget');
+    const cont = document.getElementById('emlab-auth-widget-inner');
+    if (!cont) return;
     if (user){
       cont.innerHTML = '<span>' + user.email + '</span>' +
         '<button onclick="emlabLogout()">Cerrar sesión</button>';
@@ -147,6 +161,7 @@
   }
 
   onAuthStateChanged(window.emlabAuth, function(user){
+    emlabAsegurarWidget(15);
     pintarWidget(user);
     window.dispatchEvent(new CustomEvent('emlab-auth-cambio', { detail: { user: user } }));
   });
