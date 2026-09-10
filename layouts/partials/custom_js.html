@@ -92,8 +92,26 @@
 <script type="module">
   import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+  import { doc, getDoc, setDoc }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
   let modoRegistro = false;
+  window.emlabAuthUser = undefined; // undefined = aún no se sabe, null = sin sesión, objeto = con sesión
+
+  window.emlabGuardarProgresoNube = function(progresoObj){
+    if (!window.emlabAuthUser) return Promise.resolve();
+    return setDoc(doc(window.emlabDB, 'usuarios', window.emlabAuthUser.uid), {
+      progreso: progresoObj,
+      actualizado: Date.now()
+    }, { merge: true }).catch(function(err){ console.warn('No se pudo guardar en la nube:', err); });
+  };
+
+  window.emlabLeerProgresoNube = function(){
+    if (!window.emlabAuthUser) return Promise.resolve({});
+    return getDoc(doc(window.emlabDB, 'usuarios', window.emlabAuthUser.uid)).then(function(snap){
+      return snap.exists() ? (snap.data().progreso || {}) : {};
+    }).catch(function(){ return {}; });
+  };
 
   function emlabMontarWidget(){
     if (document.getElementById('emlab-nav-item')) return true;
@@ -108,7 +126,7 @@
   }
 
   function emlabAsegurarWidget(intentos){
-    if (emlabMontarWidget()) { pintarWidget(window.emlabAuth.currentUser); return; }
+    if (emlabMontarWidget()) { pintarWidget(window.emlabAuthUser); return; }
     if (intentos > 0) setTimeout(function(){ emlabAsegurarWidget(intentos - 1); }, 200);
   }
 
@@ -161,6 +179,7 @@
   }
 
   onAuthStateChanged(window.emlabAuth, function(user){
+    window.emlabAuthUser = user || null;
     emlabAsegurarWidget(15);
     pintarWidget(user);
     window.dispatchEvent(new CustomEvent('emlab-auth-cambio', { detail: { user: user } }));
