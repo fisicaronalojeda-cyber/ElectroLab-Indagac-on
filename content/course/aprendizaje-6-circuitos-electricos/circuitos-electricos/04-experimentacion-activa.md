@@ -23,7 +23,7 @@ Usa el Kit de construcción de circuitos (laboratorio virtual) de PhET para arma
 ## 4.2 Actividad interactiva
 
 Revisa la siguiente animación:
-<iframe src="/sims/circuito-electrico-simple.html" width="100%" height="650" style="border:none;border-radius:12px;"></iframe> 
+<iframe src="/circuito-electrico-simple.html" width="100%" height="650" style="border:none;border-radius:12px;"></iframe>
 
 En Genially, diseña un diagrama interactivo donde el estudiante deba identificar si un circuito dado está en serie, en paralelo, o es mixto.
 
