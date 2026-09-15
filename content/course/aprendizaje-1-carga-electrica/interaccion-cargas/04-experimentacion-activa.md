@@ -23,7 +23,7 @@ Usa el hero interactivo de arreglos de cargas puntuales para experimentar librem
 ## 4.2 Actividad interactiva
 
 Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
-<iframe style="overflow-y: hidden;" src="https://javalab.org/en/electroscope_en/" width="100%" height="500" scrolling="no" sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen"></iframe> 
+<iframe style="overflow-y: hidden;" src="https://javalab.org/en/electroscope_en/" width="100%" height="800" scrolling="si" sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen"></iframe> 
 <!-- Pega aquí tu iframe de Genially -->
 
 <div id="emlab-boton-slot"></div>
