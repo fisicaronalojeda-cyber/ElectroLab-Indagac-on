@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Circuito eléctrico — EM·LAB</title>
+<title>Circuito eléctrico — EM·LAB-Ronald</title>
 <style>
   :root{
     --bg: #0F1620;
@@ -539,7 +539,7 @@
 
     if (closed && !reduceMotion){
       var v = getVals();
-      var speedFor = { a: 30 + v.i1 * 220, b: 30 + v.i2 * 220 };
+      var speedFor = { a: 50 + v.i1 * 440, b: 50 + v.i2 * 440 };
       var branches = dotSets[topo] || {};
       Object.keys(branches).forEach(function(branch){
         var speed = speedFor[branch] !== undefined ? speedFor[branch] : (30 + v.iTotal * 220);
