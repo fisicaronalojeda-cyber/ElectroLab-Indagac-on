@@ -61,12 +61,12 @@ Interacción de un chorro de agua con un objeto cargado.
   var CROP_HEIGHT = 790;  // hasta dónde llega, incluyendo los controles "Charged with (+)/(-)"
   var PAGE_HEIGHT = 1600; // alto que cargamos del iframe (de sobra para cubrir la zona)
   var wrap = document.getElementById('emlab-javalab- polarity_of_water');
-function render(){
+ function render(){
     var w = wrap.offsetWidth;
     var scale = w / CROP_WIDTH;
     wrap.style.height = (CROP_HEIGHT * scale) + 'px';
     wrap.innerHTML =
-      '<iframe src=" ¿Y si la molécula de agua tiene una estructura recta? - Javalab /" scrolling="no" ' +
+      '<iframe src="https://javalab.org/en/polarity_of_water_en/" scrolling="no" ' +
       'sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen" ' +
       'style="position:absolute; top:' + (-CROP_TOP * scale) + 'px; left:' + (-CROP_LEFT * scale) + 'px; ' +
       'width:' + REF_WIDTH + 'px; height:' + PAGE_HEIGHT + 'px; border:none; ' +
@@ -76,7 +76,6 @@ function render(){
   window.addEventListener('resize', render);
 })();
 </script>
-
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
