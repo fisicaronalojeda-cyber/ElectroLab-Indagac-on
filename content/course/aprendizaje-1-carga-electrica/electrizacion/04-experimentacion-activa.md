@@ -32,7 +32,7 @@ La inducción electrostática es una redistribución de la carga eléctrica en u
 (function(){
   var REF_WIDTH = 1905;   // ancho de referencia donde medimos la página de Javalab
   var CROP_LEFT = 0;
-  var CROP_WIDTH = 1230;  // ancho de la zona útil (sin el panel de la derecha con el QR y los grados)
+  var CROP_WIDTH = 1240;  // ancho de la zona útil (sin el panel de la derecha con el QR y los grados)
   var CROP_TOP = 260;     // dónde empieza la simulación (ya sin el menú de arriba)
   var CROP_HEIGHT = 790;  // hasta dónde llega, incluyendo los controles "Charged with (+)/(-)"
   var PAGE_HEIGHT = 1600; // alto que cargamos del iframe (de sobra para cubrir la zona)
