@@ -23,11 +23,33 @@ Usa el hero interactivo de arreglos de cargas puntuales para experimentar librem
 ## 4.2 Actividad interactiva
 
 Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
-<div style="width: 100%; max-width: 950px; height: 200px; overflow: hidden; position: relative;">
-  <iframe src="https://javalab.org/en/electroscope_en/" 
-          style="width: 100%; height: 750px; border: none; position: absolute; top: -120px; left: 0;">
-  </iframe>
-</div>
+<div id="emlab-javalab-electroscope" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
+<script>
+(function(){
+  var REF_WIDTH = 1905;   // ancho de referencia donde medimos la página de Javalab
+  var CROP_LEFT = 0;
+  var CROP_WIDTH = 1230;  // ancho de la zona útil (sin el panel de la derecha con el QR y los grados)
+  var CROP_TOP = 260;     // dónde empieza la simulación (ya sin el menú de arriba)
+  var CROP_HEIGHT = 790;  // hasta dónde llega, incluyendo los controles "Charged with (+)/(-)"
+  var PAGE_HEIGHT = 1600; // alto que cargamos del iframe (de sobra para cubrir la zona)
+
+  var wrap = document.getElementById('emlab-javalab-electroscope');
+
+  function render(){
+    var w = wrap.offsetWidth;
+    var scale = w / CROP_WIDTH;
+    wrap.style.height = (CROP_HEIGHT * scale) + 'px';
+    wrap.innerHTML =
+      '<iframe src="https://javalab.org/en/electroscope_en/" scrolling="no" ' +
+      'sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen" ' +
+      'style="position:absolute; top:' + (-CROP_TOP * scale) + 'px; left:' + (-CROP_LEFT * scale) + 'px; ' +
+      'width:' + REF_WIDTH + 'px; height:' + PAGE_HEIGHT + 'px; border:none; ' +
+      'transform:scale(' + scale + '); transform-origin: top left;"></iframe>';
+  }
+  render();
+  window.addEventListener('resize', render);
+})();
+</script>
 
 <!-- Pega aquí tu iframe de Genially -->
 
