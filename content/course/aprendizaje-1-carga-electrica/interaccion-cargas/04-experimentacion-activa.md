@@ -32,9 +32,7 @@ Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba cl
   var CROP_TOP = 260;     // dónde empieza la simulación (ya sin el menú de arriba)
   var CROP_HEIGHT = 790;  // hasta dónde llega, incluyendo los controles "Charged with (+)/(-)"
   var PAGE_HEIGHT = 1600; // alto que cargamos del iframe (de sobra para cubrir la zona)
-
   var wrap = document.getElementById('emlab-javalab-electroscope');
-
   function render(){
     var w = wrap.offsetWidth;
     var scale = w / CROP_WIDTH;
