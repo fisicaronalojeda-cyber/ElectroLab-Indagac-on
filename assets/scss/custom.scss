@@ -35,12 +35,12 @@
   margin: 0 auto !important;
 }
 
-.navbar {
+#navbar-main {
   background-color: #0b1220 !important;
   box-shadow: none !important;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
 }
-.navbar .nav-link,
-.navbar-brand {
+#navbar-main .nav-link,
+#navbar-main .navbar-brand {
   color: #ffffff !important;
 }
