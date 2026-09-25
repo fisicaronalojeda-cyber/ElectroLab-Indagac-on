@@ -30,7 +30,11 @@
   display: none !important;
 }
 .docs-content {
-     flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
+  max-width: 960px !important;
+  margin: 0 auto !important;
+}
+
 .navbar {
   background-color: #0b1220 !important;
   box-shadow: none !important;
@@ -40,9 +44,3 @@
 .navbar-brand {
   color: #ffffff !important;
 }
-
-
-  
-     max-width: 960px !important;
-     margin: 0 auto !important;
-   }
