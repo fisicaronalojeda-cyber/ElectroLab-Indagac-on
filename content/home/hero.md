@@ -99,7 +99,7 @@ design:
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow"><span class="dot"></span>FÍSICA · SECUNDARIA</div>
-      <h1>Electrostática y electricidad<br><span class="accent">laboratorio de indagación</span></h1>
+      <h1>Electrostática y Electricidad<br><span class="accent">Laboratorio de Indagación</span></h1>
       <p class="lead">6 aprendizajes, cada uno con su propia ruta de indagación: observa, pregúntate, formula hipótesis, experimenta con simuladores reales y evalúa lo que descubriste.</p>
       <div class="cta-row">
         <a class="elab-btn elab-btn-primary" href="#aprendizajes">Ver los 6 aprendizajes</a>
@@ -215,7 +215,7 @@ design:
 
 <div style="border-top:1px solid var(--border); padding:22px 0; text-align:center;">
   <p style="margin:0 0 4px; font-size:13px; font-weight:700; letter-spacing:0.03em; color:var(--text);">COLEGIO EL PARAÍSO DE MANUELA BELTRÁN</p>
-  <p style="margin:0; font-size:12px; color:var(--text-soft);">"Página Web" creada por Ronald Steven Ojeda Peña</p>
+  <p style="margin:0; font-size:12px; color:var(--text-soft);">Espacio creado por Ronald Steven Ojeda Peña para mejorar tu aprendizaje de la Física</p>
 </div>
 </div>
 <script src="/js/progreso.js?v=2"></script>
