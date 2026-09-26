@@ -16,7 +16,7 @@ content:
   filter_default: 0
 
   filter_button:
-    - name: All Courses
+    - name: Todos los cursos
       tag: '*'
     - name: Previous
       tag: previous
