@@ -65,12 +65,12 @@ body {
   border-top: 3px solid #2dd4bf;
   border-radius: 0 0 10px 10px;
 }
-.docs-content h1,
-.docs-content h2,
-.docs-content h3,
-.docs-content h4 {
-  color: #ffffff !important;
-}
 .docs-content a {
   color: #5eead4 !important;
+}
+.docs-content h1, .docs-content h1 a,
+.docs-content h2, .docs-content h2 a,
+.docs-content h3, .docs-content h3 a,
+.docs-content h4, .docs-content h4 a {
+  color: #ffffff !important;
 }
