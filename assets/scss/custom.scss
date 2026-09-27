@@ -115,3 +115,10 @@ body time {
 .article-title a {
   color: #ffffff !important;
 }
+/* ===== Acento de color por Aprendizaje, según la URL ===== */
+.apr-blue .docs-content, .apr-blue .article-style   { border-top: 3px solid #60A5FA !important; }
+.apr-amber .docs-content, .apr-amber .article-style { border-top: 3px solid #F5B700 !important; }
+.apr-teal .docs-content, .apr-teal .article-style   { border-top: 3px solid #2DD4BF !important; }
+.apr-violet .docs-content, .apr-violet .article-style { border-top: 3px solid #A78BFA !important; }
+.apr-green .docs-content, .apr-green .article-style { border-top: 3px solid #34D399 !important; }
+.apr-pink .docs-content, .apr-pink .article-style   { border-top: 3px solid #F472B6 !important; }
