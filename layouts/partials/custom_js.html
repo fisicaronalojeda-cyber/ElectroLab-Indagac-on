@@ -185,3 +185,22 @@
     window.dispatchEvent(new CustomEvent('emlab-auth-cambio', { detail: { user: user } }));
   });
 </script>
+<script>
+(function () {
+  var path = window.location.pathname;
+  var mapa = {
+    'aprendizaje-1-carga-electrica': 'apr-blue',
+    'aprendizaje-2-ley-coulomb': 'apr-amber',
+    'aprendizaje-3-campo-electrico': 'apr-teal',
+    'aprendizaje-4-potencial-electrico': 'apr-violet',
+    'aprendizaje-5-magnitudes-electricas': 'apr-green',
+    'aprendizaje-6-circuitos-electricos': 'apr-pink',
+  };
+  for (var clave in mapa) {
+    if (path.indexOf(clave) !== -1) {
+      document.body.classList.add(mapa[clave]);
+      break;
+    }
+  }
+})();
+</script>
