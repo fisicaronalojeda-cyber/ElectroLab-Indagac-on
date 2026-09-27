@@ -99,3 +99,15 @@ body {
 .article-style time {
   color: #94a3b8 !important;
 }
+/* ===== Títulos y texto secundario en TODO el sitio (regla global, evita repetir por plantilla) ===== */
+body h1, body h1 a,
+body h2, body h2 a,
+body h3, body h3 a,
+body h4, body h4 a {
+  color: #ffffff !important;
+}
+body .text-muted,
+body small,
+body time {
+  color: #94a3b8 !important;
+}
