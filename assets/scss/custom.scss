@@ -54,3 +54,23 @@
 #emlab-auth-widget-inner:hover {
   background-color: rgba(245, 185, 66, 0.15) !important;
 }
+/* ===== Fondo gris-azulado en el contenido de lección ===== */
+body {
+  background-color: #0b1220 !important;
+}
+.docs-content {
+  background-color: #334155 !important;
+  color: #dbe2ea !important;
+  padding: 20px 22px !important;
+  border-top: 3px solid #2dd4bf;
+  border-radius: 0 0 10px 10px;
+}
+.docs-content h1,
+.docs-content h2,
+.docs-content h3,
+.docs-content h4 {
+  color: #ffffff !important;
+}
+.docs-content a {
+  color: #5eead4 !important;
+}
