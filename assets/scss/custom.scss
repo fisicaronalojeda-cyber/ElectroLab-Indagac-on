@@ -74,3 +74,23 @@ body {
 .docs-content h4, .docs-content h4 a {
   color: #ffffff !important;
 }
+/* ===== Páginas de Aprendizaje/Curso (plantilla "article-style") ===== */
+.universal-wrapper.pt-3 h1 {
+  color: #ffffff !important;
+}
+.article-style {
+  background-color: #334155 !important;
+  color: #dbe2ea !important;
+  padding: 20px 22px !important;
+  border-top: 3px solid #2dd4bf;
+  border-radius: 0 0 10px 10px;
+}
+.article-style a {
+  color: #5eead4 !important;
+}
+.article-style h1, .article-style h1 a,
+.article-style h2, .article-style h2 a,
+.article-style h3, .article-style h3 a,
+.article-style h4, .article-style h4 a {
+  color: #ffffff !important;
+}
