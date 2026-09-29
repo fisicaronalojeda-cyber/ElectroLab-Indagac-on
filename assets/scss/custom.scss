@@ -122,3 +122,9 @@ body time {
 .apr-violet .docs-content, .apr-violet .article-style { border-top: 3px solid #A78BFA !important; }
 .apr-green .docs-content, .apr-green .article-style { border-top: 3px solid #34D399 !important; }
 .apr-pink .docs-content, .apr-pink .article-style   { border-top: 3px solid #F472B6 !important; }
+
+.sim-wrap { position: relative; width: 100%; max-width: 960px; margin: 0 auto; aspect-ratio: 16/10; min-height: 520px; }
+.sim-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+@media (max-width: 700px) {
+  .sim-wrap { aspect-ratio: auto; height: 75vh; min-height: 420px; }
+}
