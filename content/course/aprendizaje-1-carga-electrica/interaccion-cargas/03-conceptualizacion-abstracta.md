@@ -23,7 +23,7 @@ Cargas del mismo signo (positiva-positiva o negativa-negativa) se repelen; carga
           height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web
           share" allowFullScreen="true"></iframe>
     </div>
-    <p class="video-credit">Video: 1Volt1Amp (usado con autorización del autor)</p>
+  <p class="video-credit">Video: 1Volt1Amp (usado con autorización del autor)</p>
     <p><strong>Piensa y responde:</strong></p>
     <ol>
       <li>¿Qué observas en el video?</li>
