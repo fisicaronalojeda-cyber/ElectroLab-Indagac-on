@@ -137,8 +137,8 @@ video-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:24px; mar
 @media (max-width:700px) { .video-grid .video-frame { float:none !important; margin:0 auto 12px !important; } }
 .video-card { flex:0 0 299px !important; width:299px !important; max-width:100% !important; box-sizing:border-box !important; background:#1e293b; border-radius:12px; padding:16px; }
 .video-card h4 { color:#fff; text-align:center; margin:0 0 12px; font-size:1.1rem; }
-.video-frame { position:relative !important; width:267px !important; max-width:100% !important; height:476px !important; padding-top:0 !important; margin:0 auto; }
-.video-frame iframe { position:static !important; width:267px !important; height:476px !important; max-width:100%; border:0; }
+.video-frame { position:relative !important; width:300px !important; max-width:100% !important; height:533px !important; padding-top:0 !important; margin:0 auto; }
+.video-frame iframe { position:static !important; width:300px !important; height:533px !important; max-width:100%; border:0; }
 .video-credit { font-size:.85rem; color:#cbd5e1; text-align:center; margin:8px 0 12px; }
 .video-card ol, .video-card p { color:#e2e8f0; }
 .video-card table { width:100%; border-collapse:collapse; color:#e2e8f0; font-size:.9rem; }
