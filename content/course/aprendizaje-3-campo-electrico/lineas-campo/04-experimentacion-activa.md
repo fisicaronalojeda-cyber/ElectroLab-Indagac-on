@@ -44,20 +44,18 @@ Observa la simulación y realiza lo siguiente:
 En esta simulación puedes visualizar las líneas de campo Magnético, como lo que observaste en la practica, de tal manera que puedas relacionar la forma de representar las lineas de 
 campo magnético de forma analoga o similar a las líneas de campo generadas por las cargas eléctricas.  
 
-<iframe src="https://aulaquest.com/s/fisica/magnetismo/index.php"
- width="100%"
- height="560"
- style="border: 1px solid #ccc; border-radius: 8px;"
- allowfullscreen
- title="Simulador de Imán y Electroimán"></iframe>
+<div class="sim-wrap" data-w="1400" data-h="780" data-left="0">
+  <iframe src="https://aulaquest.com/s/fisica/magnetismo/index.php" title="Aulaquest Magnet Lab Pro" scrolling="no" allowfullscreen loading="lazy"></iframe>
+</div>
+<p class="video-credit">Simulación: Aulaquest · <a href="https://aulaquest.com/s/fisica/magnetismo/index.php" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
 En este caso pueden realizar la siguiente experiencia con el simulador:
 1. Modificar la posición de la brújula, mueve alrededor del imán, ¿Qué Observas?
 2. En las capas de visualización, activa líneas de campo (Flujo) ¿Qué relación existe entre estas líneas de campo magnético y las líneas de campo eléctrica?
 3. Quita los mini imanes (limaduras de hierro) y activa rayos X interior. ¿Cómo son las líneas de campo magnético en el interior del imán?
 4. Activa el botón romper imán.
-   4.1 Recrea dos situaciones, cuando dos polos opuestos estan enfrentados y cuando dos polos iguales estan enfrentados, visualiza las lineas de campo.
-   4.2 ¿Que relación puedes encontrar entre las líneas de campo magnético y las líneas de campo eléctrico?
+5. Recrea dos situaciones, cuando dos polos opuestos estan enfrentados y cuando dos polos iguales estan enfrentados, visualiza las lineas de campo.
+6. ¿Que relación puedes encontrar entre las líneas de campo magnético y las líneas de campo eléctrico?
 
 <!-- Pega aquí tu iframe de Genially -->
 
