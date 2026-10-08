@@ -86,14 +86,14 @@ Objeto cargado cerca a un metal.
 <p class="video-credit">Recurso del Concord Consortium, con licencia CC BY-NC 4.0 (<a href="https://concord.org" target="_blank" rel="noopener">https://concord.org</a>)</p>
 <!-- Pega aquí tu iframe de Genially -->
 NI IDEA
-<iframe style="overflow-y: hidden;" src="https://javalab.org/gear/" width="800px" height="500px" scrolling="no" sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen">
+<iframe style="overflow-y: hidden;" src="https://javalab.org/en/electroscope_en/" title="Electroscopio" width="800px" height="500px" scrolling="no" sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen">
 </iframe>
-
+<p class="video-credit">Simulación: Javalab,Java Lab, https://javalab.org · <a href="https://javalab.org/en/electroscope_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 ELECTRO
 <div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
   <iframe src="https://javalab.org/en/electroscope_en/" title="Electroscopio"></iframe>
 </div>
-<p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/electroscope_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
+<p class="video-credit">Simulación: Javalab,Java Lab, https://javalab.org · <a href="https://javalab.org/en/electroscope_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
 LATA
 <div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
