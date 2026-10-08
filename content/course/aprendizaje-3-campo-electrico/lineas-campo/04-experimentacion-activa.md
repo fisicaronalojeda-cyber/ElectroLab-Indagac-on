@@ -45,8 +45,9 @@ En esta simulación puedes visualizar las líneas de campo Magnético, como lo q
 campo magnético de forma analoga o similar a las líneas de campo generadas por las cargas eléctricas.  
 
 <div class="sim-wrap" data-w="1300" data-h="620" data-left="110">
-  <iframe src="URL_DE_JAVALAB" title="Líneas de campo eléctrico"></iframe>
+  <iframe src="https://javalab.org/en/electric_field_line_en/" title="Líneas de campo eléctrico"></iframe>
 </div>
+<p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/electric_field_line_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
 
 
@@ -67,4 +68,5 @@ En este caso pueden realizar la siguiente experiencia con el simulador:
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
+<script src="/js/sim-fit.js"></script>
 </div>
