@@ -80,7 +80,10 @@ Objeto cargado cerca a un metal.
 })();
 </script>
 
-<iframe width="840px" height="492px" frameborder="no" scrolling="no" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" src="https://lab.concord.org/embeddable-production.html#interactives/itsi/electrostatics/electrostatics-3-pithball.json"></iframe>
+<div class="sim-wrap" data-w="840" data-h="492">
+  <iframe src="https://lab.concord.org/embeddable-production.html#interactives/itsi/electrostatics/electrostatics-3-pithball.json" title="Bola de médula: electrostática"></iframe>
+</div>
+<p class="video-credit">Recurso del Concord Consortium, con licencia CC BY-NC 4.0 (<a href="https://concord.org" target="_blank" rel="noopener">https://concord.org</a>)</p>
 <!-- Pega aquí tu iframe de Genially -->
 
 <div id="emlab-boton-slot"></div>
