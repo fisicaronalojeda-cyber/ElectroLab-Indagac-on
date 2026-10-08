@@ -28,8 +28,8 @@ En Genially, crea una actividad de 'arrastrar la línea correcta' donde el estud
 
 En esta simulación puedes incluir cargas eléctricas y visualizar las lineas de campo : 
 
-<div class="sim-wrap" data-w="1100" data-h="700" data-left="0">
-  <iframe src="https://simufisica.com/es/fuerzas-campos-electrostaticos/" title="Fuerzas y campos electrostáticos" scrolling="no" allowfullscreen loading="lazy"></iframe>
+<div class="sim-wrap">
+  <iframe src="https://simufisica.com/es/fuerzas-campos-electrostaticos/" title="Fuerzas y campos electrostáticos"></iframe>
 </div>
 <p class="video-credit">Simulación: Marco P. M. de Souza, SimuFísica · <a href="https://simufisica.com/es/fuerzas-campos-electrostaticos/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
@@ -44,8 +44,14 @@ Observa la simulación y realiza lo siguiente:
 En esta simulación puedes visualizar las líneas de campo Magnético, como lo que observaste en la practica, de tal manera que puedas relacionar la forma de representar las lineas de 
 campo magnético de forma analoga o similar a las líneas de campo generadas por las cargas eléctricas.  
 
-<div class="sim-wrap" data-w="1400" data-h="780" data-left="0">
-  <iframe src="https://aulaquest.com/s/fisica/magnetismo/index.php" title="Aulaquest Magnet Lab Pro" scrolling="no" allowfullscreen loading="lazy"></iframe>
+<div class="sim-wrap" data-w="1300" data-h="620" data-left="110">
+  <iframe src="URL_DE_JAVALAB" title="Líneas de campo eléctrico"></iframe>
+</div>
+
+
+
+<div class="sim-wrap" data-w="1440" data-h="860">
+  <iframe src="https://aulaquest.com/s/fisica/magnetismo/index.php" title="Aulaquest Magnet Lab Pro"></iframe>
 </div>
 <p class="video-credit">Simulación: Aulaquest · <a href="https://aulaquest.com/s/fisica/magnetismo/index.php" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
