@@ -49,6 +49,12 @@ Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba cl
 })();
 </script>
 
+## ELECTROSCOPIO EN 3D
+
+<div class="sketchfab-embed-wrapper"> <iframe title="Gold Leaf Electroscope" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/1d7ce32ae2ff4c1496ec280ea00eff8a/embed"> </iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/3d-models/gold-leaf-electroscope-1d7ce32ae2ff4c1496ec280ea00eff8a" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Gold Leaf Electroscope </a> by <a href="https://sketchfab.com/vishnu27990" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> vishnu </a> on <a href="https://sketchfab.com" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div> 
+
+
+
 <!-- Pega aquí tu iframe de Genially -->
 Interacción de un chorro de agua con un objeto cargado. 
 <div id="emlab-javalab- polarity_of_water" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
