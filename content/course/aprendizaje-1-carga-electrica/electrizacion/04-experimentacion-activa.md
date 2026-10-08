@@ -80,6 +80,7 @@ Objeto cargado cerca a un metal.
 })();
 </script>
 
+<iframe width="840px" height="492px" frameborder="no" scrolling="no" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" src="https://lab.concord.org/embeddable-production.html#interactives/itsi/electrostatics/electrostatics-3-pithball.json"></iframe>
 <!-- Pega aquí tu iframe de Genially -->
 
 <div id="emlab-boton-slot"></div>
