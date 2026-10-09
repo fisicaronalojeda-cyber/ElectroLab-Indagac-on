@@ -101,6 +101,13 @@ LATA
 </div>
 <p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/static_electricity_can_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p> 
 
+PHYSICS CLASSROOM
+
+<div class="sim-wrap" data-mode="scroll" data-w="880" data-h="650">
+  <iframe src="https://www.physicsclassroom.com/interactive/static-electricity/aluminum-can-polarization/launch" title="Polarización de una lata de aluminio"></iframe>
+</div>
+<p class="video-credit">Simulación: The Physics Classroom · <a href="https://www.physicsclassroom.com/interactive/static-electricity/aluminum-can-polarization/launch" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
+
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
