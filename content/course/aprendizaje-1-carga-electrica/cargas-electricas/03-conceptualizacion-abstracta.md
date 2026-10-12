@@ -12,7 +12,6 @@ type: book
 
 **Ideas clave**
 
-Ideas clave
 
 * **La materia está formada por átomos.** Cada átomo tiene un núcleo con *protones* (carga positiva) y neutrones (sin carga).
 
@@ -24,7 +23,7 @@ Ideas clave
 
 * **Conservación de la carga:** La carga no se crea ni se destruye, solo se transfiere.
 
-* La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente $-1.6 \times 10^{-19}\text{ C}$.
+* La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente -1.6 × 10<sup>-19</sup> C.
 
 
 Observa el siguiente video: toma nota de los aspectos más importantes.
