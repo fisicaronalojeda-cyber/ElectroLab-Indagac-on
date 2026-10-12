@@ -19,7 +19,7 @@ Paso a paso
 5. Dibuja un esquema de lo que crees que le pasa al globo antes y después de frotarlo.
 
 
-Mis observaciones
+2. Mis observaciones
 ______________________________________________________________________________________________________________________
 ______________________________________________________________________________________________________________________
 ______________________________________________________________________________________________________________________
@@ -33,10 +33,10 @@ Escribe una hipótesis sobre qué propiedad adquiere el globo al frotarlo, y por
 ______________________________________________________________________________________________________________________
 ______________________________________________________________________________________________________________________
 
-5. Dibuja
-<p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Registra</p>
+5. 
+<p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Dibuja</p>
 <div style="overflow-x:auto;margin:0 0 16px;">
-  <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:.95rem;">
+  <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:.98rem;">
     <thead>
       <tr>
         <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Antes de Frotar</th>
@@ -44,7 +44,7 @@ ________________________________________________________________________________
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">      
+      <tr><td style="border:1px solid #64748b;padding:8px;height:100px;">      
       </td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
