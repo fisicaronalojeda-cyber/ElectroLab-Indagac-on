@@ -11,22 +11,23 @@ type: book
 **Propósito:** Vivir el fenómeno antes de explicarlo: observar qué le ocurre a un objeto después de frotarlo.
  
 **Materiales**
-* • 2-3 globos
 
 
-*• Paños de distintos materiales (lana, seda, algodón)
+• 2-3 globos
 
-*• Trocitos pequeños de papel
+• Paños de distintos materiales (lana, seda, algodón)
 
-*• Peine plástico
+• Trocitos pequeños de papel
 
-*• Cabello seco (voluntario)
+• Peine plástico
 
-*• Regla
+• Cabello seco (voluntario)
 
-*• Tubo de PVC
+• Regla
 
-*• Grifo con chorro de agua
+• Tubo de PVC
+
+• Grifo con chorro de agua
 
 
 <u>**Seguridad</u>. Trabaja con las manos secas y lejos de enchufes. En días húmedos el efecto es más débil.<u>las cargas se compensan</u>
