@@ -8,16 +8,16 @@ type: book
 <div id="emlab-aviso-slot"></div>
 
 
-Propósito: Construir el modelo que explica lo observado: el átomo, los tipos de carga y la conservación de la carga.
+**Propósito:** Construir el modelo que explica lo observado: el átomo, los tipos de carga y la conservación de la carga.
 
-Ideas clave
+**Ideas clave**
 
-• La materia está formada por átomos. Cada átomo tiene un núcleo con protones (carga positiva) y neutrones (sin carga), y a su alrededor hay electrones (carga negativa).
-• Un objeto es neutro cuando tiene el mismo número de protones y de electrones: las cargas se compensan.
-• Los protones están fijos en el núcleo. Los electrones son los que pueden pasar de un objeto a otro al frotarlos.
-• Un objeto que gana electrones queda cargado negativamente. Un objeto que pierde electrones queda cargado positivamente.
-• Conservación de la carga: la carga no se crea ni se destruye, solo se transfiere. Si un objeto gana electrones, el otro los pierde.
-• La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente -1.6×10⁻¹⁹ C.
+• **La materia está formada por átomos. Cada átomo tiene un núcleo con protones (carga positiva) y neutrones (sin carga), y a su alrededor hay electrones (carga negativa).
+• **Un objeto es neutro cuando tiene el mismo número de protones y de electrones: las cargas se compensan.
+• **Los protones están fijos en el núcleo. Los electrones son los que pueden pasar de un objeto a otro al frotarlos.
+• **Un objeto que gana electrones queda cargado negativamente. Un objeto que pierde electrones queda cargado positivamente.
+• **Conservación de la carga: la carga no se crea ni se destruye, solo se transfiere. Si un objeto gana electrones, el otro los pierde.
+• **La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente -1.6×10⁻¹⁹ C.
 
 
 Observa el siguiente video: toma nota de los aspectos más importantes.
@@ -26,7 +26,7 @@ Observa el siguiente video: toma nota de los aspectos más importantes.
 
 La carga eléctrica es una propiedad fundamental de la materia. Existen dos tipos de carga: positiva y negativa. Los átomos son neutros porque tienen igual número de protones (carga positiva) y electrones (carga negativa); al frotar dos materiales, los electrones pueden transferirse de uno a otro, dejando a uno con exceso de carga negativa y al otro con exceso de carga positiva. La carga se mide en culombios (C), y el culombio elemental (carga de un electrón) es e = 1.6×10⁻¹⁹ C.
 
-Paso a paso
+<u>**Paso a paso**</u>
 
 1. Lee las ideas clave y subraya las palabras nuevas.
 2. Observa el Video y toma nota de los elementos más importantes. 
