@@ -12,17 +12,19 @@ type: book
 
 **Ideas clave**
 
-• **La materia está formada por átomos. Cada átomo tiene un núcleo con protones (carga positiva) y neutrones (sin carga), y a su alrededor hay electrones (carga negativa).
+Ideas clave
 
-• **Un objeto es neutro cuando tiene el mismo número de protones y de electrones: las cargas se compensan.
+* **La materia está formada por átomos.** Cada átomo tiene un núcleo con *protones* (carga positiva) y neutrones (sin carga).
 
-• **Los protones están fijos en el núcleo. Los electrones son los que pueden pasar de un objeto a otro al frotarlos.
+* **Un objeto es neutro** cuando tiene el mismo número de protones y de electrones: <u>las cargas se compensan</u>.
 
-• **Un objeto que gana electrones queda cargado negativamente. Un objeto que pierde electrones queda cargado positivamente.
+* Los protones están fijos en el núcleo, mientras que **los electrones** son los que pueden pasar de un objeto a otro al frotarlos.
 
-• **Conservación de la carga: la carga no se crea ni se destruye, solo se transfiere. Si un objeto gana electrones, el otro los pierde.
+* Un objeto que gana electrones queda cargado negativamente; el que los pierde, positivamente.
 
-• **La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente -1.6×10⁻¹⁹ C.
+* **Conservación de la carga:** La carga no se crea ni se destruye, solo se transfiere.
+
+* La carga eléctrica se mide en culombios (C). La carga de un electrón es de aproximadamente $-1.6 \times 10^{-19}\text{ C}$.
 
 
 Observa el siguiente video: toma nota de los aspectos más importantes.
