@@ -7,8 +7,6 @@ type: book
 <div class="etapa-badge exp-concreta"><span class="eb-icon">🔍</span>Experiencia concreta</div>
 <div id="emlab-aviso-slot"></div>
 
-Frota un globo con un paño de lana y acércalo a pequeños trozos de papel, o a un chorro fino de agua del grifo. Observa qué sucede.
-
 
 Propósito: Vivir el fenómeno antes de explicarlo: observar qué le ocurre a un objeto después de frotarlo.
  
@@ -48,6 +46,8 @@ Paso a paso
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo frotado</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Regla sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Regla frotada</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">PVC frotado</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">PVC sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
 </div>
