@@ -9,7 +9,7 @@ type: book
 
 Propósito: Pasar de mirar a pensar: separar lo que observaste de lo que supones y formular una pregunta y una hipótesis.
 
-
+--------------------------------------------------------------------------------------------------------------------
 Paso a paso
 
 1. Relee tu tabla de la etapa 1. Marca con un resaltador solo lo que viste, no lo que supones.
@@ -18,7 +18,7 @@ Paso a paso
 4. Hipótesis. Escribe una respuesta posible con la forma «Si ..., entonces ..., porque ...».
 5. Dibuja un esquema de lo que crees que le pasa al globo antes y después de frotarlo.
 
-
+---------------------------------------------------------------------------------------------------------------------
 2. Mis observaciones
 ______________________________________________________________________________________________________________________
 ______________________________________________________________________________________________________________________
