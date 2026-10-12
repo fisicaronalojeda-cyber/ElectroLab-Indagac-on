@@ -8,22 +8,31 @@ type: book
 <div id="emlab-aviso-slot"></div>
 
 
-Propósito: Vivir el fenómeno antes de explicarlo: observar qué le ocurre a un objeto después de frotarlo.
+**Propósito:** Vivir el fenómeno antes de explicarlo: observar qué le ocurre a un objeto después de frotarlo.
  
-Materiales
-• 2-3 globos
-• Paños de distintos materiales (lana, seda, algodón)
-• Trocitos pequeños de papel
-• Peine plástico
-• Cabello seco (voluntario)
-• Regla
-• Tubo de PVC
-• Grifo con chorro de agua
+**Materiales**
+* • 2-3 globos
 
 
-Seguridad. Trabaja con las manos secas y lejos de enchufes. En días húmedos el efecto es más débil.
+*• Paños de distintos materiales (lana, seda, algodón)
 
-Paso a paso
+*• Trocitos pequeños de papel
+
+*• Peine plástico
+
+*• Cabello seco (voluntario)
+
+*• Regla
+
+*• Tubo de PVC
+
+*• Grifo con chorro de agua
+
+
+<u>**Seguridad</u>. Trabaja con las manos secas y lejos de enchufes. En días húmedos el efecto es más débil.<u>las cargas se compensan</u>
+
+**Paso a paso**
+
 1. Pon los pedacitos de papel sobre la mesa. Acerca el globo sin frotarlo y observa. Anota lo que pasa.
 2. Frota el globo con la lana (o el cabello) unas 20 veces, siempre en el mismo sentido.
 3. Acerca el globo frotado a los papelitos, sin tocarlos. Anota lo que ocurre.
