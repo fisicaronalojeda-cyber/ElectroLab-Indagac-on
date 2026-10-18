@@ -14,19 +14,12 @@ type: book
 
 
 • 2-3 globos
-
 • Paños de distintos materiales (lana, seda, algodón)
-
 • Trocitos pequeños de papel
-
 • Peine plástico
-
 • Cabello seco (voluntario)
-
 • Regla
-
 • Tubo de PVC
-
 • Grifo con chorro de agua
 
 
