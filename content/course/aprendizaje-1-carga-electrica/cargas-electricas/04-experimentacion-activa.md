@@ -9,20 +9,40 @@ type: book
 
 ## 4.1 Laboratorio virtual / simulador
 
-Explora el simulador de Globos y Electricidad Estática de PhET: frota el globo contra el gato o la pared y observa la transferencia de electrones.
+Revisa las siguientes simulaciones: 
 
-<iframe src="https://phet.colorado.edu/es/simulations/balloons-and-static-electricity" width="100%" height="480" style="border:none;"></iframe>
+## 4.1.1 Explora la simulación de triboelectricidad del gato:
 
-### 4.1.2 Guía
+<div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
+  <iframe src="https://javalab.org/en/triboelectricity_en/" title="Triboelectricidad"></iframe>
+</div>
+<p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/triboelectricity_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
 
-1. Frota el globo contra el gato varias veces y observa qué partículas se transfieren.
-2. Acerca el globo cargado a la pared. Anota qué sucede.
-3. Activa la vista de 'cargas' y cuenta cuántos electrones se transfirieron.
-4. Repite frotando distinto número de veces y compara la cantidad de carga acumulada.
+Realiza lo siguiente:
+1. ¿El globo y el gato están inicialmente en estado neutro? 
+2. Frota el globo contra el gato varias veces y observa qué partículas se transfieren.. ¿Qué sucede con las cargas del globo y del gato?
+3. acerca el globo después de frotarle hacia la pared  y cuenta cuántos electrones se transfirieron. ¿Qué sucede? Explica este fenómeno. 
+4. si esperas algo de tiempo ¿Qué pasa? Dibuja en tu cuaderno y realiza la explicación del fenómeno Observado.  
+
+## 4.1.2 Explora el simulador de Globos y Electricidad Estática de PhET:
+
+<div class="sim-wrap" data-w="960" data-h="630">
+  <iframe src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_es.html" title="Globos y electricidad estática"></iframe>
+</div>
+<p class="video-credit">Simulación: PhET Interactive Simulations, Universidad de Colorado Boulder, con licencia CC-BY (<a href="https://phet.colorado.edu" target="_blank" rel="noopener">https://phet.colorado.edu</a>)</p>
+
+Realiza lo siguiente:
+1 Observa la carga tanto del globo, el saco y la pared ¿Qué puedes concluir?
+2. Si acercas el globo a la pared y después al saco ¿Qué Sucece?
+3. Al acerca el globo al saco, se transfiere la carga negativa al globo, si alejas el globo hacia la pared, ¿Qué sucede con la carga en la pared? 
+4 Si dejas el globo entre el saco y la pared ¿Cómo se mueve el globo?
+5, Si activas la opción: "Mostrar las diferencias de cargas" ¿Qué representa esta opción?
 
 ## 4.2 Actividad interactiva
 
-Diseña, en Genially o en papel, un mapa conceptual que conecte: átomo neutro → fricción → transferencia de electrones → carga positiva / carga negativa.
+Observa el siguiente video: 
+<div class="sim-wrap"><iframe src="[https://www.youtube.com/embed/ID_VIDEO](https://www.youtube.com/watch?v=G8MDDvV7qwY&t=81s)" allowfullscreen></iframe></div>
+
 
 <!-- Pega aquí tu iframe de Genially -->
 
