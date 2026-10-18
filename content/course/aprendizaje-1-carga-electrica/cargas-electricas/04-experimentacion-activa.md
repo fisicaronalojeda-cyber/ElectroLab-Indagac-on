@@ -11,7 +11,7 @@ type: book
 
 Revisa las siguientes simulaciones: 
 
-# 4.1.1 Explora la simulación de triboelectricidad del gato:
+### 4.1.1 Explora la simulación de triboelectricidad del gato:
 
 <div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
   <iframe src="https://javalab.org/en/triboelectricity_en/" title="Triboelectricidad"></iframe>
@@ -24,7 +24,7 @@ Realiza lo siguiente:
 3. acerca el globo después de frotarle hacia la pared  y cuenta cuántos electrones se transfirieron. ¿Qué sucede? Explica este fenómeno. 
 4. si esperas algo de tiempo ¿Qué pasa? Dibuja en tu cuaderno y realiza la explicación del fenómeno Observado.  
 
-# 4.1.2 Explora el simulador de Globos y Electricidad Estática de PhET:
+#### 4.1.2 Explora el simulador de Globos y Electricidad Estática de PhET:
 
 <div class="sim-wrap" data-w="960" data-h="630">
   <iframe src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_es.html" title="Globos y electricidad estática"></iframe>
@@ -45,7 +45,7 @@ Observa el siguiente video:
 
 JUEGA UN POCO 
 
-<iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="795" height="690" frameborder="0" src="https://es.educaplay.com/juego/31110351-carga.html"></iframe>
+<iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="650" height="690" frameborder="0" src="https://es.educaplay.com/juego/31110351-carga.html"></iframe>
 
 
 <div id="emlab-boton-slot"></div>
