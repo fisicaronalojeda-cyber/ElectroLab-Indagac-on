@@ -25,8 +25,7 @@ type: book
 
 Observa la Imagen: 
 
-<img src="Interaccion.jpg" alt="Guía de Predicción Electrostática" style="max-width: 100%; height: auto;">
-
+<img src="/img/Interaccion.jpg" alt="Simulación de triboelectricidad: gato y globo" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 1. Corta cuatro tiras de cinta de unos 10 cm. En un extremo de cada una dobla un pedacito para hacer un asa.
 2. Arma dos pares: pega una tira sobre la mesa y otra encima de ella, asa con asa. Escribe con lápiz una B en
