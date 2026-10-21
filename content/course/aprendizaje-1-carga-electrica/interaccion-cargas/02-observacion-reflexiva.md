@@ -31,12 +31,12 @@ type: book
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Las tiras T y B se atrajeron.</td><td style="border:1px solid #64748b;padding:8px;">          </td>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Las cargas opuestas se atraen.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Los dos globos frotados se separaron.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Al tocarse, el globo se descargó.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">La regla se alejó del bolígrafo frotado.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">El bolígrafo tiene carga negativa.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Las tiras T y B se atrajeron.</td><td style="border:1px solid #64748b;padding:8px;">          </td><td style="border:1px solid #64748b;padding:8px;"></td>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Las cargas opuestas se atraen.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr><td style="border:1px solid #64748b;padding:8px;"></td>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Los dos globos frotados se separaron.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr><td style="border:1px solid #64748b;padding:8px;"></td>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Al tocarse, el globo se descargó.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr><td style="border:1px solid #64748b;padding:8px;"></td>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">La regla se alejó del bolígrafo frotado.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr><td style="border:1px solid #64748b;padding:8px;"></td>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">El bolígrafo tiene carga negativa.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr><td style="border:1px solid #64748b;padding:8px;"></td>
     </tbody>
   </table>
 
@@ -67,12 +67,12 @@ ________________________________________________________________________________
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variable independiente(lo que cambio) </td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variable dependiente (lo que mido u observo)</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variables controladas (lo que mantengo igual)</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Al tocarse, el globo se descargó.</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">La regla se alejó del bolígrafo frotado.</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">El bolígrafo tiene carga negativa.</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variable independiente(lo que cambio) </td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variable dependiente (lo que mido u observo)</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Variables controladas (lo que mantengo igual)</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Al tocarse, el globo se descargó.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">La regla se alejó del bolígrafo frotado.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">El bolígrafo tiene carga negativa.</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
 
