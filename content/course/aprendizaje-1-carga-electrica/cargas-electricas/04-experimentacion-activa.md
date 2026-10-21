@@ -17,12 +17,12 @@ Explora la animación, puedes observar un gato y un globo:
 
 *Paso a paso:*
 
-1. ¿El globo y el gato están inicialmente en estado neutro? 
+1. ¿El globo y el gato están inicialmente en estado neutro? "cuenta cuantos electrones y protones hay en el gato y en el globo"
 2. Frota el globo contra el gato varias veces y observa qué partículas se transfieren.. ¿Qué sucede con las cargas del globo y del gato?
 3. acerca el globo después de frotarle hacia la pared  y cuenta cuántos electrones se transfirieron. ¿Qué sucede? Explica este fenómeno. 
 4. si esperas algo de tiempo ¿Qué pasa? Dibuja en tu cuaderno y realiza la explicación del fenómeno Observado.
    
-<div class="sim-wrap" data-mode="scroll" data-w="1100" data-h="700">
+<div class="sim-wrap" data-mode="scroll" data-w="900" data-h="400">
   <iframe src="https://javalab.org/en/triboelectricity_en/" title="Triboelectricidad"></iframe>
 </div>
 <p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/triboelectricity_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
