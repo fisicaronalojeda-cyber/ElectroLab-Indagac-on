@@ -7,7 +7,7 @@ type: book
 <div class="etapa-badge exp-concreta"><span class="eb-icon">🔍</span>Experiencia concreta</div>
 <div id="emlab-aviso-slot"></div>
 
-
+## **PRACTICA UNO-LAS CINTAS T y B* ##
 **Propósito**: Observar cómo se comportan dos objetos cargados cuando se acercan, sin tocarse.
 **Materiales**:
 
@@ -62,6 +62,34 @@ ________________________________________________________________________________
 ___________________________________________________________________________________________________________________________________________________________________
 ____________________________________________________________________________________________________________________________________________________________________
 
+## **PRACTICA DOS-GLOBOS COLGANTES* ##
+
+1. Pega un lápiz al borde de la mesa para que sobresalga. Ata dos hilos de 40 cm a 2 cm uno del otro y cuelga
+un globo en cada uno.
+
+
+
+3. Observa los globos sin frotar. Después frota cada uno con la lana 20 veces, de la misma manera, y vuelve a colgarlos sin que se toquen.
+4. Observa y mide con la regla la separación **s* entre los globos.
+5. Reto 1. Frota solo un globo y deja el otro sin cargar. Observa. Luego deja que se toquen y observa otra vez.
+
+<p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Los globos</p>
+<div style="overflow-x:auto;margin:0 0 16px;">
+  <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:.95rem;">
+    <thead>
+      <tr>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Situación</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">¿Qué hacen los globos?</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Separación s(cm) </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globos sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Dos globos frotados</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Un globo frotado y otro sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Después de tocarse</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+    </tbody>
+  </table>
 
 Carga dos globos frotándolos con lana y acércalos entre sí sin que se toquen. Luego, carga uno de ellos y acerca el otro sin cargar.
 
