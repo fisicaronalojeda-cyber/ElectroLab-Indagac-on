@@ -7,7 +7,7 @@ type: book
 <div class="etapa-badge exp-concreta"><span class="eb-icon">🔍</span>Experiencia concreta</div>
 <div id="emlab-aviso-slot"></div>
 
-## **PRACTICA UNO-LAS CINTAS T y B* ##
+## *PRACTICA UNO-LAS CINTAS T y B* ##
 **Propósito**: Observar cómo se comportan dos objetos cargados cuando se acercan, sin tocarse.
 **Materiales**:
 
@@ -62,11 +62,12 @@ ________________________________________________________________________________
 ___________________________________________________________________________________________________________________________________________________________________
 ____________________________________________________________________________________________________________________________________________________________________
 
-## **PRACTICA DOS-GLOBOS COLGANTES* ##
+## *PRACTICA DOS-GLOBOS COLGANTES* ##
 
 1. Pega un lápiz al borde de la mesa para que sobresalga. Ata dos hilos de 40 cm a 2 cm uno del otro y cuelga
 un globo en cada uno.
 
+<img src="/img/interaccion3.jpg" alt="Globos Colgantes" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 
 3. Observa los globos sin frotar. Después frota cada uno con la lana 20 veces, de la misma manera, y vuelve a colgarlos sin que se toquen.
@@ -84,15 +85,43 @@ un globo en cada uno.
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globos sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Dos globos frotados</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Un globo frotado y otro sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Después de tocarse</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globos sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Dos globos frotados</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Un globo frotado y otro sin frotar</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Después de tocarse</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
+  
+  ## *PRACTICA TRES-LOS DOS BANDOS* ##
 
-Carga dos globos frotándolos con lana y acércalos entre sí sin que se toquen. Luego, carga uno de ellos y acerca el otro sin cargar.
+Observa la imagen y sigue los pasos que se mencionan a continuación: 
 
+<img src="/img/interaccion3.jpg" alt="Globos Colgantes" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
+
+1. Cuelga la regla de plástico por su centro con un hilo, de modo que pueda girar libremente. Frótala con la lana: queda cargada.
+2. Frota otros objetos (el globo con lana, el bolígrafo con lana, el peine con tu cabello, una tira de cinta). Antes de probar, escribe tu predicción.
+3. Acerca cada objeto a un extremo de la regla colgada, sin tocarla, y anota si la regla se aleja (repulsión) o se acerca (atracción).
+4. Clasifica los objetos en dos grupos: los que están cargados como la regla (la repelen) y los de carga contraria (la atraen).
+
+<p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Los dos Bandos</p>
+<div style="overflow-x:auto;margin:0 0 16px;">
+  <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:.95rem;">
+    <thead>
+      <tr>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Objeto</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Frotado con</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Mi predicción</th>
+         <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Resultado</th>
+         <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Grupo (Igual o Contrario)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+    </tbody>
+  </table>
 
 
 <div id="emlab-boton-slot"></div>
