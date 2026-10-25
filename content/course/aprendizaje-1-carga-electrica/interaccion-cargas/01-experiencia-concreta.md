@@ -67,7 +67,7 @@ ________________________________________________________________________________
 1. Pega un lápiz al borde de la mesa para que sobresalga. Ata dos hilos de 40 cm a 2 cm uno del otro y cuelga
 un globo en cada uno.
 
-<img src="/img/interaccion3.jpg" alt="Globos Colgantes" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
+<img src="/img/interaccion3.png" alt="Globos Colgaltes" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 
 3. Observa los globos sin frotar. Después frota cada uno con la lana 20 veces, de la misma manera, y vuelve a colgarlos sin que se toquen.
@@ -96,7 +96,7 @@ un globo en cada uno.
 
 Observa la imagen y sigue los pasos que se mencionan a continuación: 
 
-<img src="/img/interaccion3.jpg" alt="Globos Colgantes" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
+<img src="/img/interaccion4.jpg" alt="Dos bandos" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 1. Cuelga la regla de plástico por su centro con un hilo, de modo que pueda girar libremente. Frótala con la lana: queda cargada.
 2. Frota otros objetos (el globo con lana, el bolígrafo con lana, el peine con tu cabello, una tira de cinta). Antes de probar, escribe tu predicción.
@@ -116,6 +116,7 @@ Observa la imagen y sigue los pasos que se mencionan a continuación:
       </tr>
     </thead>
     <tbody>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
