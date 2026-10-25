@@ -10,8 +10,11 @@ type: book
 ## 4.1 Laboratorio virtual / simulador
 
 Usa el hero interactivo de arreglos de cargas puntuales para experimentar libremente con distintas combinaciones de signos.
+Puedes generar varios arreglos y predecir que tipo de fuerza (atracción o repulsión) se presenta cuanto interactuan las cargas.
+Puedes registrar algunos hipotesis sobre las fuerzas que se podrían presentar.
 
-<iframe src="/hero-cargas-puntuales.html" width="100%" height="480" style="border:none;"></iframe>
+<iframe src="/uploads/hero-cargas-puntuales.html" width="100%" height="480" style="border:none;"></iframe>
+
 
 ### 4.1.2 Guía
 
@@ -22,6 +25,48 @@ Usa el hero interactivo de arreglos de cargas puntuales para experimentar librem
 
 ## 4.2 Actividad interactiva
 
+1. Abre la simulación de Javalab de globos colgantes de la página. Ajusta el signo y el valor de las dos cargas en los casos de la tabla y observa la fuerza.
+2. Selecciona: Globos Colgantes y transparencia máxima de las linas de campo.
+
+<div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
+  <iframe src="https://javalab.org/en/electric_field_line_en/" title="Líneas de campo eléctrico"></iframe>
+</div>
+<p class="video-credit">Simulación: Javalab · <a href="https://javalab.org/en/electric_field_line_en/" target="_blank" rel="noopener">abrir en otra pestaña</a></p>
+
+3. Modifica el valor de carga eléctrica de cada globo.
+4. ¿Qué sucede cuando un globo tiene carga y el otro globo NO?
+5. Si dejas igual el valor de carga de un globo y al otro le modificas la carga ¿Que puedes Observar?
+6. Completa la siguiente tabla indicando  registrando la información, al modificar los valores de las cargas.
+
+<p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Registra</p>
+<div style="overflow-x:auto;margin:0 0 16px;">
+  <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:.95rem;">
+    <thead>
+      <tr>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Carga 1</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Carga 2</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Distancia(cerca o lejos)</th>
+        <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Atracción o Repulsión</th>
+         <th style="border:1px solid #64748b;padding:8px;background:#1e293b;color:#ffffff;text-align:left;">Fuerza Mayor-menor o igual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"> </td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">/td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+    </tbody>
+  </table>
+7. Responde las siguientes preguntas:
+  * ¿Si tomas una carga positiva para un globo , y el segundo globo lo dejas sin carga, posteriormente el globo sin cargas modificas su valor para que los dos globos 
+  se atraen; si sigues aumentando la carga llega un momento en que los dos globos quedan juntos "pegados", si finalmente modificas los valores de carga,+
+  el globo sin carga (neutro) , se mantiene "pegado" ¿Porque cree que sucede esto?
+
+  * ¿Que otros fenómenos encontraste al usar la simulación?
+
+    
 Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
 <div id="emlab-javalab-electroscope" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
 <script>
