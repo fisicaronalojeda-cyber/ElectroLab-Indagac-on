@@ -24,6 +24,10 @@ Usa el Kit de construcción de circuitos de PhET para medir corriente y voltaje 
 
 En Genially, crea una simulación simplificada tipo 'circuito de agua' (analogía hidráulica) que el estudiante deba relacionar con voltaje, corriente y resistencia.
 
+Observa este video: 
+Realiza el resumen de los elementos más importantes e interesantes: 
+
+<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1054346564284714%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe> 
 <!-- Pega aquí tu iframe de Genially -->
 
 <div id="emlab-boton-slot"></div>
