@@ -27,7 +27,10 @@ En Genially, crea una simulación simplificada tipo 'circuito de agua' (analogí
 Observa este video: 
 Realiza el resumen de los elementos más importantes e interesantes: 
 
-<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1054346564284714%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe> 
+<div style="display:flex; justify-content:center; margin:1rem auto;">
+<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1054346564284714%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none; overflow:hidden; max-width:100%;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" title="Video de 1Volt1Amp"></iframe>
+</div>
+<p class="video-credit" style="text-align:center;">Video: <a href="https://www.facebook.com/reel/1054346564284714/" target="_blank" rel="noopener">1Volt1Amp en Facebook</a> ·</p>
 <!-- Pega aquí tu iframe de Genially -->
 
 <div id="emlab-boton-slot"></div>
