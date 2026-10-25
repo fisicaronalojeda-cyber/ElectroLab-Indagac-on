@@ -31,8 +31,16 @@ Realiza la lectura de las ideas clave: Toma nota
 
 1. Lee las ideas clave y subraya la regla de atracción y repulsión.
 2. Dibuja las fuerzas resultantes sobre cada caso, dibuja una flecha sobre cada carga que indique la fuerza que recibe. 
+
+**Dos cargas:*
+
 <img src="/img/interaccion7.jpg" alt="Conceptos Clave" style="display:block; max-width:100%; width:920px; margin:1rem auto; border-radius:8px;">
 
+**Tres Cargas*
+<img src="/img/interaccion8.jpg" alt="Conceptos Clave" style="display:block; max-width:100%; width:980px; margin:1rem auto; border-radius:8px;">
+
+**Cuatro Cargas*
+<img src="/img/interaccion9.jpg" alt="Conceptos Clave" style="display:block; max-width:100%; width:980px; margin:1rem auto; border-radius:8px;">
 
 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F28720985274231064%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
 
