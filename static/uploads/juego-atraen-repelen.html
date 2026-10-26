@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Se atraen o se repelen? · EM·LAB</title>
+<style>
+:root{
+  --bg1:#060a14; --bg2:#0b1220; --panel:rgba(30,41,59,.72); --line:rgba(148,163,184,.25);
+  --amber:#f5b942; --cyan:#22d3ee; --green:#34d399; --pink:#fb7185; --orange:#f59e0b; --violet:#a78bfa;
+  --b:clamp(62px,12vmin,92px);
+  --txt:#e8eefc; --mut:#9fb0cc;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg1);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+svg{display:block}
+.app{position:relative;width:100%;height:100%;min-height:520px;display:flex;flex-direction:column;overflow:hidden;
+  background:radial-gradient(1100px 600px at 15% -10%,#14305f 0,transparent 60%),radial-gradient(900px 600px at 100% 110%,#4a1544 0,transparent 55%),linear-gradient(160deg,var(--bg2),var(--bg1))}
+#bg,#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#fx{z-index:30}
+/* ---------- HUD ---------- */
+.hud{position:relative;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:.5px;font-size:15px}
+.brand svg{width:22px;height:22px;fill:var(--amber);filter:drop-shadow(0 0 6px rgba(245,185,66,.8))}
+.pill{padding:5px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:13px;font-weight:700;white-space:nowrap}
+#lvl{color:var(--amber);border-color:rgba(245,185,66,.45)}
+.sp{flex:1}
+.stat{display:flex;flex-direction:column;align-items:center;line-height:1.05;min-width:58px}
+.stat small{font-size:10px;letter-spacing:1.2px;color:var(--mut);text-transform:uppercase}
+.stat b{font-size:20px;font-variant-numeric:tabular-nums}
+#streak.hot{color:var(--amber);text-shadow:0 0 10px rgba(245,185,66,.9)}
+#lives{display:flex;gap:3px;height:22px}
+#lives svg{width:22px;height:22px;fill:#ff3b5c;filter:drop-shadow(0 0 5px rgba(255,59,92,.8));transition:transform .3s,opacity .3s}
+#lives svg.lost{fill:#334155;filter:none;opacity:.7;transform:scale(.8)}
+#snd{width:38px;height:38px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center}
+#snd svg{width:20px;height:20px;stroke:var(--txt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.timer{position:relative;z-index:5;height:7px;margin:0 14px;border-radius:99px;background:rgba(148,163,184,.18);overflow:hidden}
+.timer i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--amber),var(--pink));background-size:300% 100%;transform-origin:left}
+/* ---------- escenario ---------- */
+.stage{position:relative;z-index:5;flex:1;min-height:0;display:grid;grid-template-columns:minmax(120px,1fr) minmax(250px,1.25fr) minmax(120px,1fr);gap:clamp(8px,2vw,22px);padding:12px 14px 6px;align-items:stretch}
+.zone{position:relative;border-radius:24px;border:3px dashed var(--zc);background:linear-gradient(160deg,var(--zb1),var(--zb2));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px;text-align:center;transition:transform .18s,box-shadow .25s,background .25s;
+  box-shadow:0 0 22px var(--zg),inset 0 0 26px var(--zg);animation:zp 2.6s ease-in-out infinite}
+.zone.attract{--zc:#22d3ee;--zb1:rgba(34,211,238,.20);--zb2:rgba(52,211,153,.07);--zg:rgba(34,211,238,.28)}
+.zone.repel{--zc:#fb7185;--zb1:rgba(251,113,133,.22);--zb2:rgba(245,158,11,.07);--zg:rgba(251,113,133,.28);animation-delay:1.3s}
+@keyframes zp{50%{box-shadow:0 0 34px var(--zg),inset 0 0 36px var(--zg)}}
+.zone:hover,.zone.hot{transform:scale(1.045);border-style:solid;background:linear-gradient(160deg,var(--zg),var(--zb2));box-shadow:0 0 44px var(--zc),inset 0 0 40px var(--zg)}
+.zone h3{margin:0;font-size:clamp(15px,2.8vmin,24px);letter-spacing:1px;font-weight:900;text-shadow:0 0 12px var(--zc)}
+.zone p{margin:0;font-size:12px;color:var(--mut);max-width:150px}
+.mini{display:flex;align-items:center;gap:2px}
+.mini .ball{--b:clamp(26px,5.2vmin,40px);animation:none;font-size:calc(var(--b)*.6)}
+.mini svg{width:calc(var(--b)*.8);height:16px;stroke:var(--zc);fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.center{position:relative;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;gap:10px}
+.ask{font-size:clamp(14px,2.7vmin,20px);font-weight:800;text-align:center;text-shadow:0 0 14px rgba(125,170,255,.7)}
+.hint{font-size:12px;color:var(--mut);text-align:center}
+/* ---------- esferas ---------- */
+.ball{position:relative;width:var(--b);height:var(--b);border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:calc(var(--b)*.62);line-height:1;color:#fff;user-select:none;animation:bob 3.2s ease-in-out infinite}
+.ball span{text-shadow:0 2px 6px rgba(0,0,0,.45);transform:translateY(-2%)}
+.ball::after{content:"";position:absolute;left:18%;top:12%;width:30%;height:20%;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(2px);transform:rotate(-30deg)}
+.pos{background:radial-gradient(circle at 32% 28%,#ffd1d9 0,#ff5470 38%,#c1123a 72%,#6b0a22 100%);box-shadow:0 0 26px rgba(255,60,90,.75),0 0 60px rgba(255,60,90,.35)}
+.neg{background:radial-gradient(circle at 32% 28%,#d4ebff 0,#52a8ff 38%,#1d4ed8 72%,#0b1f6b 100%);box-shadow:0 0 26px rgba(70,140,255,.8),0 0 60px rgba(70,140,255,.35)}
+.neu{background:radial-gradient(circle at 32% 28%,#f1f5f9 0,#b8c4d4 40%,#64748b 75%,#334155 100%);box-shadow:0 0 22px rgba(200,210,225,.4)}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.pair{position:relative;display:flex;align-items:flex-start;justify-content:center;gap:clamp(6px,2vmin,16px);padding:clamp(12px,2.4vmin,20px) clamp(12px,2.6vmin,22px);border-radius:26px;cursor:grab;touch-action:none;user-select:none;
+  background:linear-gradient(160deg,rgba(51,65,85,.92),rgba(15,23,42,.92));border:2px solid rgba(245,185,66,.65);
+  box-shadow:0 0 0 4px rgba(245,185,66,.10),0 12px 36px rgba(0,0,0,.55),0 0 40px rgba(245,185,66,.25);will-change:transform;transition:transform .28s cubic-bezier(.2,1.4,.4,1)}
+.pair.drag{cursor:grabbing;transition:none;z-index:20;box-shadow:0 0 0 4px rgba(245,185,66,.2),0 22px 50px rgba(0,0,0,.6),0 0 60px rgba(245,185,66,.5)}
+.pair.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{transform:scale(.3) rotate(-8deg);opacity:0}}
+.pair.shake,.demo.shake{animation:shake .5s}
+@keyframes shake{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.ch{display:flex;flex-direction:column;align-items:center;gap:8px;width:calc(var(--b)*1.45);pointer-events:none}
+.cap{font-size:clamp(10.5px,1.9vmin,13px);line-height:1.2;text-align:center;font-weight:700;color:#d7e2f7;min-height:2.4em}
+.vs{align-self:center;margin-top:calc(var(--b)*.18);font-weight:900;font-size:13px;letter-spacing:2px;color:var(--amber);text-shadow:0 0 10px rgba(245,185,66,.9);pointer-events:none}
+/* ---------- demo resultado ---------- */
+.demo[hidden]{display:none}
+.demo{position:relative;width:min(100%,380px);height:calc(var(--b)*1.9);display:grid;place-items:center}
+.bw{position:absolute;left:50%;top:50%;margin-left:calc(var(--b)/-2);margin-top:calc(var(--b)/-2);animation-fill-mode:forwards}
+.bw .ball{animation:none}
+.bw .arr{position:absolute;left:50%;top:-30px;width:46px;margin-left:-23px;opacity:0;animation:fadein .4s .15s forwards}
+.arr svg{width:46px;height:22px;stroke:#fff;fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--ac))}
+.demo.attract{--ac:#22d3ee;--far:calc(var(--b)*1.5);--near:calc(var(--b)/2 + 2px)}
+.demo.repel{--ac:#fb7185;--far:calc(var(--b)*1.5);--near:calc(var(--b)/2 + 2px)}
+.demo.attract .bw.l{animation:aL .75s cubic-bezier(.5,0,.9,.5) forwards}
+.demo.attract .bw.r{animation:aR .75s cubic-bezier(.5,0,.9,.5) forwards}
+.demo.repel .bw.l{animation:rL .9s cubic-bezier(.1,.7,.3,1) forwards}
+.demo.repel .bw.r{animation:rR .9s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes aL{from{transform:translateX(calc(var(--far) * -1))}to{transform:translateX(calc(var(--near) * -1))}}
+@keyframes aR{from{transform:translateX(var(--far))}to{transform:translateX(var(--near))}}
+@keyframes rL{from{transform:translateX(calc(var(--near) * -1))}to{transform:translateX(calc(var(--far) * -1.05))}}
+@keyframes rR{from{transform:translateX(var(--near))}to{transform:translateX(calc(var(--far) * 1.05))}}
+@keyframes fadein{to{opacity:1}}
+.spark{position:absolute;left:50%;top:50%;width:calc(var(--b)*1.6);height:calc(var(--b)*1.6);margin:calc(var(--b)*-.8) 0 0 calc(var(--b)*-.8);border-radius:50%;opacity:0;pointer-events:none;
+  background:conic-gradient(from 0deg,#fff,#ffe27a,#fff,#ffe27a,#fff,#ffe27a,#fff,#ffe27a,#fff);-webkit-mask:radial-gradient(circle,transparent 18%,#000 19%,transparent 70%);mask:radial-gradient(circle,transparent 18%,#000 19%,transparent 70%)}
+.demo.attract .spark{animation:spark .6s .7s ease-out forwards}
+.demo.repel .spark{animation:spark .6s 0s ease-out forwards}
+@keyframes spark{0%{opacity:1;transform:scale(.2) rotate(0)}100%{opacity:0;transform:scale(1.5) rotate(70deg)}}
+.msg{min-height:68px;width:min(100%,430px);text-align:center;padding:8px 12px;border-radius:16px}
+.msg b{display:block;font-size:clamp(16px,3.2vmin,22px);font-weight:900;margin-bottom:2px}
+.msg.ok b{color:var(--green);text-shadow:0 0 14px rgba(52,211,153,.8)}
+.msg.bad b{color:#ff6b84;text-shadow:0 0 14px rgba(255,80,110,.8)}
+.msg span{display:block;font-size:clamp(12px,2.1vmin,14.5px);color:#cdd9ef;line-height:1.35}
+.next{margin-top:6px;padding:8px 20px;border-radius:999px;background:linear-gradient(135deg,var(--amber),#ff9a3c);color:#2a1700;font-weight:900;box-shadow:0 0 22px rgba(245,185,66,.55);animation:zp 1.6s infinite}
+.pts{position:absolute;left:50%;top:18%;transform:translateX(-50%);font-weight:900;font-size:30px;color:var(--amber);text-shadow:0 0 18px rgba(245,185,66,.95);pointer-events:none;animation:rise 1.2s ease-out forwards;z-index:25}
+@keyframes rise{from{opacity:1;transform:translate(-50%,0) scale(.7)}to{opacity:0;transform:translate(-50%,-60px) scale(1.25)}}
+.dots{position:relative;z-index:5;display:flex;justify-content:center;gap:6px;padding:4px 14px 10px;flex-wrap:wrap}
+.dots i{width:12px;height:12px;border-radius:50%;background:rgba(148,163,184,.3);transition:.3s}
+.dots i.now{background:var(--amber);box-shadow:0 0 10px var(--amber);transform:scale(1.25)}
+.dots i.ok{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dots i.bad{background:#ff4d6d;box-shadow:0 0 8px #ff4d6d}
+/* ---------- overlays ---------- */
+.overlay{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(5,9,20,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:auto}
+.overlay[hidden]{display:none}
+.card{width:min(100%,560px);margin:auto;text-align:center;padding:clamp(16px,3.5vmin,30px);border-radius:28px;background:linear-gradient(160deg,rgba(51,65,85,.95),rgba(15,23,42,.95));border:2px solid rgba(245,185,66,.55);box-shadow:0 0 60px rgba(245,185,66,.25),0 24px 60px rgba(0,0,0,.6);animation:pop .55s cubic-bezier(.2,1.4,.4,1)}
+.card h1{margin:4px 0 6px;font-size:clamp(24px,5.4vmin,40px);line-height:1.05;font-weight:900;background:linear-gradient(90deg,#ff6b84,#f5b942,#5ac8ff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(245,185,66,.35))}
+.card p{margin:6px 0;color:#cdd9ef;font-size:clamp(13px,2.3vmin,15.5px);line-height:1.45}
+.hero{display:flex;justify-content:center;align-items:center;gap:6px;margin:6px 0 4px}
+.hero .ball{--b:clamp(52px,10vmin,74px)}
+.hero svg{width:56px;height:24px;stroke:var(--amber);fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;text-align:left}
+.steps div{padding:9px 10px;border-radius:14px;background:rgba(15,23,42,.7);border:1px solid var(--line);font-size:12.5px;line-height:1.35;color:#cdd9ef}
+.steps b{display:block;color:var(--amber);font-size:12px;letter-spacing:1px;margin-bottom:2px}
+.big{margin-top:8px;padding:13px 34px;border-radius:999px;font-size:clamp(16px,3vmin,20px);font-weight:900;letter-spacing:.5px;color:#2a1700;background:linear-gradient(135deg,var(--amber),#ff8a3c);box-shadow:0 0 30px rgba(245,185,66,.7),0 8px 20px rgba(0,0,0,.4);animation:zp 1.6s infinite}
+.big:hover{transform:scale(1.06)}
+.stars{display:flex;justify-content:center;gap:8px;margin:6px 0}
+.stars svg{width:clamp(40px,8vmin,56px);height:clamp(40px,8vmin,56px);fill:#334155;stroke:#64748b;stroke-width:1.2}
+.stars svg.on{fill:var(--amber);stroke:#ffd98a;filter:drop-shadow(0 0 12px rgba(245,185,66,.95));animation:pop .6s cubic-bezier(.2,1.6,.4,1) both}
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.res div{padding:9px 6px;border-radius:14px;background:rgba(15,23,42,.7);border:1px solid var(--line)}
+.res small{display:block;font-size:10px;letter-spacing:1.2px;color:var(--mut);text-transform:uppercase}
+.res b{font-size:clamp(18px,3.6vmin,26px)}
+.rank{font-weight:900;font-size:clamp(15px,3vmin,20px);color:var(--cyan);text-shadow:0 0 12px rgba(34,211,238,.7)}
+.banner{position:absolute;inset:0;z-index:35;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;background:rgba(5,9,20,.86)}
+.banner[hidden]{display:none}
+.banner h2{margin:0;font-size:clamp(28px,7vmin,54px);font-weight:900;color:var(--amber);text-shadow:0 0 30px rgba(245,185,66,.9);animation:pop .6s cubic-bezier(.2,1.5,.4,1)}
+.banner p{margin:0;font-size:clamp(14px,3vmin,20px);color:#e8eefc}
+.foot{position:relative;z-index:5;text-align:center;font-size:10.5px;color:#6f819f;padding:0 8px 6px}
+/* ---------- pantallas pequeñas ---------- */
+@media (max-width:640px){
+  .stage{grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) auto;gap:10px}
+  .center{grid-column:1/-1;grid-row:1}
+  .zone.attract{grid-column:1;grid-row:2}
+  .zone.repel{grid-column:2;grid-row:2}
+  .zone{padding:8px 6px;min-height:112px}
+  .zone p{display:none}
+  .hud{gap:6px;padding:8px 10px}
+  .stat{min-width:44px}.stat b{font-size:17px}
+  #lives svg{width:18px;height:18px}
+  #snd{width:32px;height:32px}
+  .pill{padding:4px 9px;font-size:12px}
+  .demo{height:calc(var(--b)*1.55)}
+  .bw .arr{top:-26px}
+  .brand span{display:none}
+  .steps{grid-template-columns:1fr}
+}
+@media (max-height:560px){ .hint,.foot{display:none} .msg{min-height:50px} }
+@media (prefers-reduced-motion:reduce){ *{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important} }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <canvas id="bg"></canvas>
+  <canvas id="fx"></canvas>
+
+  <header class="hud">
+    <div class="brand"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg><span>EM·LAB</span></div>
+    <div class="pill" id="lvl">Nivel 1</div>
+    <div class="sp"></div>
+    <div class="stat"><small>Puntos</small><b id="score">0</b></div>
+    <div class="stat"><small>Racha</small><b id="streak">0</b></div>
+    <div class="stat"><small>Vidas</small><div id="lives"></div></div>
+    <button id="snd" aria-label="Activar o silenciar el sonido" title="Sonido"></button>
+  </header>
+  <div class="timer" aria-hidden="true"><i id="tbar"></i></div>
+
+  <main class="stage">
+    <button class="zone attract" id="zA" data-z="attract" aria-label="Se atraen (flecha izquierda)">
+      <h3>SE ATRAEN</h3>
+      <div class="mini" id="miniA"></div>
+      <p>Arrastra aquí el par o toca esta zona</p>
+    </button>
+
+    <section class="center" id="center">
+      <div class="ask" id="ask">¿Qué pasará con este par de cargas?</div>
+      <div class="pair" id="card" aria-label="Par de cargas: arrástralo a una zona"></div>
+      <div class="demo" id="demo" hidden></div>
+      <div class="msg" id="msg" aria-live="polite"></div>
+      <div class="hint" id="hint">Arrástralo a una zona o usa las flechas ← →</div>
+    </section>
+
+    <button class="zone repel" id="zR" data-z="repel" aria-label="Se repelen (flecha derecha)">
+      <h3>SE REPELEN</h3>
+      <div class="mini" id="miniR"></div>
+      <p>Arrastra aquí el par o toca esta zona</p>
+    </button>
+  </main>
+
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <div class="foot">EM·LAB · Colegio El Paraíso de Manuela Beltrán IED</div>
+
+  <div class="banner" id="banner" hidden><h2 id="bT"></h2><p id="bS"></p></div>
+
+  <section class="overlay" id="start">
+    <div class="card">
+      <div class="hero" id="heroA"></div>
+      <h1>¿Se atraen<br>o se repelen?</h1>
+      <p>Pon a prueba lo que sabes de las <b>cargas eléctricas</b>. ¡Tienes 15 pares, 3 niveles y 3 vidas!</p>
+      <div class="steps">
+        <div><b>1 · MIRA</b>Observa el par de cargas u objetos.</div>
+        <div><b>2 · DECIDE</b>¿Se atraen o se repelen?</div>
+        <div><b>3 · ARRASTRA</b>Lleva el par a su zona antes de que se acabe el tiempo.</div>
+      </div>
+      <button class="big" id="play">¡JUGAR!</button>
+      <p id="best" style="font-size:12px;color:#9fb0cc"></p>
+    </div>
+  </section>
+
+  <section class="overlay" id="end" hidden>
+    <div class="card">
+      <h1 id="eT">¡Juego terminado!</h1>
+      <div class="stars" id="eStars"></div>
+      <div class="rank" id="eRank"></div>
+      <div class="res">
+        <div><small>Puntos</small><b id="eScore">0</b></div>
+        <div><small>Aciertos</small><b id="eAcc">0%</b></div>
+        <div><small>Mejor racha</small><b id="eStreak">0</b></div>
+      </div>
+      <p id="eMsg"></p>
+      <button class="big" id="again">JUGAR DE NUEVO</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var SVG={
+  heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8 3.2 4.5 6.7 4.5c2 0 3.5 1 5.3 3 1.8-2 3.3-3 5.3-3 3.5 0 5.7 3.5 4.2 7.3C19.5 16.4 12 21 12 21z"/></svg>',
+  star:'<svg viewBox="0 0 24 24"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
+  right:'<svg viewBox="0 0 48 24"><path d="M3 12h38M31 3l12 9-12 9"/></svg>',
+  left:'<svg viewBox="0 0 48 24"><path d="M45 12H7M17 3 5 12l12 9"/></svg>',
+  on:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.2 6a8.5 8.5 0 0 1 0 12"/></svg>',
+  off:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9l5 6M21 9l-5 6"/></svg>'
+};
+function ball(s,extra){var c=s==='+'?'pos':(s==='-'?'neg':'neu');var t=s==='+'?'+':(s==='-'?'\u2212':'0');return '<div class="ball '+c+(extra?' '+extra:'')+'"><span>'+t+'</span></div>';}
+function ch(c){return '<div class="ch">'+ball(c.s)+'<div class="cap">'+c.n+'</div></div>';}
+
+/* ---------- contenido ---------- */
+var P='Cargas del mismo signo se repelen.', O='Cargas de signo opuesto se atraen.';
+var LEVELS=[
+ {name:'Nivel 1 · Los signos',sub:'Cargas puntuales',time:12,pool:[
+  {a:{s:'+',n:'Carga positiva'},b:{s:'+',n:'Carga positiva'},ans:'repel',why:P},
+  {a:{s:'-',n:'Carga negativa'},b:{s:'-',n:'Carga negativa'},ans:'repel',why:P},
+  {a:{s:'+',n:'Carga positiva'},b:{s:'-',n:'Carga negativa'},ans:'attract',why:O},
+  {a:{s:'-',n:'Carga negativa'},b:{s:'+',n:'Carga positiva'},ans:'attract',why:O},
+  {a:{s:'+',n:'Protón'},b:{s:'+',n:'Protón'},ans:'repel',why:'Dos protones tienen el mismo signo: se repelen.'},
+  {a:{s:'-',n:'Electrón'},b:{s:'+',n:'Protón'},ans:'attract',why:'El electrón (\u2212) y el protón (+) tienen signos opuestos: se atraen.'},
+  {a:{s:'-',n:'Electrón'},b:{s:'-',n:'Electrón'},ans:'repel',why:'Dos electrones tienen el mismo signo: se repelen.'}]},
+ {name:'Nivel 2 · Objetos frotados',sub:'Electrización por frotamiento',time:10,pool:[
+  {a:{s:'+',n:'Varilla de vidrio frotada con seda'},b:{s:'-',n:'Paño de seda'},ans:'attract',why:'Al frotarse, el vidrio queda positivo y la seda negativa: se atraen.'},
+  {a:{s:'-',n:'Globo frotado con lana'},b:{s:'-',n:'Otro globo frotado con lana'},ans:'repel',why:'Los dos globos quedan con carga negativa: se repelen.'},
+  {a:{s:'-',n:'Globo frotado con cabello'},b:{s:'+',n:'Cabello'},ans:'attract',why:'El globo gana electrones (\u2212) y el cabello queda positivo: se atraen.'},
+  {a:{s:'+',n:'Carga de +3 µC'},b:{s:'+',n:'Carga de +5 µC'},ans:'repel',why:'No importa el valor: ambas son positivas, así que se repelen.'},
+  {a:{s:'-',n:'Carga de \u22122 µC'},b:{s:'+',n:'Carga de +6 µC'},ans:'attract',why:'Signos opuestos: se atraen, sin importar el tamaño de cada carga.'},
+  {a:{s:'-',n:'Regla de plástico frotada con piel'},b:{s:'+',n:'Piel'},ans:'attract',why:'El plástico queda negativo y la piel positiva: se atraen.'},
+  {a:{s:'-',n:'Carga de \u22124 µC'},b:{s:'-',n:'Carga de \u22121 µC'},ans:'repel',why:'Las dos son negativas: se repelen.'}]},
+ {name:'Nivel 3 · ¡Reto experto!',sub:'Cuerpos neutros, iones y más',time:9,pool:[
+  {a:{s:'-',n:'Globo cargado'},b:{s:'0',n:'Pared neutra'},ans:'attract',why:'El globo reorganiza las cargas de la pared (polarización): la parte cercana queda con carga contraria y se atraen.'},
+  {a:{s:'+',n:'Varilla de vidrio cargada'},b:{s:'0',n:'Papelitos neutros'},ans:'attract',why:'Un cuerpo cargado atrae a los cuerpos neutros por polarización.'},
+  {a:{s:'-',n:'Peine frotado'},b:{s:'0',n:'Chorrito de agua'},ans:'attract',why:'El agua es neutra, pero sus moléculas se orientan hacia el peine: se atrae.'},
+  {a:{s:'+',n:'Varilla de vidrio frotada'},b:{s:'+',n:'Otra varilla frotada'},ans:'repel',why:'Las dos quedan positivas: se repelen.'},
+  {a:{s:'+',n:'Esfera metálica cargada'},b:{s:'0',n:'Esfera metálica neutra'},ans:'attract',why:'La esfera neutra se polariza (inducción) y es atraída.'},
+  {a:{s:'+',n:'Ion sodio (Na⁺)'},b:{s:'-',n:'Ion cloruro (Cl⁻)'},ans:'attract',why:'Signos opuestos: por eso se unen en la sal común.'},
+  {a:{s:'-',n:'Ion cloruro (Cl⁻)'},b:{s:'-',n:'Otro ion cloruro (Cl⁻)'},ans:'repel',why:'Dos iones negativos se repelen.'},
+  {a:{s:'-',n:'Regla frotada'},b:{s:'0',n:'Trocitos de papel'},ans:'attract',why:'Una regla cargada atrae al papel neutro.'}]}
+];
+var PER=5, LIVES=3, TOTAL=LEVELS.length*PER;
+
+/* ---------- estado ---------- */
+var S={phase:'idle',rounds:[],i:0,score:0,streak:0,best:0,lives:LIVES,ok:0,done:0,t0:0,tlen:12,raf:0,nextT:0,hot:null};
+var el={card:$('#card'),demo:$('#demo'),msg:$('#msg'),ask:$('#ask'),hint:$('#hint'),tbar:$('#tbar'),dots:$('#dots'),score:$('#score'),streak:$('#streak'),lives:$('#lives'),lvl:$('#lvl'),
+  zA:$('#zA'),zR:$('#zR'),banner:$('#banner'),start:$('#start'),end:$('#end'),snd:$('#snd')};
+var muted=false,AC=null;
+function store(k,v){try{if(v===undefined)return window.localStorage.getItem(k);window.localStorage.setItem(k,v);}catch(e){return null;}}
+var BESTK='emlab_cargas_mejor';
+
+/* ---------- sonido ---------- */
+function tone(f,d,type,g,delay){
+  if(muted)return; try{
+    if(!AC){var C=window.AudioContext||window.webkitAudioContext; if(!C)return; AC=new C();}
+    if(AC.state==='suspended')AC.resume();
+    var t=AC.currentTime+(delay||0),o=AC.createOscillator(),v=AC.createGain();
+    o.type=type||'sine';o.frequency.setValueAtTime(f,t);v.gain.setValueAtTime(0.0001,t);v.gain.exponentialRampToValueAtTime(g||0.12,t+0.02);v.gain.exponentialRampToValueAtTime(0.0001,t+d);
+    o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d+0.05);
+  }catch(e){}
+}
+var SFX={
+  ok:function(){tone(660,.14,'triangle',.14);tone(880,.2,'triangle',.14,.1);},
+  bad:function(){tone(190,.3,'sawtooth',.1);tone(130,.35,'sawtooth',.1,.12);},
+  up:function(){[523,659,784,1047].forEach(function(f,k){tone(f,.18,'triangle',.13,k*.09);});},
+  win:function(){[523,659,784,1047,1319].forEach(function(f,k){tone(f,.25,'triangle',.14,k*.11);});},
+  tick:function(){tone(900,.05,'square',.04);}
+};
+function drawSnd(){el.snd.innerHTML=muted?SVG.off:SVG.on;}
+
+/* ---------- HUD ---------- */
+function drawLives(){var h='';for(var k=0;k<LIVES;k++)h+=SVG.heart.replace('<svg','<svg class="'+(k<S.lives?'':'lost')+'"');el.lives.innerHTML=h;}
+function drawHud(){el.score.textContent=S.score;el.streak.textContent=S.streak;el.streak.className=S.streak>=3?'hot':'';drawLives();}
+function drawDots(){var h='';for(var k=0;k<TOTAL;k++){var c=S.rounds[k]&&S.rounds[k].res?S.rounds[k].res:(k===S.i?'now':'');h+='<i class="'+c+'"></i>';}el.dots.innerHTML=h;}
+function lvlOf(i){return Math.min(LEVELS.length-1,Math.floor(i/PER));}
+
+/* ---------- partida ---------- */
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t;}return a;}
+function build(){
+  var r=[];LEVELS.forEach(function(L,li){shuffle(L.pool).slice(0,PER).forEach(function(it){
+    var sw=Math.random()<.5; r.push({a:sw?it.b:it.a,b:sw?it.a:it.b,ans:it.ans,why:it.why,lv:li,res:''});});});
+  return r;
+}
+function newGame(){
+  S.rounds=build();S.i=0;S.score=0;S.streak=0;S.best=0;S.lives=LIVES;S.ok=0;S.done=0;
+  el.start.hidden=true;el.end.hidden=true;drawHud();drawDots();banner(0,true);
+}
+function banner(li,first){
+  var L=LEVELS[li];S.phase='banner';el.lvl.textContent=L.name.split(' · ')[0];
+  $('#bT').textContent=L.name;$('#bS').textContent=L.sub+' · '+L.time+' s por par';el.banner.hidden=false;
+  el.card.style.display='none';el.demo.hidden=true;el.msg.innerHTML='';
+  if(!first)SFX.up();
+  clearTimeout(S.nextT);S.nextT=setTimeout(function(){el.banner.hidden=true;round();},first?1500:1700);
+}
+function round(){
+  var R=S.rounds[S.i],L=LEVELS[R.lv];S.phase='play';S.tlen=L.time;
+  el.lvl.textContent=L.name.split(' · ')[0];
+  el.card.innerHTML=ch(R.a)+'<div class="vs">VS</div>'+ch(R.b);
+  el.card.style.display='';el.card.style.transform='';el.card.className='pair';void el.card.offsetWidth;el.card.className='pair pop';
+  el.demo.hidden=true;el.demo.innerHTML='';el.demo.className='demo';el.msg.className='msg';el.msg.innerHTML='';
+  el.ask.style.display='';el.hint.style.display='';drawDots();
+  S.t0=performance.now();cancelAnimationFrame(S.raf);S.raf=requestAnimationFrame(tick);
+}
+function tick(now){
+  if(S.phase!=='play')return;
+  var f=1-(now-S.t0)/(S.tlen*1000);
+  if(f<=0){el.tbar.style.transform='scaleX(0)';answer('timeout');return;}
+  el.tbar.style.transform='scaleX('+f.toFixed(4)+')';el.tbar.style.backgroundPosition=((1-f)*100)+'% 0';
+  S.raf=requestAnimationFrame(tick);
+}
+function answer(choice){
+  if(S.phase!=='play')return;
+  S.phase='fb';cancelAnimationFrame(S.raf);
+  var R=S.rounds[S.i],right=(choice===R.ans),left=Math.max(0,1-(performance.now()-S.t0)/(S.tlen*1000));
+  S.done++;
+  var gain=0;
+  if(right){
+    S.ok++;S.streak++;S.best=Math.max(S.best,S.streak);
+    var mult=Math.min(2.5,1+0.25*(S.streak-1));
+    gain=Math.round((100*(R.lv+1)+50*left)*mult);S.score+=gain;R.res='ok';SFX.ok();
+  }else{
+    S.streak=0;S.lives--;R.res='bad';SFX.bad();
+  }
+  drawHud();drawDots();
+  // demo
+  var word=R.ans==='attract'?'¡Se atraen!':'¡Se repelen!';
+  var arrL=R.ans==='attract'?SVG.right:SVG.left, arrR=R.ans==='attract'?SVG.left:SVG.right;
+  el.card.style.display='none';el.ask.style.display='none';el.hint.style.display='none';
+  el.demo.className='demo '+R.ans+(right?'':' shake');
+  el.demo.innerHTML='<div class="bw l">'+ball(R.a.s)+'<div class="arr">'+arrL+'</div></div><div class="bw r">'+ball(R.b.s)+'<div class="arr">'+arrR+'</div></div><div class="spark"></div>';
+  el.demo.hidden=false;
+  var head=right?('¡Correcto! '+word+' <em style="font-style:normal;color:#ffd98a">+'+gain+'</em>'):(choice==='timeout'?'¡Se acabó el tiempo! '+word:'Casi… '+word);
+  el.msg.className='msg '+(right?'ok':'bad');
+  el.msg.innerHTML='<b>'+head+'</b><span>'+R.why+'</span><button class="next" id="nx">'+((S.lives<=0||S.i>=TOTAL-1)?'Ver resultados':'Siguiente ▶')+'</button>';
+  $('#nx').addEventListener('click',next);
+  if(right){var r=el.demo.getBoundingClientRect(),a=$('#app').getBoundingClientRect();burst(r.left-a.left+r.width/2,r.top-a.top+r.height/2,right&&S.streak>=3?70:40);float(gain);}
+  clearTimeout(S.nextT);S.nextT=setTimeout(next,right?3400:5200);
+}
+function next(){
+  if(S.phase!=='fb')return;clearTimeout(S.nextT);S.phase='x';
+  if(S.lives<=0||S.i>=TOTAL-1){return finish();}
+  S.i++;var prev=S.rounds[S.i-1].lv,cur=S.rounds[S.i].lv;
+  if(cur!==prev)banner(cur);else round();
+}
+function float(g){var d=document.createElement('div');d.className='pts';d.textContent='+'+g;$('#center').appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},1300);}
+
+function finish(){
+  S.phase='end';cancelAnimationFrame(S.raf);
+  var acc=S.done?Math.round(100*S.ok/S.done):0,full=S.i>=TOTAL-1&&S.lives>0,stars=0;
+  if(S.ok>=5)stars=1;if(full&&acc>=70)stars=2;if(full&&acc>=90)stars=3;
+  var rank=S.score>=2800?'Maestro de las cargas':S.score>=1800?'Electrón veloz':S.score>=900?'Aprendiz de Coulomb':'Explorador de la electrostática';
+  var prev=parseInt(store(BESTK)||'0',10)||0,newbest=S.score>prev;if(newbest)store(BESTK,String(S.score));
+  $('#eT').textContent=full?'¡Completaste el juego!':'¡Te quedaste sin vidas!';
+  var sh='';for(var k=0;k<3;k++)sh+=SVG.star.replace('<svg','<svg class="'+(k<stars?'on':'')+'" style="animation-delay:'+(k*0.25)+'s"');$('#eStars').innerHTML=sh;
+  $('#eRank').textContent=rank;$('#eScore').textContent=S.score;$('#eAcc').textContent=acc+'%';$('#eStreak').textContent=S.best;
+  $('#eMsg').textContent=(newbest&&S.score>0?'¡Nuevo récord personal! ':'')+(stars===3?'Dominas la regla de las cargas: signos iguales se repelen y signos opuestos se atraen.':stars>=1?'Muy bien. Repasa los casos con cuerpos neutros (polarización) y vuelve a intentarlo.':'Repasa: signos iguales se repelen, signos opuestos se atraen. ¡Inténtalo de nuevo!');
+  el.end.hidden=false;if(stars>0){SFX.win();burst($('#app').clientWidth/2,$('#app').clientHeight/3,90);}else SFX.bad();
+}
+
+/* ---------- arrastrar y soltar ---------- */
+var drag=null;
+function overZone(){
+  var c=el.card.getBoundingClientRect(),cx=c.left+c.width/2,cy=c.top+c.height/2,res=null;
+  [el.zA,el.zR].forEach(function(z){var r=z.getBoundingClientRect(),p=18;if(cx>r.left-p&&cx<r.right+p&&cy>r.top-p&&cy<r.bottom+p)res=z;});
+  return res;
+}
+el.card.addEventListener('pointerdown',function(e){
+  if(S.phase!=='play')return;
+  drag={x:e.clientX,y:e.clientY,moved:false,id:e.pointerId};
+  try{el.card.setPointerCapture(e.pointerId);}catch(x){}
+  el.card.className='pair drag';
+});
+el.card.addEventListener('pointermove',function(e){
+  if(!drag||S.phase!=='play')return;
+  var dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;
+  el.card.style.transform='translate('+dx+'px,'+dy+'px) rotate('+Math.max(-12,Math.min(12,dx/22))+'deg)';
+  var z=overZone();if(z!==S.hot){if(S.hot)S.hot.classList.remove('hot');if(z){z.classList.add('hot');SFX.tick();}S.hot=z;}
+});
+function endDrag(e){
+  if(!drag)return;var z=overZone();drag=null;
+  if(S.hot){S.hot.classList.remove('hot');S.hot=null;}
+  el.card.className='pair';
+  if(z&&S.phase==='play'){answer(z===el.zA?'attract':'repel');}
+  else el.card.style.transform='';
+}
+el.card.addEventListener('pointerup',endDrag);
+el.card.addEventListener('pointercancel',function(){drag=null;el.card.className='pair';el.card.style.transform='';});
+el.zA.addEventListener('click',function(){answer('attract');});
+el.zR.addEventListener('click',function(){answer('repel');});
+document.addEventListener('keydown',function(e){
+  if(!el.start.hidden||!el.end.hidden){if(e.key==='Enter'&&!el.start.hidden)$('#play').click();return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();answer('attract');}
+  else if(e.key==='ArrowRight'){e.preventDefault();answer('repel');}
+  else if((e.key==='Enter'||e.key===' ')&&S.phase==='fb'){e.preventDefault();next();}
+});
+$('#play').addEventListener('click',function(){tone(1,.01,'sine',.0001);newGame();});
+$('#again').addEventListener('click',newGame);
+el.snd.addEventListener('click',function(){muted=!muted;drawSnd();store('emlab_cargas_mute',muted?'1':'0');});
+
+/* ---------- fondo con física y confeti ---------- */
+var bg=$('#bg'),bx=bg.getContext('2d'),fx=$('#fx'),fc=fx.getContext('2d'),W=0,H=0,parts=[],conf=[];
+function size(){var a=$('#app'),r=a.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);W=Math.max(1,r.width);H=Math.max(1,r.height);
+  [bg,fx].forEach(function(c){c.width=Math.round(W*d);c.height=Math.round(H*d);});bx.setTransform(d,0,0,d,0,0);fc.setTransform(d,0,0,d,0,0);}
+function seed(){parts=[];var n=Math.round(Math.min(46,Math.max(18,W*H/16000)));for(var k=0;k<n;k++)parts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,q:Math.random()<.5?1:-1,r:4+Math.random()*7});}
+function loop(){
+  bx.clearRect(0,0,W,H);
+  for(var i=0;i<parts.length;i++){var a=parts[i];
+    for(var j=i+1;j<parts.length;j++){var b=parts[j],dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy+400,f=(-a.q*b.q)*38/d2,d=Math.sqrt(d2);
+      if(d<260){var fx_=dx/d*f,fy_=dy/d*f;a.vx+=fx_*.05;a.vy+=fy_*.05;b.vx-=fx_*.05;b.vy-=fy_*.05;}}
+  }
+  for(var k=0;k<parts.length;k++){var p=parts[k];p.vx*=.995;p.vy*=.995;var sp=Math.hypot(p.vx,p.vy);if(sp>1.1){p.vx*=1.1/sp;p.vy*=1.1/sp;}
+    p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.x=Math.max(0,Math.min(W,p.x));p.y=Math.max(0,Math.min(H,p.y));
+    var col=p.q>0?'255,84,112':'82,168,255';
+    var g=bx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);g.addColorStop(0,'rgba('+col+',.55)');g.addColorStop(1,'rgba('+col+',0)');bx.fillStyle=g;bx.beginPath();bx.arc(p.x,p.y,p.r*3,0,6.283);bx.fill();
+    bx.fillStyle='rgba('+col+',.85)';bx.beginPath();bx.arc(p.x,p.y,p.r*.7,0,6.283);bx.fill();
+    bx.strokeStyle='rgba(255,255,255,.8)';bx.lineWidth=1.3;bx.beginPath();bx.moveTo(p.x-p.r*.4,p.y);bx.lineTo(p.x+p.r*.4,p.y);if(p.q>0){bx.moveTo(p.x,p.y-p.r*.4);bx.lineTo(p.x,p.y+p.r*.4);}bx.stroke();}
+  // confeti
+  fc.clearRect(0,0,W,H);
+  for(var c=conf.length-1;c>=0;c--){var q=conf[c];q.vy+=.18;q.x+=q.vx;q.y+=q.vy;q.vx*=.99;q.rot+=q.vr;q.life--;
+    if(q.life<=0||q.y>H+20){conf.splice(c,1);continue;}
+    fc.save();fc.translate(q.x,q.y);fc.rotate(q.rot);fc.globalAlpha=Math.min(1,q.life/25);fc.fillStyle=q.c;fc.fillRect(-q.w/2,-q.h/2,q.w,q.h);fc.restore();}
+  requestAnimationFrame(loop);
+}
+function burst(x,y,n){var cols=['#ff5470','#52a8ff','#f5b942','#34d399','#a78bfa','#ffffff'];
+  for(var k=0;k<n;k++){var a=Math.random()*6.283,s=2+Math.random()*7;conf.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,w:5+Math.random()*6,h:3+Math.random()*5,rot:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[k%cols.length],life:70+Math.random()*50});}
+  if(conf.length>260)conf.splice(0,conf.length-260);}
+
+/* ---------- inicio ---------- */
+function init(){
+  muted=store('emlab_cargas_mute')==='1';drawSnd();
+  $('#heroA').innerHTML=ball('+')+SVG.right+SVG.left+ball('-');
+  $('#miniA').innerHTML=ball('+')+SVG.right+SVG.left+ball('-');
+  $('#miniR').innerHTML=ball('+')+SVG.left+SVG.right+ball('+');
+  var b=parseInt(store(BESTK)||'0',10)||0;$('#best').textContent=b>0?'Tu mejor puntaje: '+b:'';
+  drawHud();size();seed();requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){size();seed();});
+}
+init();
+})();
+</script>
+</body>
+</html>
