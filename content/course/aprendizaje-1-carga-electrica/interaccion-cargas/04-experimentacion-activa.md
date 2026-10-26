@@ -7,7 +7,7 @@ type: book
 <div class="etapa-badge exp-activa"><span class="eb-icon">🧪</span>Experimentación activa</div>
 <div id="emlab-aviso-slot"></div>
 
-## 4.1 Laboratorio virtual / simulador
+## 4.1 Actividad Preliminar / simulador
 
 Usa el hero interactivo de arreglos de cargas puntuales para experimentar libremente con distintas combinaciones de signos.
 Puedes generar varios arreglos y predecir que tipo de fuerza (atracción o repulsión) se presenta cuanto interactuan las cargas.
@@ -16,17 +16,19 @@ Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
 <div class="emlab-embed" data-src="/uploads/hero-cargas-puntuales.html" data-h="480"></div>
 <script src="/js/emlab-embed.js"></script> 
 
-### 4.1.2 Guía
+### 4.1.1 Guía
 
 1. Coloca dos cargas positivas y observa la dirección de la fuerza que se dibuja sobre cada una.
 2. Cambia una de las cargas a negativa y compara.
 3. Agrega una tercera carga y observa cómo cambia la fuerza neta sobre las otras dos (superposición).
 4. Registra en una tabla: combinación de signos → atracción o repulsión.
 
-## 4.2 Actividad interactiva
+### 4.2 Actividades interactivas
 
-1. Abre la simulación de Javalab de globos colgantes de la página. Ajusta el signo y el valor de las dos cargas en los casos de la tabla y observa la fuerza.
-2. Selecciona: Globos Colgantes y transparencia máxima de las linas de campo.
+## 4.2.1 Globos Colgantes
+
+1.Selecciona: Globos Colgantes(Hanging balloons) y elimina las líneas de campo transparencia máxima de las lineas de campo(Field line transparency).
+2. Abre la simulación de Javalab de globos colgantes de la página. Ajusta el signo y el valor de las dos cargas en los casos de la tabla y observa la fuerza.
 
 <div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
   <iframe src="https://javalab.org/en/electric_field_line_en/" title="Líneas de campo eléctrico"></iframe>
@@ -51,13 +53,13 @@ Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"> </td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"> </td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+       <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
 7. Responde las siguientes preguntas:
@@ -67,11 +69,21 @@ Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
 
   * ¿Que otros fenómenos encontraste al usar la simulación?
 
-JUEGA UN POCO
- <iframe src="/uploads/juego-atraen-repelen.html" width="100%" height="640" style="border:none; border-radius:12px;" title="Juego: ¿Se atraen o se repelen?" loading="lazy"></iframe> 
+## 4.2.2 Juego de Cargas
 
- <div class="emlab-embed" data-src="/uploads/juego-atraen-repelen.html" data-h="640"></div>
+Pasa todos los niveles: 
+
+<div class="emlab-embed" data-src="/uploads/juego-atraen-repelen.html" data-h="640"></div>
 <script src="/js/emlab-embed.js"></script> 
+
+## 4.2.3 Electroscopio
+
+El electroscopio es un instrumento creado que permite identificar la interacción entre cargas.
+Observa la simulación: pueden modificar y mover la barra que esta a la izquierda, puedes dejarla cargada positiva o menativamente.
+1. Acerca la barra al electroscopio ¿Qué puedes Observar? Describe lo que sucede ¿Podrías explicarlo?
+2. Si alejas la barra y acercas la mano, ¿Qué observas?
+3. Si acercas la barra, la dejas cerca al electroscopio y posteriormente acercas la mano. ¿Qué observas?
+4. Si pruebas ahora con la barra cargada de forma diferente ¿Observas lo mismo?
 
 <div id="emlab-javalab-electroscope" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
 <script>
@@ -101,12 +113,18 @@ JUEGA UN POCO
 
 ## ELECTROSCOPIO EN 3D
 
+En esta animación puedes observar el electroscopio desde diferentes perspectivas. 
+
 <div class="sketchfab-embed-wrapper"> <iframe title="Gold Leaf Electroscope" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="740" height="580" src="https://sketchfab.com/models/1d7ce32ae2ff4c1496ec280ea00eff8a/embed?ui_theme=dark"> </iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/3d-models/gold-leaf-electroscope-1d7ce32ae2ff4c1496ec280ea00eff8a" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Gold Leaf Electroscope </a> by <a href="https://sketchfab.com/vishnu27990" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> vishnu </a> on <a href="https://sketchfab.com" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div>
 
 
-
+## 4.2.4 Chorro de Agua 
 <!-- Pega aquí tu iframe de Genially -->
-Interacción de un chorro de agua con un objeto cargado. 
+El interacción de objetos cargados se puede observar con diversos elementos, en este caso hay un chorro de agua con un objeto cargado. 
+
+1. Puedes modificar el estado de barra, por los siguientes Not Charged , (+) Charged y (-) Charged
+2. Realiza la descripción de la simulación.
+
 <div id="emlab-javalab- polarity_of_water" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
 <script>
 (function(){
@@ -132,6 +150,10 @@ Interacción de un chorro de agua con un objeto cargado.
   window.addEventListener('resize', render);
 })();
 </script>
+
+Observa la siguiente infografía donde se explica lo que sucede: 
+
+<img src="/img/interaccion10.jpg" alt="Simulación de triboelectricidad: gato y globo" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
