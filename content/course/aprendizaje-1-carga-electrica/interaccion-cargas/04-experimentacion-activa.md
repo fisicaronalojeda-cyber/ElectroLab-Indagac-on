@@ -67,7 +67,9 @@ Puedes registrar algunos hipotesis sobre las fuerzas que se podrían presentar.
 
   * ¿Que otros fenómenos encontraste al usar la simulación?
 
-    
+JUEGA UN POCO
+ <iframe src="/uploads/juego-atraen-repelen.html" width="100%" height="640" style="border:none; border-radius:12px;" title="Juego: ¿Se atraen o se repelen?" loading="lazy"></iframe> 
+ 
 Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
 <div id="emlab-javalab-electroscope" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
 <script>
