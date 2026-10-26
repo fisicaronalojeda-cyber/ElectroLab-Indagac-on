@@ -27,7 +27,7 @@ Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
 
 ## 4.2.1 Globos Colgantes
 
-1.Selecciona: Globos Colgantes(Hanging balloons) y elimina las líneas de campo transparencia máxima de las lineas de campo(Field line transparency).
+1. Selecciona: Globos Colgantes(Hanging balloons) y elimina las líneas de campo transparencia máxima de las lineas de campo(Field line transparency).
 2. Abre la simulación de Javalab de globos colgantes de la página. Ajusta el signo y el valor de las dos cargas en los casos de la tabla y observa la fuerza.
 
 <div class="sim-wrap" data-mode="scroll" data-w="1300" data-h="800">
@@ -62,11 +62,11 @@ Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
        <tr><td style="border:1px solid #64748b;padding:8px;height:40px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
-7. Responde las siguientes preguntas:
-  * ¿Si tomas una carga positiva para un globo , y el segundo globo lo dejas sin carga, posteriormente el globo sin cargas modificas su valor para que los dos globos 
-  se atraen; si sigues aumentando la carga llega un momento en que los dos globos quedan juntos "pegados", si finalmente modificas los valores de carga,+
-  el globo sin carga (neutro) , se mantiene "pegado" ¿Porque cree que sucede esto?
-
+7. Responde las siguientes preguntas:  
+  *  Si tomas una carga positiva para un globo, y el segundo globo lo dejas sin carga.
+  *  posteriormente el globo sin cargas modificas su valor para que los dos globos se atraen.
+  *  si sigues aumentando la carga llega un momento en que los dos globos quedan juntos "pegados".
+  *  si finalmente modificas los valores de carga y el globo sin carga (neutro), se mantiene "pegado" ¿Porque cree que sucede esto?
   * ¿Que otros fenómenos encontraste al usar la simulación?
 
 ## 4.2.2 Juego de Cargas
