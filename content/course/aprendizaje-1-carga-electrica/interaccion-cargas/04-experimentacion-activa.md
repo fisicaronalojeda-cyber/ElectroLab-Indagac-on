@@ -11,10 +11,10 @@ type: book
 
 Usa el hero interactivo de arreglos de cargas puntuales para experimentar libremente con distintas combinaciones de signos.
 Puedes generar varios arreglos y predecir que tipo de fuerza (atracción o repulsión) se presenta cuanto interactuan las cargas.
-Puedes registrar algunos hipotesis sobre las fuerzas que se podrían presentar.
+Puedes registrar algunas hipotesis sobre las fuerzas que se podrían presentar.
 
-<iframe src="/uploads/hero-cargas-puntuales.html" width="100%" height="480" style="border:none;"></iframe>
-
+<div class="emlab-embed" data-src="/uploads/hero-cargas-puntuales.html" data-h="480"></div>
+<script src="/js/emlab-embed.js"></script> 
 
 ### 4.1.2 Guía
 
@@ -69,8 +69,10 @@ Puedes registrar algunos hipotesis sobre las fuerzas que se podrían presentar.
 
 JUEGA UN POCO
  <iframe src="/uploads/juego-atraen-repelen.html" width="100%" height="640" style="border:none; border-radius:12px;" title="Juego: ¿Se atraen o se repelen?" loading="lazy"></iframe> 
- 
-Crea una actividad de arrastrar y soltar en Genially donde el estudiante deba clasificar pares de cargas como 'se atraen' o 'se repelen'.
+
+ <div class="emlab-embed" data-src="/uploads/juego-atraen-repelen.html" data-h="640"></div>
+<script src="/js/emlab-embed.js"></script> 
+
 <div id="emlab-javalab-electroscope" style="position:relative; width:100%; overflow:hidden; border-radius:12px; background:#f0f0f0;"></div>
 <script>
 (function(){
