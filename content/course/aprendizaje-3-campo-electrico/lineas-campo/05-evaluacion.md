@@ -13,6 +13,11 @@ Responde:
 2. ¿Es posible que una línea de campo conecte dos cargas positivas? Explica por qué.
 3. Dibuja el patrón esperado de líneas de campo para dos cargas negativas iguales.
 
+## Evaluación Interactiva #
+
+<div class="emlab-embed" data-src="/uploads/evaluacion-a3-campo-electrico.html" data-h="720"></div>
+<script src="/js/emlab-embed.js"></script>
+
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
 </div>
