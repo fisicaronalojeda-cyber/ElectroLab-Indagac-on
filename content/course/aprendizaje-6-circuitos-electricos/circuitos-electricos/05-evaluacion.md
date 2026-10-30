@@ -13,6 +13,11 @@ Responde:
 2. ¿Qué pasa con las demás bombillas si una se funde en un circuito en paralelo? ¿Y en uno en serie?
 3. Menciona un ejemplo cotidiano de un circuito en paralelo (pista: la instalación eléctrica de una casa).
 
+##Evaluación Interactiva #
+
+<div class="emlab-embed" data-src="/uploads/evaluacion-a6-circuitos-electricos.html" data-h="720"></div>
+<script src="/js/emlab-embed.js"></script>
+
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
 </div>
