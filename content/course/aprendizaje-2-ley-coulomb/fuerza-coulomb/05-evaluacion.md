@@ -13,6 +13,10 @@ Responde:
 2. Si la distancia entre dos cargas se triplica, ¿en qué factor cambia la fuerza?
 3. ¿Por qué la ley de Coulomb y la ley de gravitación de Newton tienen la misma forma matemática?
 
+## Evaluación Interactiva #
+<div class="emlab-embed" data-src="/uploads/evaluacion-a2-fuerza-electrica.html" data-h="720"></div>
+<script src="/js/emlab-embed.js"></script>
+
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
 </div>
