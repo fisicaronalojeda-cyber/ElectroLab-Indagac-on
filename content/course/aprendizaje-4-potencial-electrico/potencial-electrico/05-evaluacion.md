@@ -13,6 +13,12 @@ Responde:
 2. ¿Qué relación hay entre diferencia de potencial y el movimiento de cargas en un circuito?
 3. Calcula el potencial a 5 cm de una carga de 2 µC.
 
+## Evaluación Interactiva #
+
+<div class="emlab-embed" data-src="/uploads/evaluacion-a4-energia-potencial.html" data-h="720"></div>
+<script src="/js/emlab-embed.js"></script>
+
+
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
 </div>
