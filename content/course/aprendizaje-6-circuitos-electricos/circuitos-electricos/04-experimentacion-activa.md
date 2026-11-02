@@ -25,7 +25,11 @@ Usa el Kit de construcción de circuitos (laboratorio virtual) de PhET para arma
 Revisa la siguiente animación:
 <a href="/circuito-electrico-simple.html" target="_blank" style="display:inline-block;background:#1BA394;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:700;">▶ Abrir la simulación del circuito eléctrico</a>
 
-En Genially, diseña un diagrama interactivo donde el estudiante deba identificar si un circuito dado está en serie, en paralelo, o es mixto.
+
+LABORATORIO CIRCUITOS: 
+
+<div class="emlab-embed" data-src="/uploads/laboratorio-a6-circuitos-electricos.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script>
 
 <!-- Pega aquí tu iframe de Genially -->
 
