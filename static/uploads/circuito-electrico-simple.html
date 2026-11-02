@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuito eléctrico — EM·LAB</title>
+<style>
+  :root{
+    --bg: #0F1620;
+    --panel: #182233;
+    --panel-border: #26334A;
+    --wire: #9AA7B8;
+    --wire-off: #3E4A5E;
+    --text: #E7ECF2;
+    --muted: #8B93A7;
+    --accent: #D6449A;
+    --accent-soft: rgba(214,68,154,0.28);
+    --bulb-on: #F5B700;
+    --bulb-off: #4A4433;
+    --meter: #4FB3D9;
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 24px 48px; }
+  header h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { color: var(--muted); font-size: 0.98rem; line-height: 1.5; margin: 0 0 24px; max-width: 66ch; }
+  .topo-select { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+  .topo-select button {
+    background: var(--panel); color: var(--text); border: 1px solid var(--panel-border);
+    padding: 9px 16px; border-radius: 999px; font-size: 0.88rem; cursor: pointer; font-family: var(--font);
+  }
+  .topo-select button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+  .topo-select button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .layout { display: grid; grid-template-columns: 1.55fr 1fr; gap: 22px; align-items: start; }
+  @media (max-width: 780px) { .layout { grid-template-columns: 1fr; } }
+  .stage { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 8px; }
+  .stage svg { display: block; width: 100%; height: auto; }
+  .panel { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 20px; }
+  .control-block label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .control-block .value { color: var(--text); font-weight: 600; }
+  input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--wire-off); outline: none; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 0 4px var(--accent-soft); }
+  input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border: none; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 0 4px var(--accent-soft); }
+  .switch-row { display: flex; align-items: center; justify-content: space-between; }
+  .switch-btn { position: relative; width: 52px; height: 28px; border-radius: 999px; background: var(--wire-off); border: 1px solid var(--panel-border); cursor: pointer; padding: 0; transition: background 0.25s ease; }
+  .switch-btn[aria-pressed="true"] { background: var(--accent); }
+  .switch-btn .knob { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: var(--text); transition: transform 0.25s ease; }
+  .switch-btn[aria-pressed="true"] .knob { transform: translateX(24px); }
+  .switch-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .readouts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 4px; border-top: 1px solid var(--panel-border); }
+  .readouts .item { }
+  .readouts .num { font-size: 1.25rem; font-weight: 700; color: var(--meter); font-variant-numeric: tabular-nums; }
+  .readouts .lbl { font-size: 0.72rem; color: var(--muted); display:block; margin-bottom:2px; }
+  .readouts .unit { font-size: 0.75rem; color: var(--muted); margin-left: 3px; }
+  .explain { font-size: 0.92rem; line-height: 1.5; color: var(--text); background: rgba(255,255,255,0.03); border-radius: 10px; padding: 14px 16px; min-height: 3.2em; }
+  details { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 4px 16px; }
+  details summary { cursor: pointer; padding: 10px 0; font-size: 0.9rem; font-weight: 600; }
+  details p, details ul { color: var(--muted); font-size: 0.87rem; line-height: 1.55; margin: 6px 0 14px; padding-left: 18px; }
+  details li { margin-bottom: 6px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Circuito eléctrico</h1>
+    <p>Elige la configuración, ajusta voltaje y resistencias, y observa cómo cambian la corriente y el voltaje en cada punto del circuito.</p>
+  </header>
+
+  <div class="topo-select" role="group" aria-label="Configuración del circuito">
+    <button type="button" data-topo="single" aria-pressed="true">1 bombillo</button>
+    <button type="button" data-topo="series" aria-pressed="false">2 bombillos en serie</button>
+    <button type="button" data-topo="parallel" aria-pressed="false">2 bombillos en paralelo</button>
+  </div>
+
+  <div class="layout">
+    <div class="stage">
+      <svg viewBox="0 0 800 500" role="img" aria-label="Diagrama de un circuito eléctrico">
+
+        <!-- ============ TOPOLOGÍA: 1 BOMBILLO ============ -->
+        <g class="topo-group" id="topoSingle">
+          <path class="wirePath dotPath" data-branch="a" d="M150,380 L150,120 L360,120 L440,120 L550,120 L650,120 L650,380 L150,380" fill="none" stroke="var(--wire)" stroke-width="5" stroke-linejoin="round" />
+          <g class="battery">
+            <rect x="126" y="215" width="48" height="70" fill="var(--bg)" />
+            <line x1="126" y1="228" x2="174" y2="228" stroke="var(--wire)" stroke-width="6" />
+            <line x1="136" y1="248" x2="164" y2="248" stroke="var(--wire)" stroke-width="3" />
+            <line x1="126" y1="272" x2="174" y2="272" stroke="var(--wire)" stroke-width="6" />
+            <text x="185" y="233" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">+</text>
+            <text x="185" y="278" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">−</text>
+          </g>
+          <g class="switchGroup">
+            <circle cx="360" cy="120" r="5" fill="var(--wire)" />
+            <circle cx="440" cy="120" r="5" fill="var(--wire)" />
+            <line class="switchLever" x1="360" y1="120" x2="440" y2="120" stroke="var(--wire)" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <g class="meter ammeter" transform="translate(500,120)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">A</text>
+          </g>
+          <text class="ammeterReading" x="500" y="98" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.00 A</text>
+
+          <g class="meter voltmeter" transform="translate(95,250)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReading" x="95" y="295" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="bulb" data-bulb="a">
+            <circle class="bulbGlow" cx="650" cy="250" r="46" fill="var(--bulb-off)" opacity="0.35" />
+            <g class="bulbRays">
+            <line class="ray" data-cx="650" data-cy="250" data-angle="0" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="45" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="90" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="135" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="180" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="225" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="270" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="315" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            </g>
+
+            <circle class="bulbCore" cx="650" cy="250" r="32" fill="var(--panel)" stroke="var(--wire)" stroke-width="3" />
+            <path class="bulbFilament" d="M636,262 L644,238 L656,262 L664,238" fill="none" stroke="var(--bulb-off)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <text class="bulbInfo" data-bulb="a" x="650" y="308" text-anchor="middle" fill="var(--muted)" font-size="11" font-family="Inter, sans-serif"></text>
+          <g class="meter voltmeter voltmeterBulb" data-bulb="a" transform="translate(715,250)">
+            <circle r="14" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="4" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReadingBulb" data-bulb="a" x="715" y="272" text-anchor="middle" fill="var(--meter)" font-size="10" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="dots dots-a"></g>
+        </g>
+
+        <!-- ============ TOPOLOGÍA: 2 EN SERIE ============ -->
+        <g class="topo-group hidden" id="topoSeries">
+          <path class="wirePath dotPath" data-branch="a" d="M150,380 L150,120 L360,120 L440,120 L550,120 L650,120 L650,380 L150,380" fill="none" stroke="var(--wire)" stroke-width="5" stroke-linejoin="round" />
+          <g class="battery">
+            <rect x="126" y="215" width="48" height="70" fill="var(--bg)" />
+            <line x1="126" y1="228" x2="174" y2="228" stroke="var(--wire)" stroke-width="6" />
+            <line x1="136" y1="248" x2="164" y2="248" stroke="var(--wire)" stroke-width="3" />
+            <line x1="126" y1="272" x2="174" y2="272" stroke="var(--wire)" stroke-width="6" />
+            <text x="185" y="233" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">+</text>
+            <text x="185" y="278" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">−</text>
+          </g>
+          <g class="switchGroup">
+            <circle cx="360" cy="120" r="5" fill="var(--wire)" />
+            <circle cx="440" cy="120" r="5" fill="var(--wire)" />
+            <line class="switchLever" x1="360" y1="120" x2="440" y2="120" stroke="var(--wire)" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <g class="meter ammeter" transform="translate(650,250)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">A</text>
+          </g>
+          <text class="ammeterReading" x="650" y="296" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.00 A</text>
+
+          <g class="meter voltmeter" transform="translate(95,250)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReading" x="95" y="295" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="bulb" data-bulb="a" transform="translate(0,-60)">
+            <circle class="bulbGlow" cx="650" cy="250" r="40" fill="var(--bulb-off)" opacity="0.35" />
+            <g class="bulbRays">
+            <line class="ray" data-cx="650" data-cy="250" data-angle="0" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="45" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="90" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="135" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="180" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="225" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="270" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="315" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            </g>
+
+            <circle class="bulbCore" cx="650" cy="250" r="28" fill="var(--panel)" stroke="var(--wire)" stroke-width="3" />
+            <path class="bulbFilament" d="M638,261 L645,240 L655,261 L662,240" fill="none" stroke="var(--bulb-off)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <text class="bulbInfo" data-bulb="a" x="650" y="242" text-anchor="middle" fill="var(--muted)" font-size="11" font-family="Inter, sans-serif"></text>
+          <g class="meter voltmeter voltmeterBulb" data-bulb="a" transform="translate(710,190)">
+            <circle r="14" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="4" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReadingBulb" data-bulb="a" x="710" y="212" text-anchor="middle" fill="var(--meter)" font-size="10" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="bulb" data-bulb="b" transform="translate(0,60)">
+            <circle class="bulbGlow" cx="650" cy="250" r="40" fill="var(--bulb-off)" opacity="0.35" />
+            <g class="bulbRays">
+            <line class="ray" data-cx="650" data-cy="250" data-angle="0" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="45" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="90" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="135" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="180" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="225" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="270" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="650" data-cy="250" data-angle="315" x1="650" y1="250" x2="650" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            </g>
+
+            <circle class="bulbCore" cx="650" cy="250" r="28" fill="var(--panel)" stroke="var(--wire)" stroke-width="3" />
+            <path class="bulbFilament" d="M638,261 L645,240 L655,261 L662,240" fill="none" stroke="var(--bulb-off)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <text class="bulbInfo" data-bulb="b" x="650" y="372" text-anchor="middle" fill="var(--muted)" font-size="11" font-family="Inter, sans-serif"></text>
+          <g class="meter voltmeter voltmeterBulb" data-bulb="b" transform="translate(710,310)">
+            <circle r="14" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="4" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReadingBulb" data-bulb="b" x="710" y="332" text-anchor="middle" fill="var(--meter)" font-size="10" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="dots dots-a"></g>
+        </g>
+
+        <!-- ============ TOPOLOGÍA: 2 EN PARALELO ============ -->
+        <g class="topo-group hidden" id="topoParallel">
+          <path class="wirePath dotPath" data-branch="b" d="M150,380 L150,120 L360,120 L440,120 L550,120 L690,120 L690,380 L550,380 L150,380" fill="none" stroke="var(--wire)" stroke-width="5" stroke-linejoin="round" />
+          <path class="wirePath dotPath" data-branch="a" d="M150,380 L150,120 L360,120 L440,120 L550,120 L610,120 L610,380 L550,380 L150,380" fill="none" stroke="var(--wire)" stroke-width="5" stroke-linejoin="round" />
+          <g class="battery">
+            <rect x="126" y="215" width="48" height="70" fill="var(--bg)" />
+            <line x1="126" y1="228" x2="174" y2="228" stroke="var(--wire)" stroke-width="6" />
+            <line x1="136" y1="248" x2="164" y2="248" stroke="var(--wire)" stroke-width="3" />
+            <line x1="126" y1="272" x2="174" y2="272" stroke="var(--wire)" stroke-width="6" />
+            <text x="185" y="233" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">+</text>
+            <text x="185" y="278" fill="var(--muted)" font-size="16" font-family="Inter, sans-serif">−</text>
+          </g>
+          <g class="switchGroup">
+            <circle cx="360" cy="120" r="5" fill="var(--wire)" />
+            <circle cx="440" cy="120" r="5" fill="var(--wire)" />
+            <line class="switchLever" x1="360" y1="120" x2="440" y2="120" stroke="var(--wire)" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <g class="meter ammeter" transform="translate(650,120)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">A</text>
+          </g>
+          <text class="ammeterReading" x="650" y="98" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.00 A</text>
+
+          <g class="meter voltmeter" transform="translate(95,250)">
+            <circle r="17" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="5" text-anchor="middle" fill="var(--meter)" font-size="14" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReading" x="95" y="295" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="bulb" data-bulb="a">
+            <circle class="bulbGlow" cx="610" cy="250" r="38" fill="var(--bulb-off)" opacity="0.35" />
+            <g class="bulbRays">
+            <line class="ray" data-cx="610" data-cy="250" data-angle="0" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="45" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="90" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="135" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="180" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="225" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="270" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="610" data-cy="250" data-angle="315" x1="610" y1="250" x2="610" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            </g>
+
+            <circle class="bulbCore" cx="610" cy="250" r="27" fill="var(--panel)" stroke="var(--wire)" stroke-width="3" />
+            <path class="bulbFilament" d="M598,261 L605,240 L615,261 L622,240" fill="none" stroke="var(--bulb-off)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <text class="bulbInfo" data-bulb="a" x="610" y="307" text-anchor="middle" fill="var(--muted)" font-size="11" font-family="Inter, sans-serif"></text>
+          <g class="meter voltmeter voltmeterBulb" data-bulb="a" transform="translate(610,335)">
+            <circle r="14" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="4" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReadingBulb" data-bulb="a" x="610" y="357" text-anchor="middle" fill="var(--meter)" font-size="10" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="bulb" data-bulb="b">
+            <circle class="bulbGlow" cx="690" cy="250" r="38" fill="var(--bulb-off)" opacity="0.35" />
+            <g class="bulbRays">
+            <line class="ray" data-cx="690" data-cy="250" data-angle="0" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="45" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="90" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="135" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="180" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="225" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="270" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            <line class="ray" data-cx="690" data-cy="250" data-angle="315" x1="690" y1="250" x2="690" y2="250" stroke="var(--bulb-off)" stroke-width="2" stroke-linecap="round" opacity="0" />
+            </g>
+
+            <circle class="bulbCore" cx="690" cy="250" r="27" fill="var(--panel)" stroke="var(--wire)" stroke-width="3" />
+            <path class="bulbFilament" d="M678,261 L685,240 L695,261 L702,240" fill="none" stroke="var(--bulb-off)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <text class="bulbInfo" data-bulb="b" x="690" y="307" text-anchor="middle" fill="var(--muted)" font-size="11" font-family="Inter, sans-serif"></text>
+          <g class="meter voltmeter voltmeterBulb" data-bulb="b" transform="translate(690,335)">
+            <circle r="14" fill="var(--panel)" stroke="var(--meter)" stroke-width="2.5" />
+            <text x="0" y="4" text-anchor="middle" fill="var(--meter)" font-size="12" font-family="Inter, sans-serif" font-weight="700">V</text>
+          </g>
+          <text class="voltmeterReadingBulb" data-bulb="b" x="690" y="357" text-anchor="middle" fill="var(--meter)" font-size="10" font-family="Inter, sans-serif">0.0 V</text>
+
+          <g class="dots dots-a"></g>
+          <g class="dots dots-b"></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="panel">
+      <div class="control-block switch-row">
+        <label for="switchBtn" style="margin:0;">Interruptor</label>
+        <button id="switchBtn" class="switch-btn" role="switch" aria-checked="false" aria-pressed="false" aria-label="Abrir o cerrar el interruptor">
+          <span class="knob"></span>
+        </button>
+      </div>
+
+      <div class="control-block">
+        <label for="voltage">Voltaje de la batería — <span class="value" id="voltageVal">6 V</span></label>
+        <input type="range" id="voltage" min="1" max="12" step="1" value="6">
+      </div>
+
+      <div class="control-block">
+        <label for="resistanceA">Resistencia del bombillo 1 — <span class="value" id="resistanceAVal">15 Ω</span></label>
+        <input type="range" id="resistanceA" min="5" max="50" step="1" value="15">
+      </div>
+
+      <div class="control-block" id="resistanceBBlock" style="display:none;">
+        <label for="resistanceB">Resistencia del bombillo 2 — <span class="value" id="resistanceBVal">15 Ω</span></label>
+        <input type="range" id="resistanceB" min="5" max="50" step="1" value="15">
+      </div>
+
+      <div class="readouts">
+        <div class="item"><span class="lbl">Corriente total</span><span class="num" id="currentTotal">0.00</span><span class="unit">A</span></div>
+        <div class="item"><span class="lbl">Voltaje de fuente</span><span class="num" id="voltageTotal">0.0</span><span class="unit">V</span></div>
+      </div>
+
+      <div class="explain" id="explainText" aria-live="polite"></div>
+
+      <details>
+        <summary>Cómo funciona cada parte</summary>
+        <ul>
+          <li><b>Batería:</b> es la fuente de energía. Empuja las cargas eléctricas por el circuito; su voltaje (V) mide cuánta "presión" eléctrica aporta.</li>
+          <li><b>Interruptor:</b> es solo un espacio en el cable que se puede cerrar (conectar) o abrir (desconectar). Si está abierto, el circuito no está completo y no hay corriente, sin importar el voltaje.</li>
+          <li><b>Cables:</b> conducen las cargas de un punto a otro. En este modelo se consideran ideales (sin resistencia propia).</li>
+          <li><b>Bombillo (resistencia):</b> se opone al paso de la corriente y transforma parte de esa energía en luz y calor. A mayor resistencia, más le "cuesta" a la corriente pasar.</li>
+          <li><b>Amperímetro (A):</b> mide la corriente que pasa por ese punto del circuito. Siempre se conecta en serie, es decir, la corriente tiene que atravesarlo.</li>
+          <li><b>Voltímetro (V):</b> mide la diferencia de potencial entre dos puntos. Se conecta en paralelo, es decir, "a un lado" del circuito, sin interrumpir el paso de corriente.</li>
+          <li><b>Ley de Ohm:</b> relaciona las tres cantidades con la fórmula I = V ⁄ R. Si sabes dos, puedes calcular la tercera.</li>
+          <li><b>Serie vs. paralelo:</b> en serie, la corriente es la misma en todos los bombillos y el voltaje se reparte entre ellos. En paralelo, el voltaje es el mismo en cada bombillo y la corriente se reparte entre las ramas (más corriente va por la rama de menor resistencia).</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svgNS = "http://www.w3.org/2000/svg";
+  var topoGroups = {
+    single: document.getElementById('topoSingle'),
+    series: document.getElementById('topoSeries'),
+    parallel: document.getElementById('topoParallel')
+  };
+  var topoButtons = document.querySelectorAll('.topo-select button');
+  var switchBtn = document.getElementById('switchBtn');
+  var voltageInput = document.getElementById('voltage');
+  var resistanceAInput = document.getElementById('resistanceA');
+  var resistanceBInput = document.getElementById('resistanceB');
+  var resistanceBBlock = document.getElementById('resistanceBBlock');
+  var voltageVal = document.getElementById('voltageVal');
+  var resistanceAVal = document.getElementById('resistanceAVal');
+  var resistanceBVal = document.getElementById('resistanceBVal');
+  var currentTotalEl = document.getElementById('currentTotal');
+  var voltageTotalEl = document.getElementById('voltageTotal');
+  var explainText = document.getElementById('explainText');
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var topo = 'single';
+  var closed = false;
+
+  var dotSets = {}; // { topoName: { branchLetter: [ {el, dist} ... ] } }
+  var pathLengths = {}; // { topoName: { branchLetter: length } }
+
+  function buildDots(){
+    Object.keys(topoGroups).forEach(function(name){
+      var group = topoGroups[name];
+      var paths = group.querySelectorAll('.dotPath');
+      dotSets[name] = {};
+      pathLengths[name] = {};
+      paths.forEach(function(p){
+        var branch = p.getAttribute('data-branch');
+        var len = p.getTotalLength();
+        pathLengths[name][branch] = len;
+        var dotsContainer = group.querySelector('.dots-' + branch);
+        var n = (name === 'parallel') ? 7 : 10;
+        var arr = [];
+        for (var i = 0; i < n; i++){
+          var c = document.createElementNS(svgNS, 'circle');
+          c.setAttribute('r', 5);
+          c.setAttribute('fill', 'var(--accent)');
+          c.setAttribute('opacity', '0');
+          dotsContainer.appendChild(c);
+          arr.push({ el: c, dist: (len / n) * i, path: p });
+        }
+        dotSets[name][branch] = arr;
+      });
+    });
+  }
+
+  function setTopo(name){
+    topo = name;
+    Object.keys(topoGroups).forEach(function(k){
+      topoGroups[k].classList.toggle('hidden', k !== name);
+    });
+    topoButtons.forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-topo') === name));
+    });
+    resistanceBBlock.style.display = (name === 'single') ? 'none' : 'block';
+    setClosed(false);
+    updateAll();
+  }
+
+  topoButtons.forEach(function(b){
+    b.addEventListener('click', function(){ setTopo(b.getAttribute('data-topo')); });
+  });
+
+  function getVals(){
+    var V = parseFloat(voltageInput.value);
+    var r1 = parseFloat(resistanceAInput.value);
+    var r2 = parseFloat(resistanceBInput.value);
+    var out = { V: V, r1: r1, r2: r2 };
+    if (topo === 'single'){
+      out.i1 = V / r1; out.i2 = 0; out.v1 = V; out.v2 = 0; out.iTotal = out.i1;
+    } else if (topo === 'series'){
+      var rt = r1 + r2;
+      var i = V / rt;
+      out.i1 = i; out.i2 = i; out.v1 = i * r1; out.v2 = i * r2; out.iTotal = i;
+    } else {
+      out.v1 = V; out.v2 = V; out.i1 = V / r1; out.i2 = V / r2; out.iTotal = out.i1 + out.i2;
+    }
+    return out;
+  }
+
+  function setSwitchVisual(){
+    document.querySelectorAll('.switchLever').forEach(function(l){
+      if (closed){ l.setAttribute('x2', 440); l.setAttribute('y2', 120); }
+      else { l.setAttribute('x2', 430); l.setAttribute('y2', 95); }
+    });
+  }
+
+  function updateBulbVisual(el, current, maxCurrent){
+    var t = Math.max(0, Math.min(1, current / maxCurrent));
+    var glow = el.querySelector('.bulbGlow');
+    var core = el.querySelector('.bulbCore');
+    var fil = el.querySelector('.bulbFilament');
+    var baseR = parseFloat(glow.getAttribute('data-baseR') || glow.getAttribute('r'));
+    if (!glow.getAttribute('data-baseR')) glow.setAttribute('data-baseR', baseR);
+    glow.setAttribute('r', baseR + t * 18);
+    glow.setAttribute('opacity', 0.15 + t * 0.55);
+    glow.setAttribute('fill', t > 0 ? 'var(--bulb-on)' : 'var(--bulb-off)');
+    fil.setAttribute('stroke', t > 0 ? 'var(--bulb-on)' : 'var(--bulb-off)');
+    fil.setAttribute('stroke-width', 3 + t * 2);
+    core.setAttribute('stroke', t > 0.05 ? 'var(--bulb-on)' : 'var(--wire)');
+
+    // Rayos de luz: crecen y se hacen más visibles con más corriente
+    var innerR = 38, maxOuter = 70;
+    el.querySelectorAll('.ray').forEach(function(ray){
+      var cx = parseFloat(ray.getAttribute('data-cx'));
+      var cy = parseFloat(ray.getAttribute('data-cy'));
+      var ang = parseFloat(ray.getAttribute('data-angle')) * Math.PI / 180;
+      var outerR = innerR + t * (maxOuter - innerR);
+      ray.setAttribute('x1', cx + innerR * Math.cos(ang));
+      ray.setAttribute('y1', cy + innerR * Math.sin(ang));
+      ray.setAttribute('x2', cx + outerR * Math.cos(ang));
+      ray.setAttribute('y2', cy + outerR * Math.sin(ang));
+      ray.setAttribute('stroke', t > 0 ? 'var(--bulb-on)' : 'var(--bulb-off)');
+      ray.setAttribute('stroke-width', 1.5 + t * 1.5);
+      ray.setAttribute('opacity', t > 0.02 ? (0.15 + t * 0.7) : 0);
+    });
+  }
+
+  function updateAll(){
+    var v = getVals();
+    voltageVal.textContent = v.V + ' V';
+    resistanceAVal.textContent = v.r1 + ' Ω';
+    resistanceBVal.textContent = v.r2 + ' Ω';
+
+    var activeGroup = topoGroups[topo];
+    var iTotal = closed ? v.iTotal : 0;
+    var vSource = closed ? v.V : 0;
+
+    currentTotalEl.textContent = iTotal.toFixed(2);
+    voltageTotalEl.textContent = vSource.toFixed(1);
+
+    var ammeterReading = activeGroup.querySelector('.ammeterReading');
+    if (ammeterReading) ammeterReading.textContent = iTotal.toFixed(2) + ' A';
+    var voltReading = activeGroup.querySelector('.voltmeterReading');
+    if (voltReading) voltReading.textContent = vSource.toFixed(1) + ' V';
+
+    var maxI = 12 / 5;
+    var bulbA = activeGroup.querySelector('.bulb[data-bulb="a"]');
+    var infoA = activeGroup.querySelector('.bulbInfo[data-bulb="a"]');
+    updateBulbVisual(bulbA, closed ? v.i1 : 0, maxI);
+    if (infoA) infoA.textContent = 'I = ' + (closed ? v.i1.toFixed(2) : '0.00') + ' A';
+    var voltA = activeGroup.querySelector('.voltmeterReadingBulb[data-bulb="a"]');
+    if (voltA) voltA.textContent = (closed ? v.v1.toFixed(1) : '0.0') + ' V';
+
+    if (topo !== 'single'){
+      var bulbB = activeGroup.querySelector('.bulb[data-bulb="b"]');
+      var infoB = activeGroup.querySelector('.bulbInfo[data-bulb="b"]');
+      updateBulbVisual(bulbB, closed ? v.i2 : 0, maxI);
+      if (infoB) infoB.textContent = 'I = ' + (closed ? v.i2.toFixed(2) : '0.00') + ' A';
+      var voltB = activeGroup.querySelector('.voltmeterReadingBulb[data-bulb="b"]');
+      if (voltB) voltB.textContent = (closed ? v.v2.toFixed(1) : '0.0') + ' V';
+    }
+
+    updateExplain(v, closed);
+  }
+
+  function updateExplain(v, isClosed){
+    var msg;
+    if (!isClosed){
+      msg = 'El interruptor está abierto: el circuito está roto y no circula corriente, aunque la batería tenga carga.';
+    } else if (topo === 'single'){
+      msg = 'Circuito con un bombillo: la corriente es I = V/R = ' + v.i1.toFixed(2) + ' A.';
+    } else if (topo === 'series'){
+      msg = 'En serie: la misma corriente (' + v.i1.toFixed(2) + ' A) atraviesa ambos bombillos, pero el voltaje se reparte entre ellos (' + v.v1.toFixed(1) + ' V y ' + v.v2.toFixed(1) + ' V).';
+    } else {
+      msg = 'En paralelo: ambos bombillos reciben el mismo voltaje (' + v.V.toFixed(1) + ' V), pero la corriente se reparte según su resistencia (' + v.i1.toFixed(2) + ' A y ' + v.i2.toFixed(2) + ' A).';
+    }
+    explainText.textContent = msg;
+  }
+
+  function setClosed(val){
+    closed = val;
+    switchBtn.setAttribute('aria-checked', String(val));
+    switchBtn.setAttribute('aria-pressed', String(val));
+    setSwitchVisual();
+    Object.keys(dotSets[topo] || {}).forEach(function(branch){
+      dotSets[topo][branch].forEach(function(d){ d.el.setAttribute('opacity', val ? '0.95' : '0'); });
+    });
+    updateAll();
+  }
+
+  switchBtn.addEventListener('click', function(){ setClosed(!closed); });
+  voltageInput.addEventListener('input', updateAll);
+  resistanceAInput.addEventListener('input', updateAll);
+  resistanceBInput.addEventListener('input', updateAll);
+
+  var lastTime = null;
+  function tick(now){
+    if (lastTime === null) lastTime = now;
+    var dt = (now - lastTime) / 1000;
+    lastTime = now;
+
+    if (closed && !reduceMotion){
+      var v = getVals();
+      var speedFor = { a: 30 + v.i1 * 220, b: 30 + v.i2 * 220 };
+      var branches = dotSets[topo] || {};
+      Object.keys(branches).forEach(function(branch){
+        var speed = speedFor[branch] !== undefined ? speedFor[branch] : (30 + v.iTotal * 220);
+        branches[branch].forEach(function(d){
+          var len = pathLengths[topo][branch];
+          d.dist = (d.dist + speed * dt) % len;
+          var p = d.path.getPointAtLength(d.dist);
+          d.el.setAttribute('cx', p.x);
+          d.el.setAttribute('cy', p.y);
+        });
+      });
+    }
+    requestAnimationFrame(tick);
+  }
+
+  buildDots();
+  setTopo('single');
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
