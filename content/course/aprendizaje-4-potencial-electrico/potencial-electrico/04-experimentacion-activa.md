@@ -22,7 +22,8 @@ Usa tu propio hero de líneas equipotenciales y compáralo lado a lado con el de
 
 ## 4.2 Actividad interactiva
 
-En Genially, diseña una actividad de verdadero/falso sobre las propiedades de las superficies equipotenciales.
+<div class="emlab-embed" data-src="/uploads/laboratorio-a4-energia-potencial.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script>
 
 <!-- Pega aquí tu iframe de Genially -->
 
