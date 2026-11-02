@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio de indagación · Circuitos eléctricos · EM·LAB</title><style>
+:root{--bg1:#060a14;--bg2:#0b1220;--panel:rgba(30,41,59,.78);--line:rgba(148,163,184,.28);--amber:#f5b942;--cyan:#22d3ee;--green:#34d399;--pink:#fb7185;--txt:#e8eefc;--mut:#9fb0cc}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg1);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+svg{display:block}
+.app{position:relative;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;
+ background:radial-gradient(1100px 600px at 12% -10%,#14305f 0,transparent 60%),radial-gradient(900px 600px at 100% 110%,#4a1544 0,transparent 55%),linear-gradient(160deg,var(--bg2),var(--bg1))}
+#bg,#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#fx{z-index:60}
+.hud{position:relative;z-index:5;display:flex;align-items:center;gap:10px;padding:9px 14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:7px;font-weight:800;font-size:15px}
+.brand svg{width:22px;height:22px;fill:var(--amber);filter:drop-shadow(0 0 6px rgba(245,185,66,.8))}
+.ttl{font-size:13px;color:var(--mut);font-weight:600}
+.sp{flex:1}
+.pill{padding:5px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:13px;font-weight:700;white-space:nowrap}
+.pill b{color:var(--amber)}
+#snd{width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center}
+#snd svg{width:19px;height:19px;stroke:var(--txt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bar{position:relative;z-index:5;height:7px;margin:0 14px;border-radius:99px;background:rgba(148,163,184,.18);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--green),var(--amber));transition:width .5s}
+.main{position:relative;z-index:5;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 224px;gap:14px;padding:12px 14px}
+.panel{min-height:0;overflow:auto;border-radius:22px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.chip{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;background:rgba(245,185,66,.15);color:var(--amber);border:1px solid rgba(245,185,66,.45)}
+.chip.c2{background:rgba(34,211,238,.12);color:var(--cyan);border-color:rgba(34,211,238,.45)}
+h2{margin:2px 0 6px;font-size:clamp(18px,3.4vmin,24px);font-weight:900}
+.ctx{margin:6px 0;font-size:clamp(13px,2.2vmin,15.5px);line-height:1.5;color:#d7e2f7}
+.q{margin:8px 0 6px;font-size:clamp(14px,2.4vmin,16.5px);font-weight:800;line-height:1.4}
+.fig{display:flex;justify-content:center;margin:8px 0}
+table.dt{border-collapse:collapse;margin:8px auto;font-size:13.5px}
+.dt th,.dt td{border:1px solid var(--line);padding:6px 12px;text-align:center}
+.dt th{background:rgba(148,163,184,.16);font-weight:800}
+.opts{display:grid;gap:8px;margin-top:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:10px 12px;border-radius:14px;background:rgba(15,23,42,.7);border:2px solid var(--line);font-size:clamp(13px,2.2vmin,15px);line-height:1.4;transition:.2s}
+.opt:hover:not(:disabled){border-color:var(--amber);transform:translateX(3px);background:rgba(51,65,85,.8)}
+.opt b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(245,185,66,.18);color:var(--amber);font-size:13px}
+.opt.good{border-color:var(--green);background:rgba(52,211,153,.16)}.opt.good b{background:var(--green);color:#052e1f}
+.opt.bad{border-color:#ff5370;background:rgba(255,83,112,.14);opacity:.8}.opt.bad b{background:#ff5370;color:#fff}
+.opt:disabled{cursor:default}
+.opts.grid{grid-template-columns:repeat(2,1fr)}.opts.grid .opt{flex-direction:column;align-items:center;text-align:center;padding:8px}
+.opts.grid .opt svg{width:100%;height:auto;max-height:150px}
+.fb{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:13.5px;line-height:1.45;display:none}
+.fb.show{display:block;animation:pop .35s}
+.fb.ok{background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.55)}.fb.no{background:rgba(255,83,112,.12);border:1px solid rgba(255,83,112,.5)}.fb.try{background:rgba(245,185,66,.12);border:1px solid rgba(245,185,66,.5)}
+.fb b{display:block;font-size:15px;margin-bottom:2px}
+.acts{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.btn{padding:10px 22px;border-radius:999px;font-weight:900;background:linear-gradient(135deg,var(--amber),#ff8a3c);color:#2a1700;box-shadow:0 0 22px rgba(245,185,66,.45)}
+.btn:disabled{opacity:.4;box-shadow:none;cursor:default}
+.btn.sec{background:rgba(51,65,85,.9);color:var(--txt);box-shadow:none;border:1px solid var(--line)}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+/* clasificar */
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.bin{min-height:120px;padding:8px;border-radius:16px;border:2px dashed var(--line);background:rgba(15,23,42,.5);display:flex;flex-direction:column;gap:6px;transition:.2s}
+.bin.hot{border-color:var(--amber);background:rgba(245,185,66,.1)}
+.bin h4{margin:0 0 2px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);text-align:center}
+.pool{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding:8px;border-radius:14px;border:1px dashed var(--line);min-height:48px}
+.card{padding:8px 10px;border-radius:12px;background:linear-gradient(160deg,rgba(51,65,85,.95),rgba(15,23,42,.95));border:2px solid rgba(245,185,66,.55);font-size:13px;line-height:1.35;cursor:grab;text-align:left}
+.card.sel{border-color:var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.6)}
+.card.good{border-color:var(--green)}.card.bad{border-color:#ff5370;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.hint{font-size:12px;color:var(--mut);margin-top:4px}
+/* ordenar */
+.ol{list-style:none;margin:8px 0;padding:0;display:grid;gap:7px}
+.ol li{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(15,23,42,.7);border:2px solid var(--line);font-size:13.5px}
+.ol li.good{border-color:var(--green);background:rgba(52,211,153,.12)}.ol li.bad{border-color:#ff5370;background:rgba(255,83,112,.1)}
+.ol .n{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:rgba(245,185,66,.18);color:var(--amber);font-weight:800;font-size:12px}
+.ol .t{flex:1}
+.mv{display:flex;flex-direction:column;gap:2px}
+.mv button{width:28px;height:20px;border-radius:6px;background:rgba(51,65,85,.9);border:1px solid var(--line);font-size:11px;line-height:1}
+.mv button:disabled{opacity:.3}
+/* tabla de variables */
+.vt{width:100%;border-collapse:collapse;margin-top:8px}
+.vt td{padding:6px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+.vt select{width:100%;padding:7px 8px;border-radius:10px;background:#0f172a;border:2px solid var(--line)}
+.vt select.good{border-color:var(--green)}.vt select.bad{border-color:#ff5370}
+/* rompecabezas */
+.side{min-height:0;display:flex;flex-direction:column;gap:8px;align-items:center;border-radius:22px;padding:12px;background:var(--panel);border:1px solid var(--line)}
+.side h3{margin:0;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--amber)}
+.pz{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;border-radius:12px;overflow:hidden;padding:3px;background:rgba(5,9,20,.7);border:1px solid var(--line)}
+.tile{aspect-ratio:3/2;border-radius:6px;position:relative;background-repeat:no-repeat;background-size:300% 300%}
+.tile.lock{background:linear-gradient(160deg,#1e293b,#0f172a)!important;display:grid;place-items:center;color:#52627d;font-weight:900;font-size:15px}
+.tile.win{animation:flip .7s}
+@keyframes flip{0%{transform:rotateY(90deg) scale(.6);filter:brightness(3)}100%{transform:none}}
+.pzc{font-size:13px;color:var(--mut);text-align:center}
+.pzc b{color:var(--amber);font-size:18px}
+.foot{position:relative;z-index:5;text-align:center;font-size:10.5px;color:#6f819f;padding:0 8px 6px}
+/* overlays */
+.overlay{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(5,9,20,.84);backdrop-filter:blur(6px);overflow:auto}
+.overlay[hidden]{display:none}
+.box{width:min(100%,620px);margin:auto;text-align:center;padding:clamp(16px,3.4vmin,28px);border-radius:26px;background:linear-gradient(160deg,rgba(51,65,85,.96),rgba(15,23,42,.96));border:2px solid rgba(245,185,66,.55);box-shadow:0 0 60px rgba(245,185,66,.22),0 24px 60px rgba(0,0,0,.6);animation:pop .5s}
+.box h1{margin:4px 0 6px;font-size:clamp(22px,5vmin,36px);line-height:1.1;font-weight:900;background:linear-gradient(90deg,#ff6b84,#f5b942,#5ac8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.box p{margin:6px 0;color:#cdd9ef;font-size:clamp(13px,2.2vmin,15px);line-height:1.45}
+.fld{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:8px;margin:10px 0}
+.fld input{min-width:0;width:100%;padding:10px 12px;border-radius:12px;background:#0f172a;border:2px solid var(--line);color:var(--txt)}
+.fld input:focus{outline:none;border-color:var(--amber)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;text-align:left}
+.steps div{padding:9px 10px;border-radius:14px;background:rgba(15,23,42,.7);border:1px solid var(--line);font-size:12.5px;line-height:1.35;color:#cdd9ef}
+.steps b{display:block;color:var(--amber);font-size:12px;letter-spacing:1px;margin-bottom:2px}
+/* armado */
+.asm{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;margin-top:10px;text-align:left;align-items:start}
+.board{align-content:start;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:14px;background:rgba(5,9,20,.8);border:1px solid var(--line)}
+.slot{aspect-ratio:3/2;border-radius:8px;border:2px dashed rgba(148,163,184,.4);position:relative;cursor:pointer;min-width:0}
+.slot::before{content:"";position:absolute;inset:0;border-radius:6px;background-image:var(--bi);background-size:300% 300%;background-position:var(--bp);background-repeat:no-repeat;opacity:.14}
+.slot.hot{border-color:var(--cyan);box-shadow:0 0 14px rgba(34,211,238,.6)}
+.slot.done{border:2px solid var(--green);cursor:default}.slot.done::before{opacity:1}
+.slot.miss{border-style:solid;border-color:#334155;background:#0f172a!important;display:grid;place-items:center;color:#52627d;font-weight:900;cursor:default}
+.slot.miss::before{display:none}
+.tray{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-content:start}
+.pc{aspect-ratio:3/2;border-radius:8px;border:2px solid rgba(245,185,66,.7);background-repeat:no-repeat;background-size:300% 300%;cursor:pointer;transition:.15s}
+.pc.sel{border-color:var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.8);transform:scale(1.06)}
+.pc.shake{animation:shake .4s}
+/* resultados */
+.rt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.rt div{padding:9px 6px;border-radius:14px;background:rgba(15,23,42,.7);border:1px solid var(--line)}
+.rt small{display:block;font-size:10px;letter-spacing:1.2px;color:var(--mut);text-transform:uppercase}.rt b{font-size:clamp(18px,3.6vmin,26px)}
+.lvl{font-weight:900;font-size:clamp(16px,3vmin,21px);color:var(--cyan);text-shadow:0 0 12px rgba(34,211,238,.7)}
+.ind{display:grid;gap:6px;margin:10px 0;text-align:left}
+.ind div{display:grid;grid-template-columns:178px 1fr 38px;align-items:center;gap:8px;font-size:12.5px}
+.ind i{display:block;height:10px;border-radius:99px;background:rgba(148,163,184,.2);overflow:hidden}.ind i u{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--green));text-decoration:none}
+.rev{font-size:12.5px;color:#cdd9ef;text-align:left;margin:8px 0}
+@media (max-width:700px){
+ .main{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:8px;padding:8px 10px}
+ .side{order:-1;flex-direction:row;padding:8px;gap:10px;align-items:center}.side h3{display:none}.pz{width:130px;flex:none}.pzc{text-align:left}
+ .panel{padding:12px}.asm{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.opts.grid{grid-template-columns:1fr 1fr}
+ .ind div{grid-template-columns:96px 1fr 34px}.ttl{display:none}.brand span{display:none}
+ .pill{padding:4px 9px;font-size:12px}
+ .vt tr{display:block;padding:6px 0;border-bottom:1px solid var(--line)}.vt td{display:block;width:100%!important;border:0;padding:3px 0}
+ .opts.grid .opt svg{max-height:120px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+
+.main{grid-template-columns:minmax(0,1fr) 400px}
+.stepper{position:relative;z-index:5;display:flex;gap:6px;padding:0 14px 8px;flex-wrap:wrap}
+.stp{flex:1;min-width:96px;padding:6px 8px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:11.5px;font-weight:800;text-align:center;color:var(--mut);white-space:nowrap;transition:.2s}
+.stp.now{border-color:var(--acc);color:#fff;box-shadow:0 0 14px var(--acc)}
+.stp.done{border-color:var(--green);color:var(--green)}
+.lab{min-height:0;overflow:auto;border-radius:22px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:9px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.lab h3{margin:0;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--acc)}
+.labsvg{border-radius:14px;background:rgba(5,9,20,.6);border:1px solid var(--line);padding:6px;display:flex;justify-content:center}
+.labsvg svg{width:100%;height:auto;max-height:230px}
+.reading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:14px;background:#0b1220;border:2px solid var(--acc)}
+.reading small{display:block;color:var(--mut);font-size:11.5px;letter-spacing:.5px;text-transform:none}
+.reading b{font-size:24px;font-variant-numeric:tabular-nums;color:#fff}
+.rng{width:100%;accent-color:var(--acc)}
+.fix{display:flex;flex-wrap:wrap;gap:6px}.fix span{padding:3px 9px;border-radius:999px;font-size:11.5px;background:rgba(148,163,184,.15);border:1px solid var(--line)}
+textarea{width:100%;padding:9px 12px;border-radius:12px;background:#0f172a;border:2px solid var(--line);color:var(--txt);resize:vertical;font:inherit}
+textarea:focus,select:focus,.numrow input:focus{outline:none;border-color:var(--acc)}
+.sent{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:15px;line-height:2.3;margin:8px 0}
+.sent select{padding:7px 10px;border-radius:10px;background:#0f172a;border:2px solid var(--line)}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.vals label{display:flex;gap:6px;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(15,23,42,.7);border:2px solid var(--line);cursor:pointer;font-weight:800}
+.vals label.on{border-color:var(--acc);background:rgba(255,255,255,.06)}
+.vals input{accent-color:var(--acc)}
+.mt{width:100%;border-collapse:collapse;margin:8px 0}
+.mt th,.mt td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+.mt th{background:rgba(148,163,184,.16);font-weight:800;font-size:13px}
+.mt button{padding:5px 14px;border-radius:999px;background:var(--acc);color:#fff;font-weight:900;font-size:12.5px}
+.mt td.v{font-variant-numeric:tabular-nums;font-weight:800;color:var(--amber)}
+.gr{display:flex;justify-content:center;margin:8px 0}.gr svg{width:100%;max-width:440px;height:auto}
+.own{margin-top:8px}.own label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+.numrow{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}.numrow input{width:170px;padding:11px 14px;border-radius:12px;background:#0f172a;border:2px solid var(--line);color:var(--txt);font-size:18px;font-weight:800}.numrow input:disabled{opacity:.7}.unit{font-size:18px;font-weight:900;color:var(--amber)}
+.rep{white-space:pre-wrap;text-align:left;font:12px/1.45 ui-monospace,Consolas,monospace;background:#0b1220;border:1px solid var(--line);border-radius:12px;padding:10px;max-height:190px;overflow:auto;margin:8px 0}
+.chip{border-color:var(--acc);color:var(--acc);background:rgba(255,255,255,.05)}
+.vt select.good{border-color:var(--green)}.vt select.bad{border-color:#ff5370}
+@media (max-width:860px){
+ .main{display:flex;flex-direction:column;overflow-y:auto;gap:8px;padding:8px 10px}
+ .lab{order:-1;flex:none;padding:8px 10px;overflow:visible}.panel{flex:none;overflow:visible}
+ .labsvg svg{max-height:150px}.reading b{font-size:19px}.stp{min-width:70px;font-size:10px;padding:5px 4px}
+ .stepper{padding:0 10px 6px}.hint{display:none}
+}
+</style></head><body>
+<div class="app" id="app" style="--acc:#ec4899">
+<canvas id="bg"></canvas><canvas id="fx"></canvas>
+<header class="hud">
+ <div class="brand"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg><span>EM·LAB</span></div>
+ <div class="ttl">Experimentación activa · Circuitos eléctricos</div><div class="sp"></div>
+ <div class="pill">Estación <b id="hN">1</b>/6</div><div class="pill">Puntos <b id="hP">0</b></div>
+ <button id="snd" aria-label="Activar o silenciar el sonido"></button>
+</header>
+<div class="bar" aria-hidden="true"><i id="pbar"></i></div>
+<div class="stepper" id="stepper"></div>
+<main class="main"><section class="panel" id="panel" aria-live="polite"></section><aside class="lab" id="labp"></aside></main>
+<div class="foot">EM·LAB · Colegio El Paraíso de Manuela Beltrán IED</div>
+<section class="overlay" id="start"><div class="box">
+ <h1>Laboratorio de indagación<br>Circuitos eléctricos</h1>
+ <p>Esta es la fase de <b>experimentación activa</b>: harás un experimento virtual completo, paso a paso, y al final tendrás tu informe de indagación.</p>
+ <div class="fld"><input id="inName" placeholder="Tu nombre" maxlength="60" aria-label="Tu nombre"><input id="inGrp" placeholder="Grupo" maxlength="10" aria-label="Grupo"></div>
+ <div class="steps"><div><b>6 ESTACIONES</b>Pregunta, hipótesis, variables, datos, análisis y contraste con el modelo.</div><div><b>LABORATORIO</b>Mides tú mismo; las lecturas traen error, como en la vida real.</div><div><b>INFORME</b>Al final copias tu informe y lo entregas.</div></div>
+ <button class="btn" id="go">¡COMENZAR!</button>
+</div></section>
+<section class="overlay" id="res" hidden></section>
+</div>
+<script>(function(){
+'use strict';
+var CFG={"ind": {"I1": "Preguntas investigables", "I2": "Hipótesis y predicciones", "I3": "Variables y diseño", "I4": "Datos y gráficas", "I5": "Análisis y conclusiones", "I6": "Contraste con el modelo"}, "x": {"name": "el número de resistencias en paralelo", "sym": "n", "unit": "", "vals": [1, 2, 3, 4, 5, 6], "dec": 0, "label": "Número de resistencias n"}, "y": {"name": "la corriente total", "sym": "I", "unit": "mA", "dec": 1, "label": "Corriente total I (mA)"}, "sim": "circuito", "scene": {"title": "Resistencias en paralelo", "text": "Una pila de 12 V alimenta resistencias iguales de 100 Ω conectadas en paralelo. Un amperímetro mide la corriente total que entrega la pila. Mueve el control del laboratorio para cambiar cuántas resistencias hay en el circuito."}, "fixed": ["Voltaje de la pila: 12 V", "Cada resistencia: 100 Ω", "Conexión: en paralelo"], "q": [{"x": "¿Cómo cambia la corriente total que entrega la pila al conectar más resistencias iguales en paralelo?", "ok": 1}, {"x": "¿Qué es un circuito?"}, {"x": "¿Por qué las pilas se agotan?"}, {"x": "¿Cuál cable es más bonito?"}], "qwhy": "Una buena pregunta relaciona dos variables que puedes medir: el número de resistencias y la corriente total.", "hyp": {"indep": "el número de resistencias en paralelo", "dep": "la corriente total"}, "vars": [["Número de resistencias en paralelo", 0], ["Corriente total medida", 1], ["Voltaje de la pila (12 V)", 2], ["Valor de cada resistencia (100 Ω)", 2]], "sel": ["Elige…", "Independiente (cambio)", "Dependiente (mido)", "Controlada (fija)"], "varswhy": "Independiente: el número de resistencias. Dependiente: la corriente total. Controladas: el voltaje de la pila y el valor de cada resistencia.", "graph": "lin", "graphwhy": "Cada resistencia agrega la misma corriente: recta creciente que sale del origen.", "concl": [{"x": "La corriente total es proporcional al número de ramas: al duplicar las resistencias en paralelo, la corriente total se duplica.", "ok": 1}, {"x": "La corriente total disminuye al conectar más resistencias en paralelo."}, {"x": "La corriente total no depende del número de resistencias."}, {"x": "Al duplicar las resistencias en paralelo, la corriente total se reduce a la mitad."}], "conclwhy": "Cada rama toma la misma corriente de la pila (V/R), por eso la corriente total crece en proporción al número de ramas.", "model": {"p": 1, "name": "resistencias en paralelo", "law": "I ∝ n", "hint": "Si I es proporcional a n, entonces I₂ = I₁ · (n₂ / n₁)."}, "tag": "EM·LAB · Laboratorio de indagación (Experimentación activa): Circuitos eléctricos"};
+var UID=0;
+/* ---------- dibujo SVG ---------- */
+function svgW(w,h,body,label,width){return '<svg viewBox="0 0 '+w+' '+h+'"'+(width?' width="'+width+'"':'')+' role="img" aria-label="'+(label||'')+'">'+body+'</svg>';}
+function ballS(x,y,sg,lab,r){var id='b'+(UID++),c=sg==='+'?['#ffd1d9','#ff5470','#8a0f2a']:['#d4ebff','#52a8ff','#0b1f6b'];
+ return '<defs><radialGradient id="'+id+'" cx="32%" cy="28%" r="75%"><stop offset="0" stop-color="'+c[0]+'"/><stop offset=".5" stop-color="'+c[1]+'"/><stop offset="1" stop-color="'+c[2]+'"/></radialGradient></defs>'+
+ '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="url(#'+id+')"/><text x="'+x+'" y="'+(y+r*.38)+'" font-size="'+(r*1.15)+'" font-weight="900" text-anchor="middle" fill="#fff" font-family="sans-serif">'+(sg==='+'?'+':'\u2212')+'</text>'+
+ (lab?'<text x="'+x+'" y="'+(y+r+17)+'" font-size="14" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">'+lab+'</text>':'');}
+function arrowS(x1,y1,x2,y2,col,w,hs){hs=hs||12;var a=Math.atan2(y2-y1,x2-x1),c=Math.cos(a),s=Math.sin(a);
+ return '<line x1="'+x1+'" y1="'+y1+'" x2="'+(x2-c*hs*.6)+'" y2="'+(y2-s*hs*.6)+'" stroke="'+col+'" stroke-width="'+w+'" stroke-linecap="round"/><polygon points="'+x2+','+y2+' '+(x2-hs*c+hs*.55*s)+','+(y2-hs*s-hs*.55*c)+' '+(x2-hs*c-hs*.55*s)+','+(y2-hs*s+hs*.55*c)+'" fill="'+col+'"/>';}
+function fCharges(f){var b='<line x1="30" y1="44" x2="390" y2="44" stroke="#64748b" stroke-dasharray="4 5"/>';
+ f.list.forEach(function(c){b+=ballS(c.x,44,c.s,c.lab,26);});
+ if(f.p)b+='<circle cx="'+f.p.x+'" cy="44" r="6" fill="#fff"/><text x="'+f.p.x+'" y="30" font-size="15" font-weight="900" text-anchor="middle" fill="#ffe27a" font-family="sans-serif">'+f.p.lab+'</text>';
+ return svgW(420,112,b,'Cargas en fila',380);}
+function fChart(f){var pts={lin:'20,90 140,30',cur:'20,90 50,50 80,38 110,32 140,30',dec:'20,28 140,90',hor:'20,60 140,60',inv:'20,18 32,50 50,72 80,86 140,90'}[f.kind];
+ return svgW(160,112,'<path d="M20 12V92H150" fill="none" stroke="#94a3b8" stroke-width="2"/><polyline points="'+pts+'" fill="none" stroke="#f5b942" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
+ '<text x="150" y="108" font-size="11" fill="#9fb0cc" text-anchor="end" font-family="sans-serif">'+(f.xl||'')+'</text><text x="6" y="12" font-size="11" fill="#9fb0cc" font-family="sans-serif">'+(f.yl||'')+'</text>',f.l||'Gráfica');}
+function fTbl(f){var t='<table class="dt"><tr>'+f.h.map(function(x){return '<th>'+x+'</th>';}).join('')+'</tr>';f.r.forEach(function(r){t+='<tr>'+r.map(function(x){return '<td>'+x+'</td>';}).join('')+'</tr>';});return t+'</table>';}
+function head(x,y,a,col,k){k=k||1;var c=Math.cos(a),s=Math.sin(a);return '<polygon points="'+(x+7*k*c)+','+(y+7*k*s)+' '+(x-5*k*c+4*k*s)+','+(y-5*k*s-4*k*c)+' '+(x-5*k*c-4*k*s)+','+(y-5*k*s+4*k*c)+'" fill="'+col+'"/>';}
+function fField1(f){var b='',cx=110,cy=90,k;
+ if(f.kind==='circ'){[40,62,84].forEach(function(r){b+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#bfe3ff" stroke-width="2"/>';});}
+ else if(f.kind==='rand'){b+='<path d="M20 30 Q110 120 200 40M25 150 Q100 40 195 140M30 90 Q110 20 190 95M60 20 Q120 160 170 30" fill="none" stroke="#bfe3ff" stroke-width="2"/>';}
+ else{for(k=0;k<8;k++){var a=k*Math.PI/4,r1=22,r2=84,x1=cx+r1*Math.cos(a),y1=cy+r1*Math.sin(a),x2=cx+r2*Math.cos(a),y2=cy+r2*Math.sin(a);
+   b+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#bfe3ff" stroke-width="2"/>';
+   var mx=cx+56*Math.cos(a),my=cy+56*Math.sin(a);b+=head(mx,my,f.kind==='in'?a+Math.PI:a,'#bfe3ff');}}
+ b+=ballS(cx,cy,'-','',16);return svgW(220,180,b,'Líneas de campo',200);}
+/* símbolos de circuito */
+function sym(kind,cx,cy,rot){var g='<g transform="translate('+cx+' '+cy+') rotate('+rot+')" stroke="#e8eefc" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">';
+ if(kind==='R')g+='<polyline points="-30,0 -22,0 -17,-9 -9,9 -1,-9 7,9 15,-9 22,0 30,0"/>';
+ if(kind==='B')g+='<path d="M-30 0H-5M7 0H30"/><path d="M-5 -17V17" stroke-width="4.5"/><path d="M7 -9V9" stroke-width="4.5"/>';
+ if(kind==='L')g+='<path d="M-30 0H-12M12 0H30"/><polygon points="-12,-12 -12,12 12,0" fill="#0f172a"/><path d="M12 -12V12"/><path d="M-3 -17l9 -9M-6 -23h6v6M7 -13l9 -9M4 -19h6v6"/>';
+ return g+'</g>';}
+function fCirc(f){var W=440,H=170,x0=50,x1=W-50,y0=36,y1=H-30,ym=(y0+y1)/2,el=f.el,n=el.length,xs=[],i,b='';
+ for(i=0;i<n;i++)xs.push(x0+(x1-x0)*(i+1)/(n+1));
+ var d='M'+x0+' '+(ym-30)+'V'+y0+'H'+(xs[0]-30);for(i=0;i<n-1;i++)d+='M'+(xs[i]+30)+' '+y0+'H'+(xs[i+1]-30);d+='M'+(xs[n-1]+30)+' '+y0+'H'+x1+'V'+y1+'H'+x0+'V'+(ym+30);
+ b+='<path d="'+d+'" stroke="#e8eefc" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+ b+=sym('B',x0,ym,90)+'<text x="'+(x0+14)+'" y="'+(ym-22)+'" font-size="14" font-weight="900" fill="#ffd98a" font-family="sans-serif">+</text><text x="'+(x0-10)+'" y="'+(ym+5)+'" font-size="14" font-weight="800" text-anchor="end" fill="#cdd9ef" font-family="sans-serif">'+f.bat+'</text>';
+ el.forEach(function(e,k){b+=sym(e[0],xs[k],y0,0)+'<text x="'+xs[k]+'" y="'+(y0-16)+'" font-size="14" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">'+e[1]+'</text>';});
+ return svgW(W,H,b,'Circuito en serie con '+f.bat,380);}
+function fCircP(f){var W=440,H=190,x0=50,y0=34,y1=H-34,ym=(y0+y1)/2,br=f.br,n=br.length,xs=[],i,b='',xe=W-70;
+ for(i=0;i<n;i++)xs.push(n===1?xe:x0+120+i*(xe-x0-120)/(n-1));
+ var d='';if(f.bat)d+='M'+x0+' '+(ym-30)+'V'+y0+'H'+xs[n-1]+'M'+x0+' '+(ym+30)+'V'+y1+'H'+xs[n-1];else d+='M'+x0+' '+y0+'H'+xs[n-1]+'M'+x0+' '+y1+'H'+xs[n-1]+'M'+x0+' '+y0+'V'+y1;
+ br.forEach(function(r,k){d+='M'+xs[k]+' '+y0+'V'+(ym-30)+'M'+xs[k]+' '+(ym+30)+'V'+y1;});
+ b+='<path d="'+d+'" stroke="#e8eefc" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+ if(f.bat)b+=sym('B',x0,ym,90)+'<text x="'+(x0+14)+'" y="'+(ym-22)+'" font-size="14" font-weight="900" fill="#ffd98a" font-family="sans-serif">+</text><text x="'+(x0-10)+'" y="'+(ym+5)+'" font-size="14" font-weight="800" text-anchor="end" fill="#cdd9ef" font-family="sans-serif">'+f.bat+'</text>';
+ br.forEach(function(r,k){b+=sym(r[0],xs[k],ym,90)+(f.nl?'':'<text x="'+(xs[k]+14)+'" y="'+(ym+5)+'" font-size="14" font-weight="800" fill="#cdd9ef" font-family="sans-serif">'+r[1]+'</text>')+'<circle cx="'+xs[k]+'" cy="'+y0+'" r="3.5" fill="#e8eefc"/><circle cx="'+xs[k]+'" cy="'+y1+'" r="3.5" fill="#e8eefc"/>';});
+ return svgW(W,H,b,'Circuito en paralelo',380);}
+
+var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t;}return a;}
+function fmt(v,d){return Number(v).toFixed(d).replace('.',',');}
+function round(v,d){var m=Math.pow(10,d);return Math.round(v*m)/m;}
+var IND=CFG.ind,X=CFG.x,Y=CFG.y,P=CFG.model.p;
+var SNDI={on:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.2 6a8.5 8.5 0 0 1 0 12"/></svg>',off:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9l5 6M21 9l-5 6"/></svg>'};
+var muted=false,AC=null;
+function tone(f,d,ty,g,dl){if(muted)return;try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C();}if(AC.state==='suspended')AC.resume();var t=AC.currentTime+(dl||0),o=AC.createOscillator(),v=AC.createGain();o.type=ty||'sine';o.frequency.setValueAtTime(f,t);v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g||.12,t+.02);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d+.05);}catch(e){}}
+var SFX={ok:function(){tone(660,.14,'triangle',.14);tone(880,.2,'triangle',.14,.1);},half:function(){tone(520,.14,'triangle',.12);tone(700,.16,'triangle',.12,.1);},bad:function(){tone(190,.3,'sawtooth',.09);},try:function(){tone(300,.15,'square',.05);},tick:function(){tone(900,.05,'square',.04);},win:function(){[523,659,784,1047,1319].forEach(function(f,k){tone(f,.25,'triangle',.14,k*.11);});}};
+
+/* ---------- laboratorio virtual ---------- */
+function noise(v){return v*(1+(Math.random()*2-1)*0.03);}
+var SIMS={
+ electro:{f:function(x){return .45*x;},draw:function(x,y){var a=y*Math.PI/180,L=74,cx=210,cy=100,lx=L*Math.sin(a),ly=L*Math.cos(a),n=Math.max(1,Math.min(8,Math.round(x/10))),pl=new Array(n+1).join('+ ').trim(),s='';
+  s+='<rect x="110" y="78" width="200" height="124" rx="14" fill="none" stroke="#bfe3ff" stroke-width="3" opacity=".6"/>';
+  s+='<line x1="'+cx+'" y1="52" x2="'+cx+'" y2="'+cy+'" stroke="#cbd5e1" stroke-width="5"/><circle cx="'+cx+'" cy="36" r="20" fill="#94a3b8" stroke="#e2e8f0" stroke-width="3"/>';
+  s+='<text x="'+cx+'" y="12" font-size="16" font-weight="900" text-anchor="middle" fill="#ff7a90" font-family="sans-serif">'+pl+'</text>';
+  s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(cy+L)+'" stroke="#64748b" stroke-dasharray="4 4" stroke-width="2"/>';
+  s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx-lx)+'" y2="'+(cy+ly)+'" stroke="#ffd54a" stroke-width="8" stroke-linecap="round"/><line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+lx)+'" y2="'+(cy+ly)+'" stroke="#ffd54a" stroke-width="8" stroke-linecap="round"/>';
+  s+='<path d="M'+cx+' '+(cy+38)+' A38 38 0 0 1 '+(cx+38*Math.sin(a))+' '+(cy+38*Math.cos(a))+'" fill="none" stroke="#fff" stroke-width="2.5"/><text x="'+(cx+50)+'" y="'+(cy+52)+'" font-size="18" font-weight="900" fill="#fff" font-family="sans-serif">\u03b8</text>';
+  return svgW(420,210,s,'Electroscopio: cada hoja forma '+fmt(y,1)+' grados con la vertical');}},
+ coulomb:{f:function(x){return 3.6e-6/Math.pow(x/100,2)*1000;},draw:function(x,y){var px=x*22,c1=210-px/2,c2=210+px/2,len=Math.min(70,10+y*5),s='',i;
+  s+='<rect x="34" y="150" width="352" height="18" rx="3" fill="#1e293b" stroke="#94a3b8"/>';for(i=0;i<=16;i++)s+='<line x1="'+(34+22*i)+'" y1="150" x2="'+(34+22*i)+'" y2="'+(i%2?158:162)+'" stroke="#94a3b8" stroke-width="2"/>';
+  s+=ballS(c1,84,'+','',20)+ballS(c2,84,'+','',20);
+  s+=arrowS(c1-24,84,Math.max(8,c1-24-len),84,'#ffe27a',6,13)+arrowS(c2+24,84,Math.min(412,c2+24+len),84,'#ffe27a',6,13);
+  s+='<line x1="'+c1+'" y1="124" x2="'+c2+'" y2="124" stroke="#bfe3ff" stroke-width="3"/><line x1="'+c1+'" y1="116" x2="'+c1+'" y2="132" stroke="#bfe3ff" stroke-width="3"/><line x1="'+c2+'" y1="116" x2="'+c2+'" y2="132" stroke="#bfe3ff" stroke-width="3"/>';
+  s+='<text x="210" y="190" font-size="15" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">d = '+x+' cm</text>';
+  return svgW(420,200,s,'Dos esferas a '+x+' cm');}},
+ campo:{f:function(x){return 9/Math.pow(x/100,2);},draw:function(x,y){var tx=96+x*2.6,len=16+14*Math.log(Math.max(y,1))/Math.LN10,s='';
+  s+='<line x1="82" y1="100" x2="'+(tx-9)+'" y2="100" stroke="#64748b" stroke-dasharray="4 5" stroke-width="2"/>'+ballS(60,100,'+','Q = +1 nC',22);
+  s+=ballS(tx,100,'+','',9)+arrowS(tx+14,100,Math.min(414,tx+14+len),100,'#ffe27a',6,13);
+  s+='<text x="'+((82+tx)/2)+'" y="86" font-size="14" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">r = '+x+' cm</text><text x="'+tx+'" y="136" font-size="12" font-weight="800" text-anchor="middle" fill="#9fb0cc" font-family="sans-serif">carga de prueba</text>';
+  return svgW(420,170,s,'Carga de prueba a '+x+' cm');}},
+ potencial:{f:function(x){return 90/x;},draw:function(x,y){var px=60+x*56,s='';
+  s+='<circle cx="60" cy="100" r="'+(px-60)+'" fill="none" stroke="#a78bfa" stroke-width="3" stroke-dasharray="8 7" opacity=".8"/>'+ballS(60,100,'+','Q = +10 nC',22);
+  s+='<line x1="82" y1="100" x2="'+(px-14)+'" y2="100" stroke="#64748b" stroke-dasharray="4 5" stroke-width="2"/>';
+  s+='<circle cx="'+px+'" cy="100" r="14" fill="#0f172a" stroke="#e8eefc" stroke-width="3"/><text x="'+px+'" y="106" font-size="16" font-weight="900" text-anchor="middle" fill="#e8eefc" font-family="sans-serif">V</text>';
+  s+='<text x="'+((82+px)/2)+'" y="86" font-size="14" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">r = '+fmt(x,1)+' m</text>';
+  return svgW(420,170,s,'Sonda a '+fmt(x,1)+' m');}},
+ ohm:{f:function(x){return x/220*1000;},draw:function(x,y){return fCirc({bat:x+' V',el:[['R','220 \u03a9']]});}},
+ circuito:{f:function(x){return 12/100*1000*x;},draw:function(x,y){var br=[],i;for(i=0;i<x;i++)br.push(['R','100 \u03a9']);return fCircP({bat:'12 V',br:br,nl:x>3});}}
+};
+var SM=SIMS[CFG.sim];
+function measure(x){return round(noise(SM.f(x)),Y.dec);}
+var labIdx=0;
+function labShow(i,val){labIdx=i;var x=X.vals[i],y=(val!==undefined?val:measure(x));$('#rng').value=i;$('#lsvg').innerHTML=SM.draw(x,y);$('#lx').textContent=fmt(x,X.dec)+(X.unit?' '+X.unit:'');$('#ly').textContent=fmt(y,Y.dec)+' '+Y.unit;}
+function labInit(){
+ var mid=Math.floor(X.vals.length/2);
+ $('#labp').innerHTML='<h3>Laboratorio virtual</h3><div class="labsvg" id="lsvg"></div><div class="reading"><div><small>'+X.sym+' (ajuste)</small><b id="lx"></b></div><div><small>'+Y.sym+' (lectura)</small><b id="ly"></b></div></div><input type="range" class="rng" id="rng" min="0" max="'+(X.vals.length-1)+'" step="1" value="'+mid+'" aria-label="Control del laboratorio: '+X.name+'"><div class="hint">Mueve el control para explorar. Estas lecturas no se guardan: las mediciones oficiales se hacen en la estación 4.</div><div class="fix">'+CFG.fixed.map(function(f){return '<span>'+f+'</span>';}).join('')+'</div>';
+ $('#rng').addEventListener('input',function(){labShow(parseInt(this.value,10));SFX.tick();});
+ labShow(mid);
+}
+
+/* ---------- estado ---------- */
+var STN=[['I1','Pregunta'],['I2','Hipótesis'],['I3','Variables'],['I4','Datos'],['I5','Análisis'],['I6','Contraste']];
+var S;
+function resetS(){S={st:0,pts:[0,0,0,0,0,0],h2:0,h5:0,att:0,lock:false,q:{pick:'',my:''},hyp:{a:0,b:0,why:''},plan:[],data:{},gk:'',conc:{pick:'',my:''},hv:null,pred:null,name:'',grp:''};}
+resetS();
+function total(){return S.pts[0]+(S.h2+S.h5)+S.pts[2]+S.pts[3]+S.pts[4]+S.pts[5];}
+function hud(){$('#hN').textContent=Math.min(6,S.st+1);$('#hP').textContent=total();}
+function stepper(){$('#stepper').innerHTML=STN.map(function(s,k){return '<div class="stp'+(k<S.st?' done':'')+(k===S.st?' now':'')+'">'+(k<S.st?'\u2713 ':'')+(k+1)+' · '+s[1]+'</div>';}).join('');$('#pbar').style.width=(100*S.st/6)+'%';}
+function shead(n,title){return '<div class="chips"><span class="chip">Estación '+n+' de 6</span><span class="chip c2">'+IND[STN[n-1][0]]+'</span></div><h2>'+title+'</h2>';}
+var FBID='fb';
+function fb(kind,title,body){var f=$('#'+FBID);if(!f)return;f.className='fb show '+kind;f.innerHTML='<b>'+title+'</b>'+body;}
+function go(i){FBID='fb';S.st=i;S.att=0;S.lock=false;hud();stepper();[r1,r2,r3,r4,r5,r6][i]();$('#panel').scrollTop=0;}
+function nextBtn(label,fn){var a=$('#acts');a.innerHTML='<button class="btn" id="nx">'+label+'</button>';$('#nx').addEventListener('click',fn);try{$('#nx').focus({preventScroll:true});}catch(e){}var f=$('#fb');if(f&&f.scrollIntoView)f.scrollIntoView({block:'nearest',behavior:'smooth'});}
+function pts2(){return S.att===0?2:1;}
+/* opciones */
+function optsHTML(list,grid){return '<div class="opts'+(grid?' grid':'')+'" id="opts">'+list.map(function(o,k){return '<button class="opt" data-k="'+k+'"'+(o.l?' aria-label="'+o.l+'"':'')+'><b>'+'ABCD'[k]+'</b>'+(o.f?fChart(o.f):'<span>'+o.x+'</span>')+'</button>';}).join('')+'</div>';}
+function pick(list,msg,cb){
+ document.querySelectorAll('#opts .opt').forEach(function(b){b.addEventListener('click',function(){
+  if(S.lock)return;var k=parseInt(b.getAttribute('data-k'),10),o=list[k];
+  if(o.ok){S.lock=true;b.classList.add('good');document.querySelectorAll('#opts .opt').forEach(function(x){x.disabled=true;});cb(pts2(),o);}
+  else{b.classList.add('bad');b.disabled=true;S.att++;
+   if(S.att>=2){S.lock=true;document.querySelectorAll('#opts .opt').forEach(function(x,j){x.disabled=true;if(list[j].ok)x.classList.add('good');});cb(0,list.filter(function(z){return z.ok;})[0]);}
+   else{SFX.try();fb('try','Todavía no… ¡inténtalo de nuevo!',msg+' Si aciertas ahora ganas 1 punto.');}}
+ });});}
+function title3(p){return p===2?'¡Correcto a la primera! +2':p===1?'¡Correcto en el segundo intento! +1':'Esta vez no sumó puntos';}
+function sfx(p){if(p===2)SFX.ok();else if(p===1)SFX.half();else SFX.bad();}
+
+/* ---------- estación 1: pregunta ---------- */
+function r1(){var list=shuffle(CFG.q);
+ $('#panel').innerHTML=shead(1,'¿Qué vas a investigar?')+'<div class="ctx"><b>'+CFG.scene.title+'.</b> '+CFG.scene.text+'</div><div class="q">Observa el laboratorio y elige la pregunta de investigación que puedes responder con él:</div>'+optsHTML(list)+'<div class="fb" id="fb"></div><div class="own" id="own" hidden><label for="myq">Ahora escribe tu propia pregunta de investigación (opcional):</label><textarea id="myq" rows="2" placeholder="¿Cómo cambia … al …?"></textarea></div><div class="acts" id="acts"></div>';
+ pick(list,'Esa pregunta no se puede responder bien con este laboratorio.',function(p,o){S.pts[0]=p;S.q.pick=o.x;sfx(p);hud();fb(p>0?'ok':'no',title3(p),CFG.qwhy);$('#own').hidden=false;nextBtn('Continuar ▶',function(){S.q.my=($('#myq').value||'').trim();go(1);});});}
+
+/* ---------- estación 2: hipótesis ---------- */
+function hypText(){var h=S.hyp;return 'Si '+(h.a===1?'aumento':'disminuyo')+' '+CFG.hyp.indep+', entonces '+CFG.hyp.dep+' '+(h.b===1?'aumenta':h.b===2?'disminuye':'no cambia')+', porque '+h.why.replace(/^porque[\s,:]+/i,'');}
+function r2(){
+ $('#panel').innerHTML=shead(2,'Tu hipótesis')+'<div class="ctx">Antes de medir, anticipa lo que va a pasar. Una hipótesis dice qué cambio esperas y por qué. Después la comprobarás con tus datos.</div><div class="sent">Si <select id="ha" aria-label="Qué haces con la variable que cambias"><option value="0">Elige…</option><option value="1">aumento</option><option value="2">disminuyo</option></select> '+CFG.hyp.indep+', entonces '+CFG.hyp.dep+' <select id="hb" aria-label="Qué esperas que pase"><option value="0">Elige…</option><option value="1">aumenta</option><option value="2">disminuye</option><option value="3">no cambia</option></select>,</div><div class="own"><label for="hw">porque…</label><textarea id="hw" rows="2" placeholder="Escribe tu explicación"></textarea></div><div class="fb" id="fb"></div><div class="acts" id="acts"><button class="btn" id="hsave">Guardar hipótesis</button></div>';
+ $('#hsave').addEventListener('click',function(){
+  var a=parseInt($('#ha').value,10),b=parseInt($('#hb').value,10),w=($('#hw').value||'').trim();
+  if(!a||!b||w.length<8){fb('try','Completa tu hipótesis','Elige las dos opciones y escribe tu explicación (al menos una frase corta).');SFX.try();return;}
+  S.hyp={a:a,b:b,why:w};S.h2=1;S.pts[1]=1;['ha','hb','hw'].forEach(function(id){$('#'+id).disabled=true;});SFX.ok();hud();
+  fb('ok','Hipótesis guardada','<i>'+esc(hypText())+'.</i><br>La revisarás con tus datos en la estación 5.');nextBtn('Continuar ▶',function(){go(2);});});}
+
+/* ---------- estación 3: variables y diseño ---------- */
+function r3(){var p=shead(3,'Variables y diseño')+'<div class="ctx">Un buen experimento cambia una sola variable. Clasifica los elementos de este laboratorio:</div><table class="vt">';
+ CFG.vars.forEach(function(r,k){p+='<tr><td>'+r[0]+'</td><td style="width:46%"><select data-k="'+k+'" aria-label="'+r[0]+'">'+CFG.sel.map(function(s,j){return '<option value="'+j+'">'+s+'</option>';}).join('')+'</select></td></tr>';});
+ p+='</table><div class="fb" id="fb"></div><div class="acts" id="acts"><button class="btn" id="chk">Comprobar</button></div><div id="planbox"></div>';
+ $('#panel').innerHTML=p;
+ document.querySelectorAll('.vt select').forEach(function(s){s.addEventListener('change',function(){s.className='';});});
+ $('#chk').addEventListener('click',function(){
+  if(S.lock)return;var sel=document.querySelectorAll('.vt select'),all=true,bad=0;
+  sel.forEach(function(s){if(parseInt(s.value,10)===0)all=false;});
+  if(!all){fb('try','Faltan casillas','Elige una opción en cada fila antes de comprobar.');return;}
+  sel.forEach(function(s,k){var ok=(parseInt(s.value,10)-1)===CFG.vars[k][1];s.className=ok?'good':'bad';if(!ok)bad++;});
+  if(!bad){S.lock=true;sel.forEach(function(s){s.disabled=true;});var pp=pts2();S.pts[2]=pp;sfx(pp);hud();fb('ok',title3(pp),CFG.varswhy);plan();}
+  else{S.att++;if(S.att>=2){S.lock=true;sel.forEach(function(s,k){s.value=String(CFG.vars[k][1]+1);s.className='good';s.disabled=true;});S.pts[2]=0;SFX.bad();hud();fb('no',title3(0),CFG.varswhy);plan();}
+   else{SFX.try();fb('try','Todavía no… ¡inténtalo de nuevo!',bad+' fila(s) están mal (en rojo). Si aciertas ahora ganas 1 punto.');}}});}
+function plan(){
+ $('#acts').innerHTML='';
+ var b=$('#planbox');b.innerHTML='<div class="q">Diseña tu plan de medición: elige los valores de «'+X.label+'» que vas a medir (mínimo 5, incluyendo valores pequeños y grandes).</div><div class="vals" id="vals">'+X.vals.map(function(v,k){return '<label><input type="checkbox" value="'+k+'"> '+fmt(v,X.dec)+(X.unit?' '+X.unit:'')+'</label>';}).join('')+'</div><div class="hint" id="ph"></div><div class="acts"><button class="btn" id="pl">Confirmar plan ▶</button></div>';
+ document.querySelectorAll('#vals input').forEach(function(c){c.addEventListener('change',function(){c.parentNode.className=c.checked?'on':'';});});
+ $('#pl').addEventListener('click',function(){
+  var ks=[];document.querySelectorAll('#vals input:checked').forEach(function(c){ks.push(parseInt(c.value,10));});
+  var vs=ks.map(function(k){return X.vals[k];}).sort(function(a,b){return a-b;});
+  if(vs.length<5){$('#ph').textContent='Elige al menos 5 valores.';SFX.try();return;}
+  if(vs[vs.length-1]/vs[0]<3){$('#ph').textContent='Incluye valores más separados: el mayor debe ser al menos 3 veces el menor, para ver bien el patrón.';SFX.try();return;}
+  S.plan=vs;S.data={};go(3);});}
+
+/* ---------- estación 4: datos y gráfica ---------- */
+function niceMax(v){var e=Math.pow(10,Math.floor(Math.log(v)/Math.LN10)),f=v/e,n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
+function plot(){
+ var xs=S.plan.filter(function(x){return S.data[x]!==undefined;}),mx=niceMax(Math.max.apply(null,xs)*1.02),my=niceMax(Math.max.apply(null,xs.map(function(x){return S.data[x];}))*1.05),s='',i,gx=function(v){return 52+v/mx*350;},gy=function(v){return 200-v/my*180;};
+ for(i=0;i<=5;i++){s+='<line x1="52" y1="'+(200-i*36)+'" x2="402" y2="'+(200-i*36)+'" stroke="#334155"/><text x="46" y="'+(204-i*36)+'" font-size="10" text-anchor="end" fill="#9fb0cc" font-family="sans-serif">'+fmt(my*i/5,my<10?1:0)+'</text><line x1="'+(52+i*70)+'" y1="200" x2="'+(52+i*70)+'" y2="205" stroke="#94a3b8"/><text x="'+(52+i*70)+'" y="217" font-size="10" text-anchor="middle" fill="#9fb0cc" font-family="sans-serif">'+fmt(mx*i/5,mx<10?1:0)+'</text>';}
+ s+='<path d="M52 12V200H402" fill="none" stroke="#94a3b8" stroke-width="2"/><polyline points="'+xs.map(function(x){return gx(x).toFixed(1)+','+gy(S.data[x]).toFixed(1);}).join(' ')+'" fill="none" stroke="#f5b942" stroke-width="2.5" opacity=".7"/>';
+ xs.forEach(function(x){s+='<circle cx="'+gx(x).toFixed(1)+'" cy="'+gy(S.data[x]).toFixed(1)+'" r="5.5" fill="var(--acc)" stroke="#fff" stroke-width="1.5"/>';});
+ s+='<text x="227" y="236" font-size="12" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif">'+X.label+'</text><text x="12" y="108" font-size="12" font-weight="800" text-anchor="middle" fill="#cdd9ef" font-family="sans-serif" transform="rotate(-90 12 108)">'+Y.label+'</text>';
+ return '<svg viewBox="0 0 420 242" role="img" aria-label="Gráfica de '+Y.name+' contra '+X.name+'">'+s+'</svg>';}
+function r4(){
+ var p=shead(4,'Mide y grafica')+'<div class="ctx">Haz clic en «Medir» en cada valor de tu plan. Cada lectura trae un pequeño error de medición, como en un laboratorio real. Puedes repetir una medida si dudas de ella.</div><table class="mt"><tr><th>'+X.label+'</th><th>'+Y.label+'</th><th>Acción</th></tr>';
+ S.plan.forEach(function(x,k){p+='<tr><td>'+fmt(x,X.dec)+'</td><td class="v" id="yv'+k+'">'+(S.data[x]!==undefined?fmt(S.data[x],Y.dec):'—')+'</td><td><button data-k="'+k+'">'+(S.data[x]!==undefined?'Repetir':'Medir')+'</button></td></tr>';});
+ p+='</table><div id="gz"></div><div class="fb" id="fb"></div><div class="acts" id="acts"></div>';
+ $('#panel').innerHTML=p;
+ document.querySelectorAll('.mt button').forEach(function(b){b.addEventListener('click',function(){
+  var k=parseInt(b.getAttribute('data-k'),10),x=S.plan[k],y=measure(x);S.data[x]=y;$('#yv'+k).textContent=fmt(y,Y.dec);b.textContent='Repetir';SFX.tick();labShow(X.vals.indexOf(x),y);graphUI();});});
+ graphUI(true);}
+function graphUI(first){
+ var done=S.plan.every(function(x){return S.data[x]!==undefined;});
+ if(!done){return;}
+ var gz=$('#gz'),has=$('#gplot');
+ if(has){has.innerHTML=plot();return;}
+ var kinds=[['lin','Recta creciente que parte del origen'],['inv','Curva decreciente que baja rápido y luego se aplana'],['dec','Recta decreciente'],['hor','Línea horizontal']];
+ var list=shuffle(kinds.map(function(k){return {f:{k:'chart',kind:k[0],xl:X.sym,yl:Y.sym,l:k[1]},l:k[1],ok:(k[0]===CFG.graph)?1:0,x:k[1]};}));
+ gz.innerHTML='<div class="gr" id="gplot">'+plot()+'</div><div class="q">¿Qué forma tiene la relación entre '+X.name+' y '+Y.name+'? Elige la gráfica que representa tus datos:</div>'+optsHTML(list,true);
+ pick(list,'Compara la forma de tus puntos con cada gráfica.',function(p,o){S.pts[3]=p;S.gk=o.x;sfx(p);hud();fb(p>0?'ok':'no',title3(p),CFG.graphwhy);nextBtn('Continuar ▶',function(){go(4);});});
+}
+
+/* ---------- estación 5: análisis ---------- */
+function trendOK(){var h=S.hyp,same=(h.a===1&&h.b===1)||(h.a===2&&h.b===2),opp=(h.a===1&&h.b===2)||(h.a===2&&h.b===1);return P>0?same:opp;}
+function r5(){
+ $('#panel').innerHTML=shead(5,'Analiza tus datos')+'<div class="ctx"><b>Tu hipótesis:</b> <i>'+esc(hypText())+'.</i></div><div class="gr" id="gplot2">'+plot()+'</div><div class="q">Mira tu gráfica y tu tabla. ¿Tu hipótesis se cumplió?</div><div class="acts"><button class="btn sec" id="hy">Se cumplió</button><button class="btn sec" id="hn">No se cumplió</button></div><div class="fb" id="fb"></div><div id="cbox"></div>';
+ function evalH(said){var truth=trendOK();S.h5=(said===truth)?1:0;S.pts[1]=S.h2+S.h5;$('#hy').disabled=true;$('#hn').disabled=true;hud();
+  fb(S.h5?'ok':'no',S.h5?'¡Bien revisado! +1':'Revísalo con la gráfica',truth?'Tu hipótesis coincide con el patrón de tus datos.':'El patrón de tus datos va en sentido contrario a tu hipótesis. En ciencia eso también es un resultado valioso: se corrige la hipótesis.');S.h5?SFX.ok():SFX.bad();conc();}
+ $('#hy').addEventListener('click',function(){evalH(true);});$('#hn').addEventListener('click',function(){evalH(false);});}
+function conc(){
+ var list=shuffle(CFG.concl);S.att=0;S.lock=false;FBID='fb2';
+ $('#cbox').innerHTML='<div class="q">¿Qué conclusión está respaldada por tus datos?</div>'+optsHTML(list)+'<div class="fb" id="fb2"></div><div class="own" id="own" hidden><label for="myc">Escribe tu conclusión con tus palabras y con un dato de tu tabla (opcional):</label><textarea id="myc" rows="2"></textarea></div><div class="acts" id="acts"></div>';
+ pick(list,'Esa conclusión no coincide con el patrón de tus datos.',function(p,o){S.pts[4]=p;S.conc.pick=o.x;sfx(p);hud();fb(p>0?'ok':'no',title3(p),CFG.conclwhy);$('#own').hidden=false;nextBtn('Continuar ▶',function(){S.conc.my=($('#myc').value||'').trim();go(5);});});
+}
+
+/* ---------- estación 6: contraste con el modelo ---------- */
+function r6(){
+ var xs=S.plan.slice().sort(function(a,b){return a-b;}),x1=xs[0],xl=xs[xs.length-1],y1=S.data[x1],yl=S.data[xl],ans=y1*Math.pow(xl/x1,P);
+ S.pred={x1:x1,y1:y1,xl:xl,yl:yl,ans:ans,diff:null};
+ var u=function(v,d){return fmt(v,d)};
+ $('#panel').innerHTML=shead(6,'Contrasta con el modelo')+'<div class="ctx"><b>Modelo: '+CFG.model.name+'</b> ('+CFG.model.law+'). Un modelo sirve si predice lo que medimos.</div><div class="ctx">Con tu primera medición ('+X.sym+' = '+u(x1,X.dec)+(X.unit?' '+X.unit:'')+' → '+Y.sym+' = '+u(y1,Y.dec)+' '+Y.unit+'), usa el modelo para <b>predecir</b> cuánto debería valer '+Y.sym+' cuando '+X.sym+' = '+u(xl,X.dec)+(X.unit?' '+X.unit:'')+'.</div><div class="numrow"><input id="num" inputmode="decimal" autocomplete="off" placeholder="Tu predicción" aria-label="Tu predicción"><span class="unit">'+Y.unit+'</span><button class="btn" id="chk">Comprobar</button></div><div class="fb" id="fb"></div><div id="cmp"></div><div class="acts" id="acts"></div>';
+ $('#num').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('#chk').click();}});
+ $('#chk').addEventListener('click',function(){
+  if(S.lock)return;var raw=$('#num').value.replace(',','.').trim(),v=parseFloat(raw);
+  if(raw===''||isNaN(v)){fb('try','Escribe un número','Escribe tu predicción (puedes usar coma o punto decimal).');return;}
+  var ok=Math.abs(v-ans)<=Math.max(ans*0.02,Math.pow(10,-Y.dec));
+  if(ok){S.lock=true;$('#num').disabled=true;$('#chk').disabled=true;var p=pts2();S.pts[5]=p;sfx(p);hud();fb('ok',title3(p),'Predicción = '+u(y1,Y.dec)+' · ('+u(xl,X.dec)+' / '+u(x1,X.dec)+')^('+P+') = '+u(ans,Y.dec)+' '+Y.unit+'.');compare();}
+  else{S.att++;if(S.att>=2){S.lock=true;$('#num').value=String(round(ans,Y.dec)).replace('.',',');$('#num').disabled=true;$('#chk').disabled=true;S.pts[5]=0;SFX.bad();hud();fb('no',title3(0),'<b>Respuesta: '+u(ans,Y.dec)+' '+Y.unit+'.</b> Predicción = '+u(y1,Y.dec)+' · ('+u(xl,X.dec)+' / '+u(x1,X.dec)+')^('+P+').');compare();}
+   else{SFX.try();fb('try','Todavía no… ¡inténtalo de nuevo!','Pista: '+CFG.model.hint+' Si aciertas ahora ganas 1 punto.');}}});}
+function compare(){
+ var d=Math.abs(S.pred.yl-S.pred.ans)/S.pred.ans*100;S.pred.diff=d;
+ var list=shuffle([{x:'Los datos son coherentes con el modelo: la diferencia es pequeña y se explica por el error de medición.',ok:1},{x:'El modelo es incorrecto, porque lo medido no es exactamente igual a lo predicho.',ok:0},{x:'Hay que ignorar el modelo y confiar solo en una medida.',ok:0},{x:'Los datos no sirven para nada.',ok:0}]);
+ S.att=0;S.lock=false;FBID='fb2';
+ $('#cmp').innerHTML='<table class="dt"><tr><th>Predicho por el modelo</th><th>Medido por ti</th><th>Diferencia</th></tr><tr><td>'+fmt(S.pred.ans,Y.dec)+' '+Y.unit+'</td><td>'+fmt(S.pred.yl,Y.dec)+' '+Y.unit+'</td><td>'+fmt(d,1)+' %</td></tr></table><div class="q">¿Qué concluyes de esta comparación?</div>'+optsHTML(list)+'<div class="fb" id="fb2"></div>';
+ pick(list,'Piensa en que toda medición real tiene un pequeño error.',function(p,o){fb(p>0?'ok':'no',p>0?'Bien razonado':'Piénsalo de nuevo','Una diferencia pequeña, dentro del error de medición, respalda el modelo. Una diferencia grande y repetida obligaría a revisar el modelo o el montaje.');
+  var a=$('#acts');a.innerHTML='<button class="btn" id="nx">Ver mi informe ▶</button>';$('#nx').addEventListener('click',showRes);});
+}
+
+/* ---------- informe y resultados ---------- */
+function level(p){return p>=80?'Avanzado':p>=60?'Satisfactorio':p>=40?'Básico':'Inicial';}
+function showRes(){
+ S.pts[1]=S.h2+S.h5;var tot=total(),pc=Math.round(100*tot/12),lv=level(pc),keys=['I1','I2','I3','I4','I5','I6'],bars='';
+ keys.forEach(function(k,i){var v=S.pts[i];bars+='<div><span>'+IND[k]+'</span><i><u style="width:'+Math.round(100*v/2)+'%"></u></i><b>'+v+'/2</b></div>';});
+ var d=new Date(),ds=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+ var rows=S.plan.map(function(x){return fmt(x,X.dec)+(X.unit?' '+X.unit:'')+' \u2192 '+fmt(S.data[x],Y.dec)+' '+Y.unit;}).join('; ');
+ var rep=CFG.tag+'\nEstudiante: '+(S.name||'(sin nombre)')+' · Grupo: '+(S.grp||'-')+' · Fecha: '+ds+
+  '\n1. Pregunta: '+S.q.pick+(S.q.my?'\n   Mi pregunta: '+S.q.my:'')+
+  '\n2. Hipótesis: '+hypText()+'. ('+(S.h5?'Revisión correcta':'Revisión por mejorar')+')'+
+  '\n3. Variables: independiente = '+X.name+' ('+X.sym+'); dependiente = '+Y.name+' ('+Y.sym+'); controladas = '+CFG.fixed.join(', ')+
+  '\n4. Datos: '+rows+'\n   Gráfica: '+S.gk+
+  '\n5. Conclusión: '+S.conc.pick+(S.conc.my?'\n   Mi conclusión: '+S.conc.my:'')+
+  '\n6. Contraste con el modelo ('+CFG.model.law+'): predicho '+fmt(S.pred.ans,Y.dec)+' '+Y.unit+', medido '+fmt(S.pred.yl,Y.dec)+' '+Y.unit+' (diferencia '+fmt(S.pred.diff,1)+' %)'+
+  '\nPuntaje: '+tot+'/12 ('+pc+' %) · Nivel: '+lv+' · '+keys.map(function(k,i){return k+' '+S.pts[i]+'/2';}).join(' · ');
+ var o=$('#res');o.hidden=false;
+ o.innerHTML='<div class="box"><h1>¡Informe de indagación listo!</h1><div class="lvl">Nivel: '+lv+'</div><div class="rt"><div><small>Puntos</small><b>'+tot+'/12</b></div><div><small>Porcentaje</small><b>'+pc+'%</b></div><div><small>Estaciones</small><b>6/6</b></div></div><div class="ind">'+bars+'</div><pre class="rep" id="rep">'+esc(rep)+'</pre><div class="acts" style="justify-content:center"><button class="btn" id="copy">Copiar mi informe</button><button class="btn sec" id="again">Repetir el laboratorio</button></div><p class="hint" id="cmsg"></p></div>';
+ SFX.win();burst($('#app').clientWidth/2,$('#app').clientHeight/3,100);
+ $('#copy').addEventListener('click',function(){copyTxt(rep,function(ok){$('#cmsg').textContent=ok?'¡Copiado! Pégalo donde tu docente te indique.':'No se pudo copiar automáticamente: selecciona el texto del recuadro y cópialo.';});});
+ $('#again').addEventListener('click',function(){o.hidden=true;begin();});
+}
+function copyTxt(t,cb){try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){cb(true);},function(){fallback();});return;}}catch(e){}fallback();
+ function fallback(){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(a);cb(ok);}}
+
+/* ---------- inicio ---------- */
+function begin(){var n=S.name,g=S.grp;resetS();S.name=n;S.grp=g;$('#start').hidden=true;$('#res').hidden=true;go(0);}
+$('#go').addEventListener('click',function(){S.name=$('#inName').value.trim();S.grp=$('#inGrp').value.trim();tone(1,.01,'sine',.0001);begin();});
+$('#snd').innerHTML=SNDI.on;$('#snd').addEventListener('click',function(){muted=!muted;$('#snd').innerHTML=muted?SNDI.off:SNDI.on;});
+
+/* ---------- fondo y confeti ---------- */
+var bg=$('#bg'),bx=bg.getContext('2d'),fx=$('#fx'),fc=fx.getContext('2d'),W=0,H=0,parts=[],conf=[];
+function size(){var r=$('#app').getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);W=Math.max(1,r.width);H=Math.max(1,r.height);[bg,fx].forEach(function(c){c.width=Math.round(W*d);c.height=Math.round(H*d);});bx.setTransform(d,0,0,d,0,0);fc.setTransform(d,0,0,d,0,0);}
+function seed(){parts=[];var n=Math.round(Math.min(36,Math.max(14,W*H/20000)));for(var k=0;k<n;k++)parts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,q:Math.random()<.5?1:-1,r:4+Math.random()*6});}
+function loop(){bx.clearRect(0,0,W,H);
+ for(var i=0;i<parts.length;i++){var a=parts[i];for(var j=i+1;j<parts.length;j++){var b=parts[j],dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy+400,f=(-a.q*b.q)*38/d2,d=Math.sqrt(d2);if(d<260){var fx_=dx/d*f,fy_=dy/d*f;a.vx+=fx_*.05;a.vy+=fy_*.05;b.vx-=fx_*.05;b.vy-=fy_*.05;}}}
+ for(var k=0;k<parts.length;k++){var p=parts[k];p.vx*=.995;p.vy*=.995;var sp=Math.hypot(p.vx,p.vy);if(sp>1){p.vx*=1/sp;p.vy*=1/sp;}p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.x=Math.max(0,Math.min(W,p.x));p.y=Math.max(0,Math.min(H,p.y));
+  var col=p.q>0?'255,84,112':'82,168,255',g=bx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);g.addColorStop(0,'rgba('+col+',.5)');g.addColorStop(1,'rgba('+col+',0)');bx.fillStyle=g;bx.beginPath();bx.arc(p.x,p.y,p.r*3,0,6.283);bx.fill();bx.fillStyle='rgba('+col+',.85)';bx.beginPath();bx.arc(p.x,p.y,p.r*.7,0,6.283);bx.fill();bx.strokeStyle='rgba(255,255,255,.8)';bx.lineWidth=1.3;bx.beginPath();bx.moveTo(p.x-p.r*.4,p.y);bx.lineTo(p.x+p.r*.4,p.y);if(p.q>0){bx.moveTo(p.x,p.y-p.r*.4);bx.lineTo(p.x,p.y+p.r*.4);}bx.stroke();}
+ fc.clearRect(0,0,W,H);for(var c=conf.length-1;c>=0;c--){var q=conf[c];q.vy+=.18;q.x+=q.vx;q.y+=q.vy;q.vx*=.99;q.rot+=q.vr;q.life--;if(q.life<=0||q.y>H+20){conf.splice(c,1);continue;}fc.save();fc.translate(q.x,q.y);fc.rotate(q.rot);fc.globalAlpha=Math.min(1,q.life/25);fc.fillStyle=q.c;fc.fillRect(-q.w/2,-q.h/2,q.w,q.h);fc.restore();}
+ requestAnimationFrame(loop);}
+function burst(x,y,n){var cols=['#ff5470','#52a8ff','#f5b942','#34d399','#a78bfa','#ffffff'];for(var k=0;k<n;k++){var a=Math.random()*6.283,s=2+Math.random()*7;conf.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,w:5+Math.random()*6,h:3+Math.random()*5,rot:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[k%cols.length],life:70+Math.random()*50});}if(conf.length>260)conf.splice(0,conf.length-260);}
+size();seed();requestAnimationFrame(loop);labInit();stepper();hud();
+window.addEventListener('resize',function(){size();seed();});
+})();
+</script></body></html>
