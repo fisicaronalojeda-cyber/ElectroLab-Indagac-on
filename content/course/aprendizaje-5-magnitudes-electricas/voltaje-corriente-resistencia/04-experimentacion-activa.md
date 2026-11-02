@@ -22,7 +22,8 @@ Usa el Kit de construcción de circuitos de PhET para medir corriente y voltaje 
 
 ## 4.2 Actividad interactiva
 
-En Genially, crea una simulación simplificada tipo 'circuito de agua' (analogía hidráulica) que el estudiante deba relacionar con voltaje, corriente y resistencia.
+<div class="emlab-embed" data-src="/uploads/laboratorio-a5-magnitudes-electricas.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script>
 
 Observa este video: 
 Realiza el resumen de los elementos más importantes e interesantes: 
