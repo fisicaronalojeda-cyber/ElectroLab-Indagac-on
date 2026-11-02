@@ -22,9 +22,10 @@ Explora tu propio hero de líneas de campo, probando arreglos con una carga, dos
 
 ## 4.2 Actividad interactiva
 
-En Genially, crea una actividad de 'arrastrar la línea correcta' donde el estudiante deba unir cada arreglo de cargas con su patrón de líneas de campo correspondiente.
-##lÍNEAS DE CAMPO ELÉCTRICO
+<div class="emlab-embed" data-src="/uploads/laboratorio-a3-campo-electrico.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script>
 
+##lÍNEAS DE CAMPO ELÉCTRICO
 
 En esta simulación puedes incluir cargas eléctricas y visualizar las lineas de campo : 
 
