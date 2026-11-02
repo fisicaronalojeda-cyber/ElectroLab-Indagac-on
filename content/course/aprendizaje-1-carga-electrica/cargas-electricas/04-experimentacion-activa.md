@@ -54,6 +54,11 @@ JUEGA UN POCO
 
 <iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="650" height="690" frameborder="0" src="https://es.educaplay.com/juego/31110351-carga.html"></iframe>
 
+LABORATORIO : Electroscopio
+
+<div class="emlab-embed" data-src="/uploads/laboratorio-a1-carga-electrica.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script> 
+
 
 <div id="emlab-boton-slot"></div>
 <script src="/js/progreso.js"></script>
