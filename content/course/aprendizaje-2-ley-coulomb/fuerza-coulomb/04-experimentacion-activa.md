@@ -26,7 +26,8 @@ Usa el simulador Ley de Coulomb de PhET para medir la fuerza variando carga y di
 
 ## 4.2 Actividad interactiva
 
-Con Genially, arma una actividad tipo 'calculadora interactiva' donde el estudiante ingrese dos cargas y una distancia, y compare su cálculo manual con el resultado esperado.
+<div class="emlab-embed" data-src="/uploads/laboratorio-a2-fuerza-electrica.html" data-h="780"></div>
+<script src="/js/emlab-embed.js"></script>
 
 <!-- Pega aquí tu iframe de Genially -->
 
