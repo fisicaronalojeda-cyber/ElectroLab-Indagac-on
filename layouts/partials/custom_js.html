@@ -113,6 +113,24 @@
     }).catch(function(){ return {}; });
   };
 
+  // ---- Un solo intento oficial por actividad (lo usan los laboratorios y las evaluaciones) ----
+  // Guarda en usuarios/{uid} -> intentos.{clave} = { fecha, total, porcentaje }
+  window.emlabIntentoLeer = function(clave){
+    if (!window.emlabAuthUser) return Promise.reject(new Error('sin-sesion'));
+    return getDoc(doc(window.emlabDB, 'usuarios', window.emlabAuthUser.uid)).then(function(snap){
+      var d = snap.exists() ? snap.data() : {};
+      return (d.intentos && d.intentos[clave]) || null;
+    });
+  };
+
+  window.emlabIntentoRegistrar = function(clave, datos){
+    if (!window.emlabAuthUser) return Promise.resolve(false);
+    var o = { intentos: {} }; o.intentos[clave] = datos;
+    return setDoc(doc(window.emlabDB, 'usuarios', window.emlabAuthUser.uid), o, { merge: true })
+      .then(function(){ return true; })
+      .catch(function(err){ console.warn('No se pudo registrar el intento:', err); return false; });
+  };
+
   function emlabMontarWidget(){
     if (document.getElementById('emlab-nav-item')) return true;
     const ul = document.querySelector('ul.nav-icons');
