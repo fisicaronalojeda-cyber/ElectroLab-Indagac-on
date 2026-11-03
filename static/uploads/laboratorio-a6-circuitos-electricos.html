@@ -462,7 +462,7 @@ function dest(){return FORM||SAVE_URL;}
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return [];}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function parseForm(u){try{var U=new URL(u),m=U.pathname.match(/\/forms\/d\/e\/([^\/]+)/);if(!m)return null;var map={};U.searchParams.forEach(function(v,k){if(/^entry\.\d+$/.test(k))map[String(v).trim().toUpperCase()]=k;});return {url:U.origin+'/forms/d/e/'+m[1]+'/formResponse',map:map};}catch(e){return null;}}
-var FMAP={LAB:'tag',NOMBRE:'nombre',GRUPO:'grupo',FECHA:'fecha',ID:'id',I1:'I1',I2:'I2',I3:'I3',I4:'I4',I5:'I5',I6:'I6',TOTAL:'total',PORCENTAJE:'porcentaje',NIVEL:'nivel',INFORME:'informe'};
+var FMAP={LAB:'tag',NOMBRE:'nombre',GRUPO:'grupo',FECHA:'fecha',ID:'uid',INTENTO:'intento',I1:'I1',I2:'I2',I3:'I3',I4:'I4',I5:'I5',I6:'I6',TOTAL:'total',PORCENTAJE:'porcentaje',NIVEL:'nivel',INFORME:'informe'};
 function postRes(p,ok,bad){if(!dest()){bad&&bad('nourl');return;}
  try{var req;
   if(FORM){var q=new URLSearchParams();Object.keys(FORM.map).forEach(function(w){var f=FMAP[w];if(f&&p[f]!==undefined)q.append(FORM.map[w],String(p[f]));});
@@ -470,13 +470,36 @@ function postRes(p,ok,bad){if(!dest()){bad&&bad('nourl');return;}
   else req=fetch(SAVE_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)});
   req.then(function(){ok&&ok();},function(){bad&&bad('net');});}catch(e){bad&&bad('net');}}
 function flushPending(){var q=lsGet(PKEY);if(!q.length||!dest())return;lsSet(PKEY,[]);q.forEach(function(p){postRes(p,null,function(){var n=lsGet(PKEY);n.push(p);lsSet(PKEY,n);});});}
-function loadCfg(){try{fetch('/js/emlab-config.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(c){if(!c)return;if(c.prefillUrl){FORM=parseForm(c.prefillUrl);}if(c.saveUrl){SAVE_URL=c.saveUrl;}if(dest()){var m=document.getElementById('infmsg');if(m)m.textContent='Al final se guarda tu informe y tu docente lo recibe.';flushPending();}}).catch(function(){});}catch(e){}}
+function loadCfg(){try{fetch('/js/emlab-config.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(c){if(!c)return;if(c.prefillUrl){FORM=parseForm(c.prefillUrl);}if(c.saveUrl){SAVE_URL=c.saveUrl;}if(dest()){var m=document.getElementById('infmsg');if(m)m.textContent='Al final se guarda tu informe y tu docente lo recibe.';flushPending();pintaAviso();}}).catch(function(){});}catch(e){}}
+/* ---- un solo intento oficial por estudiante (usa la sesión del sitio) ---- */
+function par(){try{var P=window.parent;if(P&&P!==window&&typeof P.emlabIntentoLeer==='function')return P;}catch(e){}return null;}
+function esperaSesion(P,cb){if(P.emlabAuthUser!==undefined){cb(P.emlabAuthUser);return;}
+ var done=false,t=setTimeout(function(){if(!done){done=true;cb(undefined);}},6000);
+ P.addEventListener('emlab-auth-cambio',function f(){if(done)return;done=true;clearTimeout(t);try{P.removeEventListener('emlab-auth-cambio',f);}catch(e){}cb(P.emlabAuthUser);});}
+function claveIntento(){var s=String(CFG.tag||'actividad').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,120);return 'lab_'+s;}
+function fmtFecha(ms){try{return new Date(ms).toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';}}
+function pintaAviso(){var P=par(),m=document.getElementById('infmsg');if(!P||!m||!dest())return;
+ var show=function(){var u=P.emlabAuthUser;m.textContent=u?'Sesión iniciada: tu primer envío de esta actividad será tu resultado oficial; después podrás repetirla solo para practicar.':(u===null?'Antes de empezar, pulsa «Ingresar» (arriba a la derecha) y entra con tu cuenta: así tu resultado cuenta para tu docente.':'Al final se guarda tu informe y tu docente lo recibe.');};
+ show();try{P.addEventListener('emlab-auth-cambio',show);}catch(e){}}
 function saveResult(p,say){
  p.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
  var a=lsGet(KEY);a.push(p);var stored=lsSet(KEY,a);
  var base=stored?'Guardado en este navegador. ':'';
- if(!dest()){say(base+'Descarga tu informe con el bot\u00f3n de abajo y entr\u00e9galo a tu docente.');return;}
- postRes(p,function(){say('\u2713 Tu resultado fue enviado a tu docente. '+base);},function(){var n=lsGet(PKEY);n.push(p);lsSet(PKEY,n);say('No hay conexi\u00f3n con el servidor: se reintentar\u00e1 la pr\u00f3xima vez que abras el laboratorio. Mientras tanto, descarga tu informe.');});}
+ if(!dest()){say(base+'Descarga tu informe con el botón de abajo y entrégalo a tu docente.');return;}
+ var enviar=function(after){postRes(p,function(){say('✓ Tu resultado fue enviado a tu docente. '+base);after&&after();},function(){var n=lsGet(PKEY);n.push(p);lsSet(PKEY,n);say('No hay conexión con el servidor: se reintentará la próxima vez que abras el laboratorio. Mientras tanto, descarga tu informe.');after&&after();});};
+ var P=par();
+ if(!P){enviar();return;}
+ say('Verificando tu sesión…');
+ esperaSesion(P,function(u){
+  if(u===undefined){say('No se pudo verificar tu sesión. Revisa tu conexión y repite la actividad. '+base+'Mientras tanto, descarga tu informe.');return;}
+  if(u===null){say('Para que tu resultado cuente, pulsa «Ingresar» (arriba a la derecha), entra con tu cuenta y repite la actividad. '+base+'Mientras tanto, descarga tu informe.');return;}
+  var key=claveIntento();
+  P.emlabIntentoLeer(key).then(function(prev){
+   if(prev){say('Ya presentaste esta actividad el '+fmtFecha(prev.fecha)+'. Este intento es de práctica y no se envía a tu docente. '+base+'Puedes descargar tu informe.');return;}
+   p.uid=u.uid;p.intento=1;
+   enviar(function(){try{P.emlabIntentoRegistrar(key,{fecha:Date.now(),total:p.total,porcentaje:p.porcentaje});}catch(e){}});
+  },function(){say('No se pudo verificar si ya presentaste esta actividad (revisa tu conexión). Repite la actividad con conexión. '+base+'Mientras tanto, descarga tu informe.');});
+ });}
 function dlTxt(name,text){try{var b=new Blob([text],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u);},1500);return true;}catch(e){return false;}}
 loadCfg();
 
