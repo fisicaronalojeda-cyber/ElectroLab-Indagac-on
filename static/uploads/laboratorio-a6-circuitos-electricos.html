@@ -188,7 +188,7 @@ textarea:focus,select:focus,.numrow input:focus{outline:none;border-color:var(--
  <h1>Laboratorio de indagación<br>Circuitos eléctricos</h1>
  <p>Esta es la fase de <b>experimentación activa</b>: harás un experimento virtual completo, paso a paso, y al final tendrás tu informe de indagación.</p>
  <div class="fld"><input id="inName" placeholder="Tu nombre" maxlength="60" aria-label="Tu nombre"><input id="inGrp" placeholder="Grupo" maxlength="10" aria-label="Grupo"></div>
- <div class="steps"><div><b>6 ESTACIONES</b>Pregunta, hipótesis, variables, datos, análisis y contraste con el modelo.</div><div><b>LABORATORIO</b>Mides tú mismo; las lecturas traen error, como en la vida real.</div><div><b>INFORME</b>Al final copias tu informe y lo entregas.</div></div>
+ <div class="steps"><div><b>6 ESTACIONES</b>Pregunta, hipótesis, variables, datos, análisis y contraste con el modelo.</div><div><b>LABORATORIO</b>Mides tú mismo; las lecturas traen error, como en la vida real.</div><div><b>INFORME</b><span id="infmsg">Al final copias tu informe y lo entregas.</span></div></div>
  <button class="btn" id="go">¡COMENZAR!</button>
 </div></section>
 <section class="overlay" id="res" hidden></section>
@@ -443,14 +443,42 @@ function showRes(){
   '\n5. Conclusión: '+S.conc.pick+(S.conc.my?'\n   Mi conclusión: '+S.conc.my:'')+
   '\n6. Contraste con el modelo ('+CFG.model.law+'): predicho '+fmt(S.pred.ans,Y.dec)+' '+Y.unit+', medido '+fmt(S.pred.yl,Y.dec)+' '+Y.unit+' (diferencia '+fmt(S.pred.diff,1)+' %)'+
   '\nPuntaje: '+tot+'/12 ('+pc+' %) · Nivel: '+lv+' · '+keys.map(function(k,i){return k+' '+S.pts[i]+'/2';}).join(' · ');
+ var payload={tag:CFG.tag,nombre:S.name||'',grupo:S.grp||'',fecha:new Date().toISOString(),I1:S.pts[0],I2:S.pts[1],I3:S.pts[2],I4:S.pts[3],I5:S.pts[4],I6:S.pts[5],total:tot,porcentaje:pc,nivel:lv,informe:rep};
  var o=$('#res');o.hidden=false;
- o.innerHTML='<div class="box"><h1>¡Informe de indagación listo!</h1><div class="lvl">Nivel: '+lv+'</div><div class="rt"><div><small>Puntos</small><b>'+tot+'/12</b></div><div><small>Porcentaje</small><b>'+pc+'%</b></div><div><small>Estaciones</small><b>6/6</b></div></div><div class="ind">'+bars+'</div><pre class="rep" id="rep">'+esc(rep)+'</pre><div class="acts" style="justify-content:center"><button class="btn" id="copy">Copiar mi informe</button><button class="btn sec" id="again">Repetir el laboratorio</button></div><p class="hint" id="cmsg"></p></div>';
+ o.innerHTML='<div class="box"><h1>¡Informe de indagación listo!</h1><div class="lvl">Nivel: '+lv+'</div><div class="rt"><div><small>Puntos</small><b>'+tot+'/12</b></div><div><small>Porcentaje</small><b>'+pc+'%</b></div><div><small>Estaciones</small><b>6/6</b></div></div><div class="ind">'+bars+'</div><pre class="rep" id="rep">'+esc(rep)+'</pre><div class="acts" style="justify-content:center"><button class="btn" id="copy">Copiar mi informe</button><button class="btn sec" id="dl">Descargar mi informe</button><button class="btn sec" id="again">Repetir el laboratorio</button></div><p class="hint" id="cmsg"></p><p class="hint" id="smsg" style="font-weight:700"></p></div>';
  SFX.win();burst($('#app').clientWidth/2,$('#app').clientHeight/3,100);
  $('#copy').addEventListener('click',function(){copyTxt(rep,function(ok){$('#cmsg').textContent=ok?'¡Copiado! Pégalo donde tu docente te indique.':'No se pudo copiar automáticamente: selecciona el texto del recuadro y cópialo.';});});
+ saveResult(payload,function(t){var e=$('#smsg');if(e)e.textContent=t;});
+ $('#dl').addEventListener('click',function(){var nm='informe-'+(S.name||'estudiante').replace(/[^A-Za-z0-9\u00C0-\u00FF]+/g,'_')+'.txt';if(!dlTxt(nm,rep))$('#cmsg').textContent='No se pudo descargar: copia el informe del recuadro.';});
  $('#again').addEventListener('click',function(){o.hidden=true;begin();});
 }
 function copyTxt(t,cb){try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){cb(true);},function(){fallback();});return;}}catch(e){}fallback();
  function fallback(){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(a);cb(ok);}}
+
+
+/* ---------- guardado de resultados ---------- */
+var SAVE_URL='',FORM=null,KEY='emlab_lab_results',PKEY='emlab_lab_pending';
+function dest(){return FORM||SAVE_URL;}
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return [];}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+function parseForm(u){try{var U=new URL(u),m=U.pathname.match(/\/forms\/d\/e\/([^\/]+)/);if(!m)return null;var map={};U.searchParams.forEach(function(v,k){if(/^entry\.\d+$/.test(k))map[String(v).trim().toUpperCase()]=k;});return {url:U.origin+'/forms/d/e/'+m[1]+'/formResponse',map:map};}catch(e){return null;}}
+var FMAP={LAB:'tag',NOMBRE:'nombre',GRUPO:'grupo',FECHA:'fecha',ID:'id',I1:'I1',I2:'I2',I3:'I3',I4:'I4',I5:'I5',I6:'I6',TOTAL:'total',PORCENTAJE:'porcentaje',NIVEL:'nivel',INFORME:'informe'};
+function postRes(p,ok,bad){if(!dest()){bad&&bad('nourl');return;}
+ try{var req;
+  if(FORM){var q=new URLSearchParams();Object.keys(FORM.map).forEach(function(w){var f=FMAP[w];if(f&&p[f]!==undefined)q.append(FORM.map[w],String(p[f]));});
+   req=fetch(FORM.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:q.toString()});}
+  else req=fetch(SAVE_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)});
+  req.then(function(){ok&&ok();},function(){bad&&bad('net');});}catch(e){bad&&bad('net');}}
+function flushPending(){var q=lsGet(PKEY);if(!q.length||!dest())return;lsSet(PKEY,[]);q.forEach(function(p){postRes(p,null,function(){var n=lsGet(PKEY);n.push(p);lsSet(PKEY,n);});});}
+function loadCfg(){try{fetch('/js/emlab-config.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(c){if(!c)return;if(c.prefillUrl){FORM=parseForm(c.prefillUrl);}if(c.saveUrl){SAVE_URL=c.saveUrl;}if(dest()){var m=document.getElementById('infmsg');if(m)m.textContent='Al final se guarda tu informe y tu docente lo recibe.';flushPending();}}).catch(function(){});}catch(e){}}
+function saveResult(p,say){
+ p.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+ var a=lsGet(KEY);a.push(p);var stored=lsSet(KEY,a);
+ var base=stored?'Guardado en este navegador. ':'';
+ if(!dest()){say(base+'Descarga tu informe con el bot\u00f3n de abajo y entr\u00e9galo a tu docente.');return;}
+ postRes(p,function(){say('\u2713 Tu resultado fue enviado a tu docente. '+base);},function(){var n=lsGet(PKEY);n.push(p);lsSet(PKEY,n);say('No hay conexi\u00f3n con el servidor: se reintentar\u00e1 la pr\u00f3xima vez que abras el laboratorio. Mientras tanto, descarga tu informe.');});}
+function dlTxt(name,text){try{var b=new Blob([text],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u);},1500);return true;}catch(e){return false;}}
+loadCfg();
 
 /* ---------- inicio ---------- */
 function begin(){var n=S.name,g=S.grp;resetS();S.name=n;S.grp=g;$('#start').hidden=true;$('#res').hidden=true;go(0);}
