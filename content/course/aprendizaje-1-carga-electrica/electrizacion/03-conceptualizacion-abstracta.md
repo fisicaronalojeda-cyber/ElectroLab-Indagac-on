@@ -9,8 +9,8 @@ type: book
 
 
 <div style="text-align:center; margin:1.5rem 0;">
-  <a href="/uploads/formas_de_electrizar_cuerpos.png" target="_blank">
-    <img src="/uploads/formas_de_electrizar_cuerpos.png"
+  <a href="/uploads/formas_de_electrizar_cuerpos.svg" target="_blank">
+    <img src="/uploads/formas_de_electrizar_cuerpos.svg"
          alt="Formas de electrizar cuerpos: frotamiento, contacto, inducción y polarización; conductores y aislantes; electroscopio"
          style="max-width:100%; height:auto; border-radius:12px;">
   </a>
