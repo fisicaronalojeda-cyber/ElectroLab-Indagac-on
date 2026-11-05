@@ -36,10 +36,10 @@ type: book
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo sin frotar cerca</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo frotado cerca (sin tocar)</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo frotado que se aleja</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Después de tocar la lata con el globo</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo sin frotar cerca</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo frotado cerca (sin tocar)</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Globo frotado que se aleja</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Después de tocar la lata con el globo</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
 
@@ -77,7 +77,7 @@ type: book
 3. Frota el globo y acércalo a la bolita sin tocarla. Observa las láminas. Aleja el globo y observa.
 4. Toca la bolita con el globo frotado y retíralo. Observa. Mide la separación entre las puntas de las láminas.
 
-<img src="/img/electro1.jpg" alt="Elementos de un electroscopio" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
+<img src="/img/electro1.png" alt="Elementos de un electroscopio" style="display:block; max-width:100%; width:600px; margin:1rem auto; border-radius:8px;">
 
 <p style="margin:12px 0 6px;font-size:1.1rem;font-weight:bold;color:#ffffff;">Registra 3</p>
 <div style="overflow-x:auto;margin:0 0 16px;">
@@ -146,11 +146,11 @@ signo de la carga del electroscopio.
       </tr>
     </thead>
     <tbody>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Acerco el globo (sin tocar)</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Toco la bolita con el dedo</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Quito el dedo</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Retiro el globo</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
-      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Acerco de nuevo el globo</td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Acerco el globo (sin tocar)</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Toco la bolita con el dedo</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Quito el dedo</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Retiro el globo</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
+      <tr><td style="border:1px solid #64748b;padding:8px;height:40px;">Acerco de nuevo el globo</td><td style="border:1px solid #64748b;padding:8px;"></td></tr>
     </tbody>
   </table>
 
