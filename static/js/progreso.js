@@ -171,4 +171,24 @@
     initAll();
   }
   window.addEventListener('load', initAll);
+
+  // ---- Registro de visitas: fecha de la última visita y contador (una vez por sesión del navegador) ----
+  function registrarVisita(){
+    var u = window.emlabAuthUser;
+    if (!u || !window.emlabDB) return;
+    var k = 'emlab_visita_' + u.uid;
+    try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch(e){}
+    import('https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js').then(function(m){
+      return m.setDoc(m.doc(window.emlabDB, 'usuarios', u.uid), {
+        correo: u.email || '',
+        ultimaVisita: new Date().toISOString(),
+        visitas: m.increment(1)
+      }, { merge: true });
+    }).catch(function(err){
+      console.warn('No se pudo registrar la visita:', err);
+      try { sessionStorage.removeItem(k); } catch(e){}
+    });
+  }
+  window.addEventListener('emlab-auth-cambio', registrarVisita);
+  registrarVisita();
 })();
