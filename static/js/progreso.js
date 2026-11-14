@@ -6,15 +6,49 @@
   function getProgreso(){
     try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; }
   }
-  function isCompletado(id){ return !!getProgreso()[id]; }
+  // Valor guardado por etapa: +marca de tiempo = completada, -marca de tiempo = desmarcada (lápida para sincronizar entre equipos)
+  function isCompletado(id){ var v = getProgreso()[id]; return typeof v === 'number' ? v > 0 : !!v; }
+  function setLocal(p){ try { localStorage.setItem(KEY, JSON.stringify(p)); } catch(e){} }
   function marcarCompletado(id, val){
     var p = getProgreso();
-    if (val === false) { delete p[id]; } else { p[id] = Date.now(); }
-    localStorage.setItem(KEY, JSON.stringify(p));
+    p[id] = (val === false ? -1 : 1) * Date.now();
+    setLocal(p);
     window.dispatchEvent(new Event('emlab-progreso-cambio'));
+    // Guarda en la nube (si hay sesión) y recién después recarga la página
+    var guardado = (window.emlabAuthUser && window.emlabGuardarProgresoNube) ? window.emlabGuardarProgresoNube(p) : Promise.resolve();
+    return Promise.race([guardado, new Promise(function(r){ setTimeout(r, 4000); })]);
   }
-  window.emlabMarcar = function(id){ marcarCompletado(id, true); location.reload(); };
-  window.emlabDesmarcar = function(id){ marcarCompletado(id, false); location.reload(); };
+  window.emlabMarcar = function(id){ marcarCompletado(id, true).then(function(){ location.reload(); }); };
+  window.emlabDesmarcar = function(id){ marcarCompletado(id, false).then(function(){ location.reload(); }); };
+
+  // ---- Sincronización con la cuenta (Firebase) ----
+  // Une lo guardado en este equipo con lo guardado en la nube; para cada etapa gana el cambio más reciente.
+  function fusionar(a, b){
+    var out = {}, k;
+    function abs(v){ return typeof v === 'number' ? Math.abs(v) : (v ? 1 : 0); }
+    [a, b].forEach(function(src){
+      for (k in src){
+        if (!(k in out) || abs(src[k]) > abs(out[k])) out[k] = src[k];
+      }
+    });
+    return out;
+  }
+  var syncUid = null;
+  function sincronizar(){
+    var u = window.emlabAuthUser;
+    if (!u || !window.emlabLeerProgresoNube || syncUid === u.uid) return;
+    syncUid = u.uid;
+    window.emlabLeerProgresoNube().then(function(nube){
+      var local = getProgreso();
+      var union = fusionar(local, nube || {});
+      var cambioLocal = JSON.stringify(union) !== JSON.stringify(local);
+      var cambioNube = JSON.stringify(union) !== JSON.stringify(nube || {});
+      if (cambioLocal) setLocal(union);
+      if (cambioNube && window.emlabGuardarProgresoNube) window.emlabGuardarProgresoNube(union);
+      if (cambioLocal) initAll();
+    });
+  }
+  window.addEventListener('emlab-auth-cambio', function(){ syncUid = null; sincronizar(); });
 
   function flatten(){
     var out = [];
@@ -130,7 +164,7 @@
     });
   }
 
-  function initAll(){ initEtapaPage(); initProgresoPage(); initHomeBars(); }
+  function initAll(){ initEtapaPage(); initProgresoPage(); initHomeBars(); sincronizar(); }
   if (document.readyState === 'loading') {
     window.addEventListener('DOMContentLoaded', initAll);
   } else {
